@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}KeyCoding{% endblock %}</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 2rem; }
+    nav a { margin-right: 1rem; }
+    .messages { margin: 1rem 0; padding: 0; list-style: none; }
+    .messages li { padding: .75rem 1rem; border-radius: 6px; margin-bottom: .5rem; }
+    .messages li.info { background: #e8f4fd; color: #084c86; }
+    .messages li.success { background: #e6f6ea; color: #0a5c2b; }
+    .messages li.warning { background: #fff4e0; color: #8a4b01; }
+    .messages li.error { background: #fdecea; color: #8a1f11; }
+    form p { margin: .5rem 0; }
+  </style>
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/contact/">Contact</a>
+    {% if user.is_authenticated %}
+      <span>Hi, {{ user.username }}!</span>
+      <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+      <a href="{% url 'login' %}">Login</a>
+      <a href="{% url 'register' %}">Register</a>
+    {% endif %}
+    <a href="/admin/">Admin</a>
+  </nav>
+
+  {% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li class="{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  {% block content %}{% endblock %}
+</body>
+<script>
+  // Optional: auto-dismiss messages after a few seconds
+  setTimeout(() => {
+    document.querySelectorAll('.messages li').forEach(el => el.remove());
+  }, 5000);
+  </script>
+</html>
+
