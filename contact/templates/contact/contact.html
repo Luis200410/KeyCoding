@@ -1,11 +1,17 @@
 {% extends 'base.html' %}
 {% block title %}Contact{% endblock %}
 {% block content %}
-  <h1>Contact Us</h1>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Send</button>
-  </form>
+  <section class="section">
+    <div class="container">
+      <h1>Contact Us</h1>
+      <p class="lead">We usually respond within one business day.</p>
+      <form method="post" class="card" style="max-width:720px;">
+        <div class="card-inner">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button class="btn btn-form" type="submit">Send message</button>
+        </div>
+      </form>
+    </div>
+  </section>
 {% endblock %}
-

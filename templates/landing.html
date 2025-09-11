@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}KeyCoding — Build Smarter, Faster{% endblock %}
+{% block head %}
+  <meta name="description" content="KeyCoding helps you move faster with curated modules, libraries, and built-ins across languages—beautifully organized and easy to explore.">
+{% endblock %}
+{% block content %}
+  <section class="hero">
+    <div class="orbs">
+      <div class="orb a"></div>
+      <div class="orb b"></div>
+      <div class="orb c"></div>
+    </div>
+    <div class="container hero-grid">
+      <div>
+        <span class="badge" data-reveal>New: CLI snippets + starter kits</span>
+        <h1 data-reveal>Build faster. Hack smarter. Keep shipping.</h1>
+        <p data-reveal>A dev‑first index of modules, APIs, and built‑ins across languages. Find equivalents, grab snippets, and move on—no tabs, no fluff.</p>
+        <div class="hero-cta" data-reveal>
+          <a class="btn btn-primary" href="{% url 'register' %}">Get started free</a>
+          <a class="btn btn-ghost" href="/contact/">Talk to us</a>
+        </div>
+      </div>
+      <div>
+        <div class="card code-demo" data-code-demo data-reveal>
+          <div class="code-toolbar">
+            <div class="code-dots"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></div>
+            <div class="code-tabs">
+              <span class="code-tab" data-tab="python">python.py</span>
+              <span class="code-tab" data-tab="javascript">script.js</span>
+              <span class="code-tab" data-tab="go">main.go</span>
+            </div>
+            <div class="code-actions">
+              <button class="code-btn" type="button" data-copy>Copy</button>
+            </div>
+          </div>
+          <div class="code-content">
+            <div class="code-pane" data-lang="python">
+              <pre class="code"><code>import requests\n\nurl = 'https://api.example.com/todos/1'\nr = requests.get(url, timeout=10)\nr.raise_for_status()\nprint(r.json())</code></pre>
+            </div>
+            <div class="code-pane" data-lang="javascript">
+              <pre class="code"><code>async function main() {\n  const res = await fetch('https://api.example.com/todos/1');\n  if (!res.ok) throw new Error('HTTP ' + res.status);\n  const data = await res.json();\n  console.log(data);\n}\nmain().catch(console.error);</code></pre>
+            </div>
+            <div class="code-pane" data-lang="go">
+              <pre class="code"><code>package main\n\nimport (\n  \t\"encoding/json\"\n  \t\"fmt\"\n  \t\"net/http\"\n)\n\nfunc main() {\n  resp, err := http.Get(\"https://api.example.com/todos/1\")\n  if err != nil { panic(err) }\n  defer resp.Body.Close()\n  var v map[string]any\n  if err := json.NewDecoder(resp.Body).Decode(&v); err != nil { panic(err) }\n  fmt.Println(v)\n}</code></pre>
+            </div>
+          </div>
+          <div class="code-meta">HTTP + JSON in three languages · copy/paste ready</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 data-reveal>How it works</h2>
+      <div class="features">
+        <div class="feature card sheen" data-reveal data-tilt><div class="card-inner">
+          <h3>Search</h3>
+          <p>Type what you want to do. We map it to the right block across languages.</p>
+        </div></div>
+        <div class="feature card sheen" data-reveal data-tilt><div class="card-inner">
+          <h3>Grab</h3>
+          <p>Copy a minimal, runnable snippet tailored to your stack.</p>
+        </div></div>
+        <div class="feature card sheen" data-reveal data-tilt><div class="card-inner">
+          <h3>Ship</h3>
+          <p>Use consistent patterns so you can move faster with fewer bugs.</p>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 data-reveal>Works great for</h2>
+      <div class="features">
+        <div class="feature card sheen" data-reveal data-tilt><div class="card-inner">
+          <h3>Developers</h3>
+          <p>Daily helpers for web, CLIs, data work, and more.</p>
+        </div></div>
+        <div class="feature card sheen" data-reveal data-tilt><div class="card-inner">
+          <h3>Hobbyists & Learners</h3>
+          <p>See equivalents across languages to build intuition quickly.</p>
+        </div></div>
+        <div class="feature card sheen" data-reveal data-tilt><div class="card-inner">
+          <h3>OSS Contributors</h3>
+          <p>Jump between ecosystems without losing momentum.</p>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="card hover-glow sheen" data-reveal data-tilt>
+        <div class="card-inner" style="display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap;">
+          <div>
+            <h2>Ready to move faster?</h2>
+            <p class="lead">Create a free account and start pasting runnable snippets.</p>
+          </div>
+          <div>
+            <a class="btn btn-primary" href="{% url 'register' %}">Get started free</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 data-reveal>Why developers choose KeyCoding</h2>
+      <p class="lead" data-reveal>Quick answers, consistent patterns, and tools that stay out of your way.</p>
+      <div class="features">
+        <div class="feature card sheen" data-reveal data-tilt><div class="card-inner">
+          <h3>Copy‑ready snippets</h3>
+          <p>Battle‑tested examples you can paste and run.</p>
+        </div></div>
+        <div class="feature card sheen" data-reveal data-tilt><div class="card-inner">
+          <h3>Cross‑language equivalents</h3>
+          <p>See how to do the same thing in Python, JS, Go, Rust, and more.</p>
+        </div></div>
+        <div class="feature card sheen" data-reveal data-tilt><div class="card-inner">
+          <h3>Lightning search</h3>
+          <p>Type what you want; we surface the right block instantly.</p>
+        </div></div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{% static 'js/landing.js' %}"></script>
+{% endblock %}

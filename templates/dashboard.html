@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+  <section class="section">
+    <div class="container">
+      <h1>Your Dashboard</h1>
+      <p class="lead">Explore languages by category to jump in faster.</p>
+
+      {% for cat, langs in categories.items %}
+        <h2 style="margin-top:1.6rem;" data-reveal>{{ cat }}</h2>
+        <div class="grid-squares" style="margin-top:.6rem;">
+          {% for item in langs %}
+            <a class="tile card" href="{% url 'language_dashboard' item.slug %}" data-reveal style="text-decoration:none;">
+              <div class="tile-inner">
+                <div class="badge">{{ item.name|slice:":1" }}</div>
+                <div class="title">{{ item.name }}</div>
+                <div class="meta">Language</div>
+              </div>
+            </a>
+          {% endfor %}
+        </div>
+      {% endfor %}
+
+    </div>
+  </section>
+{% endblock %}
+{% block scripts %}
+  <script src="{% static 'js/landing.js' %}"></script>
+{% endblock %}

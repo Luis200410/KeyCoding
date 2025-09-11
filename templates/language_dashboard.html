@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ lang_name }} · Dashboard{% endblock %}
+{% block content %}
+  <section class="section">
+    <div class="container">
+      <div class="hero" style="padding:2.5rem 0 1rem;">
+        <h1>{{ lang_name }}</h1>
+        <p class="lead">Category: {{ categories|join:', ' }}</p>
+        <div class="hero-cta" style="margin-top:.6rem;">
+          <a class="btn btn-primary" href="/dashboard/">Back to categories</a>
+        </div>
+      </div>
+
+      <div class="stack">
+        <div class="card" data-reveal>
+          <div class="card-inner">
+            <h2>Quick Start</h2>
+            <p>Starter tips and common setup for {{ lang_name }} will appear here. Want anything specific? Tell us and we’ll tailor it.</p>
+            <pre style="white-space:pre-wrap; background:#0b1222; padding:.8rem; border-radius:10px; border:1px solid var(--border);"><code>// Coming soon: install tools, hello world, project scaffold</code></pre>
+          </div>
+        </div>
+
+        <div class="card" data-reveal>
+          <div class="card-inner">
+            <h2>Common Tasks</h2>
+            <p>Idiomatic snippets for file I/O, HTTP, JSON, testing, and more.</p>
+            <div class="grid-squares" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+              <div class="tile card"><div class="tile-inner"><div class="title">I/O</div><div class="meta">Read/write files</div></div></div>
+              <div class="tile card"><div class="tile-inner"><div class="title">HTTP</div><div class="meta">Requests + APIs</div></div></div>
+              <div class="tile card"><div class="tile-inner"><div class="title">Data</div><div class="meta">JSON/YAML/CSV</div></div></div>
+              <div class="tile card"><div class="tile-inner"><div class="title">Testing</div><div class="meta">Unit/integration</div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" data-reveal>
+          <div class="card-inner">
+            <h2>Ecosystem</h2>
+            <p>Package managers, docs, and community links tailored for {{ lang_name }}.</p>
+            <ul>
+              <li><a class="muted-link" href="#">Official docs</a></li>
+              <li><a class="muted-link" href="#">Package index</a></li>
+              <li><a class="muted-link" href="#">Style guide</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+{% block scripts %}
+  <script src="{% static 'js/landing.js' %}"></script>
+{% endblock %}
+

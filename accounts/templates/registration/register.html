@@ -1,12 +1,17 @@
 {% extends 'base.html' %}
 {% block title %}Register{% endblock %}
 {% block content %}
-  <h1>Create an account</h1>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Register</button>
-  </form>
-  <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+  <section class="section">
+    <div class="container" style="max-width:720px;">
+      <h1>Create an account</h1>
+      <form method="post" class="card">
+        <div class="card-inner">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button class="btn btn-form" type="submit">Register</button>
+        </div>
+      </form>
+      <p class="muted" style="margin-top: .8rem;">Already have an account? <a class="muted-link" href="{% url 'login' %}">Login</a></p>
+    </div>
+  </section>
 {% endblock %}
-

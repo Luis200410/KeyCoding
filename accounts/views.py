@@ -1,9 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
-from .forms import RegisterForm
+from .forms import RegisterForm, ProfileForm, ProfileDetailsForm
 
 
 def register(request):
@@ -34,6 +35,36 @@ class CustomLoginView(LoginView):
 
 
 class CustomLogoutView(LogoutView):
+    # Ensure immediate redirect to landing page on GET/POST
+    next_page = 'home'
+
     def dispatch(self, request, *args, **kwargs):
         messages.info(request, 'You have been logged out.')
         return super().dispatch(request, *args, **kwargs)
+
+
+def logout_immediate(request):
+    messages.info(request, 'You have been logged out.')
+    from django.contrib.auth import logout
+    logout(request)
+    return redirect('home')
+
+
+@login_required
+def my_account(request):
+    user = request.user
+    profile = getattr(user, 'profile', None)
+    if request.method == 'POST':
+        user_form = ProfileForm(request.POST, instance=user)
+        profile_form = ProfileDetailsForm(request.POST, request.FILES, instance=profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Your profile has been updated.')
+            return redirect('my_account')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        user_form = ProfileForm(instance=user)
+        profile_form = ProfileDetailsForm(instance=profile)
+    return render(request, 'accounts/my_account.html', {"user_form": user_form, "profile_form": profile_form})
