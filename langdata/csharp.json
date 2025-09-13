@@ -1,0 +1,36 @@
+{
+  "name": "C#",
+  "slug": "csharp",
+  "version": ".NET 7+",
+  "quick_start": [
+    {"title": "Install .NET SDK", "description": "Install from dotnet.microsoft.com.", "code": "dotnet --version"},
+    {"title": "New console app", "description": "Create and run.", "code": "dotnet new console -n Hello && cd Hello\ndotnet run"}
+  ],
+  "common_tasks": [
+    {"group": "I/O", "tasks": [
+      {"title": "Read a file", "description": "Read all text."}
+    ]},
+    {"group": "HTTP + APIs", "tasks": [
+      {"title": "GET JSON", "description": "HttpClient usage."}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "System", "description": "Core types"},
+    {"name": "System.IO", "description": "File and stream I/O"},
+    {"name": "System.Net.Http", "description": "HTTP client"}
+  ],
+  "tools": [
+    {"name": "dotnet CLI", "description": "Build/run/test"}
+  ],
+  "links": [
+    {"title": ".NET Docs", "url": "https://learn.microsoft.com/dotnet/"}
+  ],
+  "builtins": [
+    {"name": "Console", "kind": "class", "signature": "System.Console", "description": "Standard I/O."},
+    {"name": "Math", "kind": "class", "signature": "System.Math", "description": "Math utilities."},
+    {"name": "String", "kind": "class", "signature": "System.String", "description": "Unicode strings."},
+    {"name": "List", "kind": "class", "signature": "System.Collections.Generic.List", "description": "Dynamic array."},
+    {"name": "Dictionary", "kind": "class", "signature": "System.Collections.Generic.Dictionary", "description": "Hash map."}
+  ]
+}
+
