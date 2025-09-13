@@ -1,0 +1,40 @@
+{
+  "name": "Java",
+  "slug": "java",
+  "version": "17+",
+  "quick_start": [
+    {"title": "Install JDK", "description": "Install with SDKMAN or vendor packages.", "code": "brew install openjdk\njava -version"},
+    {"title": "Hello, World", "description": "Compile and run.", "code": "public class Hello {\n  public static void main(String[] args){\n    System.out.println(\"Hello, world!\");\n  }\n}\n// Save as Hello.java then:\n// javac Hello.java\n// java Hello"}
+  ],
+  "common_tasks": [
+    {"group": "I/O", "tasks": [
+      {"title": "Read a file", "description": "Read as String.", "code": "import java.nio.file.*;\nclass R{ public static void main(String[] a) throws Exception {\n  String s = Files.readString(Path.of(\"README.md\"));\n  System.out.println(s.substring(0, Math.min(200, s.length()))); }}"}
+    ]},
+    {"group": "HTTP + APIs", "tasks": [
+      {"title": "GET JSON", "description": "HttpClient in Java 11+.", "code": "import java.net.http.*; import java.net.*;\nclass H{ public static void main(String[] a) throws Exception {\n  var c = HttpClient.newHttpClient();\n  var r = c.send(HttpRequest.newBuilder(new URI(\"https://httpbin.org/json\")).build(), HttpResponse.BodyHandlers.ofString());\n  System.out.println(r.body()); }}"}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "java.lang", "description": "Core classes"},
+    {"name": "java.util", "description": "Collections and utilities"},
+    {"name": "java.nio", "description": "NIO buffers and channels"},
+    {"name": "java.net.http", "description": "HTTP client"}
+  ],
+  "tools": [
+    {"name": "javac", "description": "Java compiler"},
+    {"name": "maven", "description": "Build tool"},
+    {"name": "gradle", "description": "Build tool"}
+  ],
+  "links": [
+    {"title": "Java Tutorials", "url": "https://docs.oracle.com/javase/tutorial/"},
+    {"title": "API Docs", "url": "https://docs.oracle.com/en/java/javase/"}
+  ],
+  "builtins": [
+    {"name": "String", "kind": "class", "signature": "java.lang.String", "description": "UTF-16 strings."},
+    {"name": "System", "kind": "class", "signature": "java.lang.System", "description": "System facilities (in/out/err, properties)."},
+    {"name": "Math", "kind": "class", "signature": "java.lang.Math", "description": "Math utilities."},
+    {"name": "List", "kind": "interface", "signature": "java.util.List", "description": "List collection interface."},
+    {"name": "Map", "kind": "interface", "signature": "java.util.Map", "description": "Key-value maps."}
+  ]
+}
+

@@ -1,0 +1,54 @@
+{
+  "name": "Go",
+  "slug": "go",
+  "version": "1.x",
+  "quick_start": [
+    {"title": "Install Go", "description": "Download from go.dev or install via your OS.", "code": "# macOS\nbrew install go\n\n# Ubuntu\nsudo apt-get update && sudo apt-get install -y golang\n\n# Verify\ngo version"},
+    {"title": "Hello, World", "description": "Create a module and a main.", "code": "mkdir hello && cd hello\ngo mod init example.com/hello\ncat > main.go <<'EOF'\npackage main\nimport \"fmt\"\nfunc main(){ fmt.Println(\"Hello, world!\") }\nEOF\n\ngo run ."},
+    {"title": "Add a dependency", "description": "Go modules manage deps.", "code": "go get github.com/google/uuid@latest\ncat > main.go <<'EOF'\npackage main\nimport (\n  \t\"fmt\"\n  \t\"github.com/google/uuid\"\n)\nfunc main(){ fmt.Println(uuid.NewString()) }\nEOF\n\ngo run ."}
+  ],
+  "common_tasks": [
+    {"group": "I/O", "tasks": [
+      {"title": "Read a file", "description": "Read all bytes into memory.", "code": "package main\nimport (\n  \t\"fmt\"; \"os\"\n)\nfunc main(){ b, err := os.ReadFile(\"README.md\"); if err!=nil { panic(err) }\n  fmt.Println(string(b)[:200]) }"},
+      {"title": "Write JSON", "description": "Marshal struct to JSON file.", "code": "package main\nimport (\n  \t\"encoding/json\"; \"os\"\n)\nfunc main(){ v := map[string]any{\"ok\":true,\"items\":[]int{1,2,3}}\n  f,_ := os.Create(\"data.json\"); defer f.Close()\n  enc := json.NewEncoder(f); enc.SetIndent(\"\", \"  \")\n  _ = enc.Encode(v) }"}
+    ]},
+    {"group": "HTTP + APIs", "tasks": [
+      {"title": "GET JSON", "description": "Fetch and decode JSON.", "code": "package main\nimport (\n  \t\"encoding/json\"; \"net/http\"; \"log\"\n)\nfunc main(){ resp, err := http.Get(\"https://httpbin.org/json\"); if err!=nil { log.Fatal(err) }\n  defer resp.Body.Close(); var v map[string]any; _ = json.NewDecoder(resp.Body).Decode(&v) }"}
+    ]},
+    {"group": "CLI", "tasks": [
+      {"title": "Flags", "description": "Parse command-line flags.", "code": "package main\nimport (\n  \t\"flag\"; \"fmt\"\n)\nfunc main(){ name := flag.String(\"name\", \"world\", \"name\"); flag.Parse(); fmt.Printf(\"Hello %s!\\n\", *name) }"}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "fmt", "description": "Formatting I/O."},
+    {"name": "os", "description": "Operating system primitives."},
+    {"name": "io", "description": "I/O primitives."},
+    {"name": "net/http", "description": "HTTP client and server."},
+    {"name": "encoding/json", "description": "JSON encoding/decoding."},
+    {"name": "time", "description": "Timekeeping and durations."}
+  ],
+  "tools": [
+    {"name": "go", "description": "Build/run/test toolchain"},
+    {"name": "go fmt", "description": "Code formatter"},
+    {"name": "go test", "description": "Testing framework"}
+  ],
+  "links": [
+    {"title": "Go Docs", "url": "https://go.dev/doc/"},
+    {"title": "pkg.go.dev", "url": "https://pkg.go.dev/"}
+  ],
+  "builtins": [
+    {"name": "make", "kind": "function", "signature": "make(t, size...)", "description": "Allocate and initialize slices, maps, channels."},
+    {"name": "new", "kind": "function", "signature": "new(T)", "description": "Allocate zeroed storage and return *T."},
+    {"name": "len", "kind": "function", "signature": "len(v)", "description": "Length of string, array, slice, map, channel."},
+    {"name": "cap", "kind": "function", "signature": "cap(v)", "description": "Capacity of array, slice, or channel."},
+    {"name": "append", "kind": "function", "signature": "append(slice, elems...)", "description": "Append to slice."},
+    {"name": "copy", "kind": "function", "signature": "copy(dst, src)", "description": "Copy slices."},
+    {"name": "delete", "kind": "function", "signature": "delete(map, key)", "description": "Delete from map."},
+    {"name": "close", "kind": "function", "signature": "close(ch)", "description": "Close channel."},
+    {"name": "panic", "kind": "function", "signature": "panic(v)", "description": "Stop ordinary flow of control."},
+    {"name": "recover", "kind": "function", "signature": "recover()", "description": "Resume from panic."},
+    {"name": "print", "kind": "function", "signature": "print(args...)", "description": "Low-level printing."},
+    {"name": "println", "kind": "function", "signature": "println(args...)", "description": "Low-level printing with newline."}
+  ]
+}
+

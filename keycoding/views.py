@@ -2,6 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import Http404
 from django.utils.text import slugify
+from pathlib import Path
+import json
 
 
 def home_view(request):
@@ -110,9 +112,21 @@ def language_dashboard_view(request, lang: str):
     display_name = by_slug[lang]
     in_categories = [cat for cat, names in categories.items() if display_name in names]
 
+    # Try to load language data from langdata/<slug>.json
+    base = Path(__file__).resolve().parent.parent
+    langdata_dir = base / 'langdata'
+    data = { 'name': display_name, 'slug': lang, 'builtins': [] }
+    fpath = langdata_dir / f"{lang}.json"
+    if fpath.exists():
+        try:
+            data = json.loads(fpath.read_text(encoding='utf-8'))
+        except Exception:
+            pass
+
     context = {
         'lang_slug': lang,
         'lang_name': display_name,
         'categories': in_categories,
+        'lang': data,
     }
     return render(request, 'language_dashboard.html', context)

@@ -12,44 +12,160 @@
         </div>
       </div>
 
+      {# Moved Tasks subnav below to appear after Quick Start #}
+
+      {# Built-ins top navigator removed to restore original simpler layout #}
+
       <div class="stack">
+        {% if lang.quick_start %}
         <div class="card" data-reveal>
           <div class="card-inner">
             <h2>Quick Start</h2>
-            <p>Starter tips and common setup for {{ lang_name }} will appear here. Want anything specific? Tell us and we’ll tailor it.</p>
-            <pre style="white-space:pre-wrap; background:#0b1222; padding:.8rem; border-radius:10px; border:1px solid var(--border);"><code>// Coming soon: install tools, hello world, project scaffold</code></pre>
+            <div class="stack">
+              {% for q in lang.quick_start %}
+                <div class="card">
+                  <div class="card-inner">
+                    <h3>{{ q.title }}</h3>
+                    {% if q.description %}<p class="muted">{{ q.description }}</p>{% endif %}
+                    {% if q.code %}
+                      <div style="display:flex; justify-content:flex-end;">
+                        <button class="code-btn" type="button" data-code-copy>Copy</button>
+                      </div>
+                      <pre class="code"><code>{{ q.code }}</code></pre>
+                    {% endif %}
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
           </div>
         </div>
+        {% endif %}
 
+        {# Tasks navigator moved into Common Tasks card below #}
+
+        {% if lang.common_tasks %}
         <div class="card" data-reveal>
           <div class="card-inner">
             <h2>Common Tasks</h2>
-            <p>Idiomatic snippets for file I/O, HTTP, JSON, testing, and more.</p>
-            <div class="grid-squares" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
-              <div class="tile card"><div class="tile-inner"><div class="title">I/O</div><div class="meta">Read/write files</div></div></div>
-              <div class="tile card"><div class="tile-inner"><div class="title">HTTP</div><div class="meta">Requests + APIs</div></div></div>
-              <div class="tile card"><div class="tile-inner"><div class="title">Data</div><div class="meta">JSON/YAML/CSV</div></div></div>
-              <div class="tile card"><div class="tile-inner"><div class="title">Testing</div><div class="meta">Unit/integration</div></div></div>
+            <div style="margin:.4rem 0 1rem;">
+              <h3 style="margin:.2rem .2rem .6rem;">Tasks</h3>
+              <div class="grid-squares">
+                {% for group in lang.common_tasks %}
+                  {% for t in group.tasks %}
+                    <a class="tile card tile-sm" href="#task-{{ t.title|slugify }}" style="text-decoration:none;">
+                      <div class="tile-inner">
+                        <div class="title">{{ t.title }}</div>
+                        <div class="meta">{{ group.group }}</div>
+                      </div>
+                    </a>
+                  {% endfor %}
+                {% endfor %}
+              </div>
+            </div>
+            {% for group in lang.common_tasks %}
+              <h3 style="margin-top:.6rem;">{{ group.group }}</h3>
+              {% for t in group.tasks %}
+                {% if t.code %}
+                <div class="card anchor-target" id="task-{{ t.title|slugify }}" style="margin-top:.6rem;">
+                  <div class="card-inner">
+                    <div style="display:flex; justify-content:space-between; align-items:center; gap:.6rem; flex-wrap:wrap;">
+                      <h4 style="margin:0;">{{ t.title }}</h4>
+                      <button class="code-btn" type="button" data-code-copy>Copy</button>
+                    </div>
+                    <p class="muted" style="margin:.2rem 0 .6rem;">{{ t.description }}</p>
+                    <pre class="code"><code>{{ t.code }}</code></pre>
+                  </div>
+                </div>
+                {% endif %}
+              {% endfor %}
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        <div class="card" data-reveal>
+          <div class="card-inner">
+            <h2>Built-ins</h2>
+            <p class="lead">Core primitives and functions available without imports.</p>
+            <div style="display:flex; gap:.6rem; align-items:center; flex-wrap:wrap; margin:.6rem 0 1rem;">
+              <input id="bi-filter" type="search" placeholder="Filter built-ins (e.g. map, Array, range)" style="max-width:380px;">
+              <span class="muted" id="bi-count"></span>
+            </div>
+            <div class="card" style="overflow:auto;">
+              <div class="card-inner" style="padding:0;">
+                <table style="width:100%; border-collapse:collapse;">
+                  <thead>
+                    <tr style="text-align:left;">
+                      <th style="padding:.7rem .9rem; border-bottom:1px solid var(--border);">Name</th>
+                      <th style="padding:.7rem .9rem; border-bottom:1px solid var(--border);">Kind</th>
+                      <th style="padding:.7rem .9rem; border-bottom:1px solid var(--border);">Signature</th>
+                      <th style="padding:.7rem .9rem; border-bottom:1px solid var(--border);">Description</th>
+                    </tr>
+                  </thead>
+                  <tbody id="bi-body">
+                    {% for bi in lang.builtins %}
+                    <tr data-row>
+                      <td style="padding:.6rem .9rem; border-bottom:1px solid var(--border); white-space:nowrap;">{{ bi.name }}</td>
+                      <td style="padding:.6rem .9rem; border-bottom:1px solid var(--border);">{{ bi.kind }}</td>
+                      <td style="padding:.6rem .9rem; border-bottom:1px solid var(--border); font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;">{{ bi.signature }}</td>
+                      <td style="padding:.6rem .9rem; border-bottom:1px solid var(--border);">{{ bi.description }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr><td style="padding:.6rem .9rem;" colspan="4" class="muted">No built-ins found for this language yet.</td></tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
 
+        {% if lang.stdlib or lang.tools or lang.links %}
         <div class="card" data-reveal>
           <div class="card-inner">
             <h2>Ecosystem</h2>
-            <p>Package managers, docs, and community links tailored for {{ lang_name }}.</p>
-            <ul>
-              <li><a class="muted-link" href="#">Official docs</a></li>
-              <li><a class="muted-link" href="#">Package index</a></li>
-              <li><a class="muted-link" href="#">Style guide</a></li>
-            </ul>
+            {% if lang.stdlib %}
+              <h3>Standard Library</h3>
+              <div class="grid-squares-sm">
+                {% for m in lang.stdlib %}
+                  <div class="tile card tile-sm"><div class="tile-inner"><div class="title">{{ m.name }}</div><div class="meta">{{ m.description }}</div></div></div>
+                {% endfor %}
+              </div>
+            {% endif %}
+            {% if lang.tools %}
+              <h3 style="margin-top:1rem;">Tools</h3>
+              <div class="grid-squares-sm">
+                {% for tool in lang.tools %}
+                  <div class="tile card tile-sm">
+                    <div class="tile-inner">
+                      <div class="title">{{ tool.name|default:tool }}</div>
+                      {% if tool.description %}<div class="meta">{{ tool.description }}</div>{% endif %}
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            {% endif %}
+            {% if lang.links %}
+              <h3 style="margin-top:1rem;">Useful links</h3>
+              <div class="grid-squares-sm">
+                {% for link in lang.links %}
+                  <a class="tile card tile-sm" href="{{ link.url }}" target="_blank" rel="noopener" style="text-decoration:none;">
+                    <div class="tile-inner">
+                      <div class="title">{{ link.title }}</div>
+                      <div class="meta">{{ link.url }}</div>
+                    </div>
+                  </a>
+                {% endfor %}
+              </div>
+            {% endif %}
           </div>
         </div>
+        {% endif %}
       </div>
     </div>
   </section>
 {% endblock %}
 {% block scripts %}
   <script src="{% static 'js/landing.js' %}"></script>
+  <script src="{% static 'js/lang-dashboard.js' %}"></script>
 {% endblock %}
-

@@ -1,0 +1,64 @@
+{
+  "name": "JavaScript",
+  "slug": "javascript",
+  "version": "ES2023",
+  "quick_start": [
+    {"title": "Install Node.js", "description": "Install via nvm or the official installer.", "code": "# macOS/Linux: nvm\ncurl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash\n# restart shell then:\nnvm install --lts\nnode -v && npm -v"},
+    {"title": "Hello, World (Node)", "description": "Create a script and run it with Node.", "code": "console.log('Hello, world!');\n\n// Run\n// node hello.js"},
+    {"title": "Project init + dependency", "description": "Initialize a project and add a package.", "code": "npm init -y\nnpm install axios"}
+  ],
+  "common_tasks": [
+    {"group": "I/O (Node)", "tasks": [
+      {"title": "Read a file", "description": "Read text using fs/promises.", "code": "import { readFile } from 'node:fs/promises';\nconst text = await readFile('README.md', 'utf8');\nconsole.log(text.slice(0, 200));"},
+      {"title": "Write JSON", "description": "Write JSON file.", "code": "import { writeFile } from 'node:fs/promises';\nconst data = { ok: true, items: [1,2,3] };\nawait writeFile('data.json', JSON.stringify(data, null, 2));"}
+    ]},
+    {"group": "HTTP + APIs", "tasks": [
+      {"title": "Fetch JSON (Node)", "description": "Use global fetch in Node 18+.", "code": "const res = await fetch('https://httpbin.org/json');\nif (!res.ok) throw new Error(res.status);\nconsole.log(await res.json());"}
+    ]},
+    {"group": "CLI", "tasks": [
+      {"title": "Arguments", "description": "Process argv.", "code": "const args = process.argv.slice(2);\nconsole.log('Args:', args);"}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "fs", "description": "Filesystem (require('fs') / node:fs)."},
+    {"name": "path", "description": "Path utilities."},
+    {"name": "http/https", "description": "HTTP(S) servers and clients."},
+    {"name": "url", "description": "URL parsing and formatting."},
+    {"name": "crypto", "description": "Cryptography utilities."}
+  ],
+  "tools": ["Node.js", "npm", "npx", "ESM/CommonJS", "Jest"],
+  "links": [
+    {"title": "MDN JavaScript", "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript"},
+    {"title": "Node.js docs", "url": "https://nodejs.org/api/"},
+    {"title": "npm registry", "url": "https://www.npmjs.com/"}
+  ],
+  "builtins": [
+    {"name": "Array", "kind": "class", "signature": "new Array(length) | []", "description": "Ordered list of values with methods like map, filter, reduce.", "category": "Collections"},
+    {"name": "Object", "kind": "class", "signature": "Object()", "description": "Key-value pairs; base for most values.", "category": "Core"},
+    {"name": "Function", "kind": "class", "signature": "Function(args..., body)", "description": "Callable objects; also arrow functions (() => {}).", "category": "Core"},
+    {"name": "Map", "kind": "class", "signature": "new Map(iterable)", "description": "Key-value map with arbitrary key types.", "category": "Collections"},
+    {"name": "Set", "kind": "class", "signature": "new Set(iterable)", "description": "Unique value collection.", "category": "Collections"},
+    {"name": "WeakMap", "kind": "class", "signature": "new WeakMap(iterable)", "description": "Map with object keys that are weakly held.", "category": "Collections"},
+    {"name": "WeakSet", "kind": "class", "signature": "new WeakSet(iterable)", "description": "Set of objects, weakly held.", "category": "Collections"},
+    {"name": "Promise", "kind": "class", "signature": "new Promise(executor)", "description": "Represents eventual completion of an async operation.", "category": "Async"},
+    {"name": "Symbol", "kind": "function", "signature": "Symbol([description])", "description": "Unique and immutable primitive value.", "category": "Primitives"},
+    {"name": "BigInt", "kind": "function", "signature": "BigInt(value)", "description": "Arbitrary precision integers.", "category": "Primitives"},
+    {"name": "Number", "kind": "class", "signature": "Number(value)", "description": "Numeric wrapper; provides number utilities.", "category": "Primitives"},
+    {"name": "String", "kind": "class", "signature": "String(value)", "description": "String wrapper; methods like slice, includes, replace.", "category": "Text & RegExp"},
+    {"name": "Boolean", "kind": "class", "signature": "Boolean(value)", "description": "Boolean wrapper; use true/false primitives.", "category": "Primitives"},
+    {"name": "Date", "kind": "class", "signature": "new Date()", "description": "Dates and times.", "category": "Date & Time"},
+    {"name": "RegExp", "kind": "class", "signature": "new RegExp(pattern, flags)", "description": "Regular expressions.", "category": "Text & RegExp"},
+    {"name": "Error", "kind": "class", "signature": "new Error(message)", "description": "Base error type; TypeError, RangeError, etc.", "category": "Errors"},
+    {"name": "parseInt", "kind": "function", "signature": "parseInt(string, radix)", "description": "Parse a string to integer.", "category": "Parsing"},
+    {"name": "parseFloat", "kind": "function", "signature": "parseFloat(string)", "description": "Parse a string to floating point number.", "category": "Parsing"},
+    {"name": "isNaN", "kind": "function", "signature": "isNaN(value)", "description": "Test whether a value is NaN (after coercion).", "category": "Numbers"},
+    {"name": "isFinite", "kind": "function", "signature": "isFinite(value)", "description": "Test whether a number is finite (after coercion).", "category": "Numbers"},
+    {"name": "encodeURI", "kind": "function", "signature": "encodeURI(uri)", "description": "Encode a URI.", "category": "Encoding"},
+    {"name": "decodeURI", "kind": "function", "signature": "decodeURI(uri)", "description": "Decode a URI.", "category": "Encoding"},
+    {"name": "encodeURIComponent", "kind": "function", "signature": "encodeURIComponent(str)", "description": "Encode a URI component.", "category": "Encoding"},
+    {"name": "decodeURIComponent", "kind": "function", "signature": "decodeURIComponent(str)", "description": "Decode a URI component.", "category": "Encoding"},
+    {"name": "queueMicrotask", "kind": "function", "signature": "queueMicrotask(callback)", "description": "Schedule a microtask.", "category": "Async"},
+    {"name": "structuredClone", "kind": "function", "signature": "structuredClone(value)", "description": "Deep-clone a structured value.", "category": "Core"},
+    {"name": "globalThis", "kind": "object", "signature": "globalThis", "description": "Standardized global object reference.", "category": "Core"}
+  ]
+}

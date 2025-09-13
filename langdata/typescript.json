@@ -1,0 +1,39 @@
+{
+  "name": "TypeScript",
+  "slug": "typescript",
+  "version": "5.x",
+  "quick_start": [
+    {"title": "Install TypeScript", "description": "Use npm to install the compiler.", "code": "npm install -g typescript\ntsc -v"},
+    {"title": "Init project", "description": "Initialize tsconfig and compile.", "code": "mkdir ts-demo && cd ts-demo\necho '{"compilerOptions":{"target":"ES2020","module":"ES2020"}}' > tsconfig.json\necho "const msg: string = 'Hello';\nconsole.log(msg);" > index.ts\n\n# Compile\ntsc\nnode index.js"}
+  ],
+  "common_tasks": [
+    {"group": "I/O (Node)", "tasks": [
+      {"title": "Read a file", "description": "fs/promises with types.", "code": "import { readFile } from 'node:fs/promises';\nconst s: string = await readFile('README.md', 'utf8');\nconsole.log(s.slice(0, 200));"}
+    ]},
+    {"group": "HTTP + APIs", "tasks": [
+      {"title": "Fetch JSON", "description": "Typed fetch in Node.", "code": "type T = { ok: boolean };\nconst res = await fetch('https://httpbin.org/json');\nconst data = (await res.json()) as unknown;\nconsole.log(data as T);"}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "lib.dom.d.ts", "description": "DOM library types"},
+    {"name": "lib.es2020.d.ts", "description": "ES2020 standard library types"}
+  ],
+  "tools": [
+    {"name": "tsc", "description": "TypeScript compiler"},
+    {"name": "ts-node", "description": "Run TS directly"}
+  ],
+  "links": [
+    {"title": "TypeScript Handbook", "url": "https://www.typescriptlang.org/docs/"}
+  ],
+  "builtins": [
+    {"name": "Partial<T>", "kind": "utility type", "signature": "Partial<T>", "description": "All properties optional."},
+    {"name": "Pick<T,K>", "kind": "utility type", "signature": "Pick<T, K>", "description": "Pick subset of properties."},
+    {"name": "Record<K,T>", "kind": "utility type", "signature": "Record<K, T>", "description": "Map of keys to values."},
+    {"name": "Readonly<T>", "kind": "utility type", "signature": "Readonly<T>", "description": "Make properties readonly."},
+    {"name": "Omit<T,K>", "kind": "utility type", "signature": "Omit<T, K>", "description": "Remove keys from T."},
+    {"name": "ReturnType<F>", "kind": "utility type", "signature": "ReturnType<F>", "description": "Function return type."},
+    {"name": "Parameters<F>", "kind": "utility type", "signature": "Parameters<F>", "description": "Tuple of parameter types."},
+    {"name": "Awaited<T>", "kind": "utility type", "signature": "Awaited<T>", "description": "Unwrap Promise/Thenable."}
+  ]
+}
+
