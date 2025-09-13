@@ -3,25 +3,79 @@
   "slug": "fortran",
   "version": "Fortran 2008",
   "quick_start": [
-    {"title": "Install gfortran", "description": "GNU Fortran.", "code": "gfortran --version"},
-    {"title": "Hello, World", "description": "Compile and run.", "code": "program hello\nprint *, 'Hello, world!'\nend program hello"}
+    {
+      "title": "Install gfortran",
+      "description": "GNU Fortran.",
+      "code": "gfortran --version"
+    },
+    {
+      "title": "Hello, World",
+      "description": "Compile and run.",
+      "code": "program hello\nprint *, 'Hello, world!'\nend program hello"
+    }
   ],
   "common_tasks": [
-    {"group": "I/O", "tasks": [
-      {"title": "Read file", "description": "READ and OPEN.", "code": "character(len=200) :: line\nopen(10, file='README.md')\nread(10,'(A)') line\nprint *, trim(line)\nclose(10)"}
-    ]}
+    {
+      "group": "Files & Data",
+      "tasks": [
+        {
+          "title": "Read file",
+          "description": "READ and OPEN.",
+          "code": "character(len=200) :: line\nopen(10, file='README.md')\nread(10,'(A)') line\nprint *, trim(line)\nclose(10)"
+        },
+        {
+          "title": "Write JSON",
+          "description": "WRITE char string.",
+          "code": "open(11, file='data.json')\nwrite(11,'(A)') '{\"ok\":true}'\nclose(11)"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "CSV Summarizer",
+      "summary": "Count rows (simple)",
+      "description": "Naive split; compiler‑dependent extensions omitted.",
+      "steps": [
+        {
+          "title": "main.f90",
+          "code": "! Pseudocode example for CSV summarizing"
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Unit",
+      "definition": "Logical file handle (number) used in OPEN/READ/WRITE."
+    }
   ],
   "stdlib": [
-    {"name": "iso_fortran_env", "description": "Env and kinds"}
+    {
+      "name": "iso_fortran_env",
+      "description": "Env and kinds"
+    }
   ],
   "tools": [
-    {"name": "gfortran", "description": "Fortran compiler"}
+    {
+      "name": "gfortran",
+      "description": "Fortran compiler"
+    }
   ],
   "links": [
-    {"title": "Fortran Wiki", "url": "https://fortranwiki.org/"}
+    {
+      "title": "Fortran Wiki",
+      "url": "https://fortranwiki.org/"
+    }
   ],
   "builtins": [
-    {"name": "print", "kind": "statement", "signature": "print *, expr", "description": "Output values."}
-  ]
+    {
+      "name": "print",
+      "kind": "statement",
+      "signature": "print *, expr",
+      "description": "Output values."
+    }
+  ],
+  "concepts": [],
+  "tips": []
 }
-

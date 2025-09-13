@@ -3,27 +3,133 @@
   "slug": "haskell",
   "version": "GHC 9+",
   "quick_start": [
-    {"title": "Install GHCup", "description": "Installer for GHC and cabal.", "code": "ghcup --version"},
-    {"title": "Hello, World", "description": "Compile and run.", "code": "main = putStrLn \"Hello, world!\"\n-- Save as Main.hs then:\n-- ghc Main.hs && ./Main"}
+    {
+      "title": "Install GHCup",
+      "description": "Installer for GHC and cabal.",
+      "code": "ghcup --version"
+    },
+    {
+      "title": "Hello, World",
+      "description": "Compile and run.",
+      "code": "main = putStrLn \"Hello, world!\"\n-- Save as Main.hs then:\n-- ghc Main.hs && ./Main"
+    }
   ],
   "common_tasks": [
-    {"group": "I/O", "tasks": [
-      {"title": "Read file", "description": "readFile", "code": "main = readFile \"README.md\" >>= putStrLn . take 200"}
-    ]}
+    {
+      "group": "Files & Data",
+      "tasks": [
+        {
+          "title": "Read file",
+          "description": "readFile",
+          "code": "main = readFile \"README.md\" >>= putStrLn . take 200"
+        },
+        {
+          "title": "Write JSON (string)",
+          "description": "No deps",
+          "code": "main = writeFile \"data.json\" \"{\\\"ok\\\":true}\""
+        }
+      ]
+    },
+    {
+      "group": "HTTP + APIs",
+      "tasks": [
+        {
+          "title": "GET JSON (curl)",
+          "description": "System.Process",
+          "code": "import System.Process; import System.IO\nmain = do s <- readProcess \"curl\" [\"-s\",\"https://httpbin.org/json\"] \"\"; putStrLn s"
+        }
+      ]
+    },
+    {
+      "group": "Env & Config",
+      "tasks": [
+        {
+          "title": "Read env",
+          "description": "lookupEnv",
+          "code": "import System.Environment\nmain = do v <- lookupEnv \"PORT\"; putStrLn (maybe \"8000\" id v)"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "To-Do CLI",
+      "summary": "Append/list tasks to todo.txt.",
+      "description": "Simple file I/O.",
+      "steps": [
+        {
+          "title": "Main.hs",
+          "code": "import System.Environment; import System.Directory; import System.IO\nmain = do args <- getArgs; case args of\n  (\"add\":t:_) -> appendFile \"todo.txt\" (t ++ \"\\n\")\n  (\"list\":_) -> do ex <- doesFileExist \"todo.txt\"; if ex then readFile \"todo.txt\" >>= putStr else return ()\n  _ -> putStrLn \"usage: add <text> | list\""
+        }
+      ]
+    },
+    {
+      "title": "Web Fetcher",
+      "summary": "Download JSON to disk.",
+      "description": "curl via readProcess.",
+      "steps": [
+        {
+          "title": "Main.hs",
+          "code": "import System.Process; import System.Directory\nmain = do s <- readProcess \"curl\" [\"-s\",\"https://httpbin.org/json\"] \"\"; createDirectoryIfMissing True \"out\"; writeFile \"out/data.json\" s; putStrLn \"saved to out/data.json\""
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Maybe",
+      "definition": "Optional value (Just x or Nothing)."
+    },
+    {
+      "term": "IO",
+      "definition": "Effectful computations interacting with the world."
+    }
+  ],
+  "tips": [
+    {
+      "title": "Build",
+      "note": "Use stack or cabal for projects."
+    },
+    {
+      "title": "Text",
+      "note": "Prefer Data.Text over String for performance."
+    }
   ],
   "stdlib": [
-    {"name": "base", "description": "Core Prelude and types"}
+    {
+      "name": "base",
+      "description": "Core Prelude and types"
+    }
   ],
   "tools": [
-    {"name": "ghc", "description": "Compiler"},
-    {"name": "cabal", "description": "Build tool"}
+    {
+      "name": "ghc",
+      "description": "Compiler"
+    },
+    {
+      "name": "cabal",
+      "description": "Build tool"
+    }
   ],
   "links": [
-    {"title": "Haskell Docs", "url": "https://www.haskell.org/documentation/"}
+    {
+      "title": "Haskell Docs",
+      "url": "https://www.haskell.org/documentation/"
+    }
   ],
   "builtins": [
-    {"name": "print", "kind": "function", "signature": "print :: Show a => a -> IO ()", "description": "Print value."},
-    {"name": "map", "kind": "function", "signature": "map :: (a->b) -> [a] -> [b]", "description": "Map over list."}
-  ]
+    {
+      "name": "print",
+      "kind": "function",
+      "signature": "print :: Show a => a -> IO ()",
+      "description": "Print value."
+    },
+    {
+      "name": "map",
+      "kind": "function",
+      "signature": "map :: (a->b) -> [a] -> [b]",
+      "description": "Map over list."
+    }
+  ],
+  "concepts": []
 }
-

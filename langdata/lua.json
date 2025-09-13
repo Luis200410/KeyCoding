@@ -3,27 +3,133 @@
   "slug": "lua",
   "version": "5.4",
   "quick_start": [
-    {"title": "Install Lua", "description": "Install via your OS.", "code": "lua -v"},
-    {"title": "Hello, World", "description": "Run a script.", "code": "print('Hello, world!')"}
+    {
+      "title": "Install Lua",
+      "description": "Install via your OS.",
+      "code": "lua -v"
+    },
+    {
+      "title": "Hello, World",
+      "description": "Run a script.",
+      "code": "print('Hello, world!')"
+    }
   ],
   "common_tasks": [
-    {"group": "I/O", "tasks": [
-      {"title": "Read file", "description": "io.open", "code": "local f = io.open('README.md', 'r'); local s = f:read('*a'); f:close(); print(string.sub(s,1,200))"}
-    ]}
+    {
+      "group": "Files & Data",
+      "tasks": [
+        {
+          "title": "Read file",
+          "description": "io.open",
+          "code": "local f = io.open('README.md', 'r'); local s = f:read('*a'); f:close(); print(string.sub(s,1,200))"
+        },
+        {
+          "title": "Write JSON (string)",
+          "description": "No deps",
+          "code": "local f = io.open('data.json','w'); f:write('{\"ok\":true}'); f:close()"
+        }
+      ]
+    },
+    {
+      "group": "HTTP + APIs",
+      "tasks": [
+        {
+          "title": "GET JSON (curl)",
+          "description": "Shell out to curl",
+          "code": "os.execute('curl -s https://httpbin.org/json > out.json')"
+        }
+      ]
+    },
+    {
+      "group": "Env & Config",
+      "tasks": [
+        {
+          "title": "Read env",
+          "description": "os.getenv",
+          "code": "local port = os.getenv('PORT') or '8000'; print(port)"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "To-Do CLI",
+      "summary": "Append/list tasks in todo.txt.",
+      "description": "Simple file-based CLI.",
+      "steps": [
+        {
+          "title": "Script",
+          "code": "local path='todo.txt'\nlocal cmd=arg[1] or 'list'\nlocal text=arg[2]\nif cmd=='add' and text then local f=io.open(path,'a'); f:write(text,'\n'); f:close() elseif cmd=='list' then local f=io.open(path,'r'); if f then print(f:read('*a')); f:close() end else print('usage: lua todo.lua add <text> | list') end"
+        }
+      ]
+    },
+    {
+      "title": "Web Fetcher",
+      "summary": "Download JSON to disk.",
+      "description": "curl via os.execute.",
+      "steps": [
+        {
+          "title": "Script",
+          "code": "os.execute('mkdir -p out'); os.execute('curl -s https://httpbin.org/json > out/data.json'); print('saved to out/data.json')"
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "table",
+      "definition": "Lua's main data structure (arrays + maps)."
+    },
+    {
+      "term": "nil",
+      "definition": "Absence of a value."
+    }
+  ],
+  "tips": [
+    {
+      "title": "Locals",
+      "note": "Use local variables to avoid polluting globals."
+    },
+    {
+      "title": "Packages",
+      "note": "Use LuaRocks to install libraries when needed."
+    }
   ],
   "stdlib": [
-    {"name": "string", "description": "String library"},
-    {"name": "table", "description": "Table helpers"}
+    {
+      "name": "string",
+      "description": "String library"
+    },
+    {
+      "name": "table",
+      "description": "Table helpers"
+    }
   ],
   "tools": [
-    {"name": "lua", "description": "Lua interpreter"}
+    {
+      "name": "lua",
+      "description": "Lua interpreter"
+    }
   ],
   "links": [
-    {"title": "Lua 5.4 Reference", "url": "https://www.lua.org/manual/5.4/"}
+    {
+      "title": "Lua 5.4 Reference",
+      "url": "https://www.lua.org/manual/5.4/"
+    }
   ],
   "builtins": [
-    {"name": "print", "kind": "function", "signature": "print(...) ", "description": "Print arguments."},
-    {"name": "pairs", "kind": "function", "signature": "pairs(t)", "description": "Iterate key/value pairs."}
-  ]
+    {
+      "name": "print",
+      "kind": "function",
+      "signature": "print(...) ",
+      "description": "Print arguments."
+    },
+    {
+      "name": "pairs",
+      "kind": "function",
+      "signature": "pairs(t)",
+      "description": "Iterate key/value pairs."
+    }
+  ],
+  "concepts": []
 }
-

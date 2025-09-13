@@ -52,16 +52,46 @@
     {"title": "Project init + dependency", "description": "Initialize a project and add a package.", "code": "npm init -y\nnpm install axios"}
   ],
   "common_tasks": [
-    {"group": "I/O (Node)", "tasks": [
+    {"group": "Files & Data (Node)", "tasks": [
       {"title": "Read a file", "description": "Read text using fs/promises.", "code": "import { readFile } from 'node:fs/promises';\nconst text = await readFile('README.md', 'utf8');\nconsole.log(text.slice(0, 200));"},
-      {"title": "Write JSON", "description": "Write JSON file.", "code": "import { writeFile } from 'node:fs/promises';\nconst data = { ok: true, items: [1,2,3] };\nawait writeFile('data.json', JSON.stringify(data, null, 2));"}
+      {"title": "Write JSON", "description": "Write JSON file.", "code": "import { writeFile } from 'node:fs/promises';\nconst data = { ok: true, items: [1,2,3] };\nawait writeFile('data.json', JSON.stringify(data, null, 2));"},
+      {"title": "List files (glob)", "description": "Find files by extension.", "code": "import { readdir } from 'node:fs/promises';\nimport path from 'node:path';\nconst list = async (dir) => {\n  for (const name of await readdir(dir)) {\n    const p = path.join(dir, name);\n    if (p.endsWith('.js')) console.log(p);\n  }\n};\nawait list('.')"},
+      {"title": "ZIP (zlib)", "description": "Compress/decompress buffers.", "code": "import { gzipSync, gunzipSync } from 'node:zlib';\nconst buf = Buffer.from('hello');\nconst gz = gzipSync(buf);\nconsole.log('sizes:', buf.length, '->', gz.length);\nconsole.log(gunzipSync(gz).toString());"}
     ]},
     {"group": "HTTP + APIs", "tasks": [
-      {"title": "Fetch JSON (Node)", "description": "Use global fetch in Node 18+.", "code": "const res = await fetch('https://httpbin.org/json');\nif (!res.ok) throw new Error(res.status);\nconsole.log(await res.json());"}
+      {"title": "Fetch JSON (Node)", "description": "Use global fetch in Node 18+.", "code": "const res = await fetch('https://httpbin.org/json');\nif (!res.ok) throw new Error(res.status);\nconsole.log(await res.json());"},
+      {"title": "POST JSON (Node)", "description": "Send JSON with fetch.", "code": "const res = await fetch('https://httpbin.org/post', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ ok: true }) });\nconsole.log((await res.json()).json);"}
     ]},
     {"group": "CLI", "tasks": [
       {"title": "Arguments", "description": "Process argv.", "code": "const args = process.argv.slice(2);\nconsole.log('Args:', args);"}
     ]}
+  ],
+  "projects": [
+    {"title": "To-Do CLI (Node)", "summary": "Add/list tasks saved to a JSON file.", "description": "A simple command-line app using fs.", "steps": [
+      {"title": "Script", "code": "// todo.mjs\nimport { readFile, writeFile } from 'node:fs/promises';\nconst PATH = 'todo.json';\nconst load = async () => { try { return JSON.parse(await readFile(PATH, 'utf8')); } catch { return []; } };\nconst save = async (items) => writeFile(PATH, JSON.stringify(items, null, 2));\nconst [,, cmd, text] = process.argv;\nconst items = await load();\nif (cmd === 'add' && text) { items.push({ text, done:false }); await save(items); }\nif (cmd === 'list') { items.forEach((it,i)=> console.log(`${i+1}. ${it.done?'[x]':'[ ]'} ${it.text}`)); }"}
+    ]},
+    {"title": "CSV Summarizer (Node)", "summary": "Compute quick stats from CSV.", "description": "Reads CSV and prints count and averages without deps.", "steps": [
+      {"title": "Script", "code": "// summarize.mjs\nimport { readFile } from 'node:fs/promises';\nconst text = await readFile('data.csv', 'utf8');\nconst [hdr, ...rows] = text.trim().split(/\n+/);\nconst cols = hdr.split(',');\nconst ageIdx = cols.indexOf('age');\nconst ages = rows.map(r => parseInt(r.split(',')[ageIdx], 10)).filter(n => !Number.isNaN(n));\nconst avg = ages.reduce((a,b)=>a+b,0)/Math.max(ages.length,1);\nconsole.log('rows:', rows.length);\nconsole.log('avg age:', Math.round(avg*10)/10);"}
+    ]},
+    {"title": "Web Fetcher (Node)", "summary": "Download JSON to disk.", "description": "Fetch an API and save the response.", "steps": [
+      {"title": "Script", "code": "// fetch.mjs\nimport { writeFile, mkdir } from 'node:fs/promises';\nconst url = 'https://httpbin.org/json';\nconst res = await fetch(url);\nconst data = await res.json();\nawait mkdir('out', { recursive: true });\nawait writeFile('out/data.json', JSON.stringify(data, null, 2));\nconsole.log('saved to out/data.json');"}
+    ]}
+  ],
+  "glossary": [
+    {"term": "Variable", "definition": "A named reference to a value (let/const)."},
+    {"term": "Function", "definition": "Reusable block of code that may return a value."},
+    {"term": "Module", "definition": "A file you can import (ESM)."},
+    {"term": "Package", "definition": "A folder with code, often published on npm."},
+    {"term": "Node.js", "definition": "JS runtime for server-side scripts."},
+    {"term": "Standard library", "definition": "Core Node modules like fs, path, http."},
+    {"term": "Promise", "definition": "Represents a future value (async/await)."}
+  ],
+  "tips": [
+    {"title": "Use ESM", "note": "Prefer ESM with .mjs and top-level await in Node 18+."},
+    {"title": "Async", "note": "Use async/await for readability; catch errors around awaits."},
+    {"title": "JSON", "note": "JSON.stringify(value, null, 2) produces readable files."},
+    {"title": "Path safety", "note": "Avoid string concat for paths; use node:path join/resolve."},
+    {"title": "Env", "note": "Use process.env.NAME || default to handle missing env vars."}
   ],
   "stdlib": [
     {"name": "fs", "description": "Filesystem (require('fs') / node:fs)."},

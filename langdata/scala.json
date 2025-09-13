@@ -3,28 +3,137 @@
   "slug": "scala",
   "version": "3.x",
   "quick_start": [
-    {"title": "Install Scala", "description": "Use cs (Coursier) or SDKMAN.", "code": "scala -version"},
-    {"title": "Hello, World", "description": "Run a script.", "code": "@main def run() = println(\\"Hello, world!\\")"}
+    {
+      "title": "Install Scala",
+      "description": "Use cs (Coursier) or SDKMAN.",
+      "code": "scala -version"
+    },
+    {
+      "title": "Hello, World",
+      "description": "Run a script.",
+      "code": "@main def run() = println(\"Hello, world!\")"
+    }
   ],
   "common_tasks": [
-    {"group": "I/O", "tasks": [
-      {"title": "Read a file", "description": "Read text.", "code": "import java.nio.file.*\n@main def run() = { val s = Files.readString(Path.of(\\"README.md\\")); println(s.take(200)) }"}
-    ]}
+    {
+      "group": "Files & Data",
+      "tasks": [
+        {
+          "title": "Read a file",
+          "description": "Read text.",
+          "code": "import java.nio.file.*\n@main def run() = { val s = Files.readString(Path.of(\"README.md\")); println(s.take(200)) }"
+        },
+        {
+          "title": "Write JSON",
+          "description": "Write JSON string.",
+          "code": "import java.nio.file.*\n@main def run() = Files.writeString(Path.of(\"data.json\"), \"{\\\"ok\\\":true}\")"
+        }
+      ]
+    },
+    {
+      "group": "HTTP + APIs",
+      "tasks": [
+        {
+          "title": "GET JSON",
+          "description": "java.net.http.",
+          "code": "import java.net.http.*; import java.net.*\n@main def run() = { val c=HttpClient.newHttpClient(); val r=c.send(HttpRequest.newBuilder(URI(\"https://httpbin.org/json\")).build(), HttpResponse.BodyHandlers.ofString()); println(r.body()) }"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "To-Do CLI",
+      "summary": "Append/list tasks in a text file.",
+      "description": "One task per line in todo.txt.",
+      "steps": [
+        {
+          "title": "App.scala",
+          "code": "import java.nio.file.*\n@main def run(args: String*) = { val p=Path.of(\"todo.txt\"); args.headOption match { case Some(\"add\") if args.size>1 => Files.writeString(p, args(1)+\"\\n\", StandardOpenOption.CREATE, StandardOpenOption.APPEND); case Some(\"list\") => if Files.exists(p) then print(Files.readString(p)) case _ => println(\"usage: add <text> | list\") } }"
+        }
+      ]
+    },
+    {
+      "title": "Web Fetcher",
+      "summary": "Download JSON to disk.",
+      "description": "HttpClient + Files.",
+      "steps": [
+        {
+          "title": "App.scala",
+          "code": "import java.net.http.*; import java.net.*; import java.nio.file.*\n@main def run() = { val c=HttpClient.newHttpClient(); val r=c.send(HttpRequest.newBuilder(URI(\"https://httpbin.org/json\")).build(), HttpResponse.BodyHandlers.ofString()); Files.createDirectories(Path.of(\"out\")); Files.writeString(Path.of(\"out/data.json\"), r.body()); println(\"saved to out/data.json\") }"
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Case class",
+      "definition": "Immutable data class with pattern matching and copy."
+    },
+    {
+      "term": "Companion object",
+      "definition": "Singleton associated with a class for factory/util methods."
+    }
+  ],
+  "tips": [
+    {
+      "title": "Immutability",
+      "note": "Prefer vals and immutable collections for clarity."
+    },
+    {
+      "title": "Scala CLI",
+      "note": "Use scala-cli for quick scripts and packaging."
+    }
   ],
   "stdlib": [
-    {"name": "scala.collection", "description": "Collections"}
+    {
+      "name": "scala.collection",
+      "description": "Collections"
+    }
   ],
   "tools": [
-    {"name": "scala-cli", "description": "Run and package"}
+    {
+      "name": "scala-cli",
+      "description": "Run and package"
+    }
   ],
   "links": [
-    {"title": "Scala Docs", "url": "https://docs.scala-lang.org/"}
+    {
+      "title": "Scala Docs",
+      "url": "https://docs.scala-lang.org/"
+    }
   ],
   "builtins": [
-    {"name": "println", "kind": "function", "signature": "println(x)", "description": "Print line."},
-    {"name": "StringOps.toUpperCase", "kind": "method", "signature": "StringOps#toUpperCase: String", "description": "Uppercase a string (via enrichment)."},
-    {"name": "List.map", "kind": "method", "signature": "def map[B](f: A => B): List[B]", "description": "Transform list elements."},
-    {"name": "scala.collection", "kind": "module", "signature": "package scala.collection", "description": "Collections library."},
-    {"name": "Cats", "kind": "library", "signature": "org.typelevel:cats-core", "description": "Functional programming abstractions."}
-  ]
+    {
+      "name": "println",
+      "kind": "function",
+      "signature": "println(x)",
+      "description": "Print line."
+    },
+    {
+      "name": "StringOps.toUpperCase",
+      "kind": "method",
+      "signature": "StringOps#toUpperCase: String",
+      "description": "Uppercase a string (via enrichment)."
+    },
+    {
+      "name": "List.map",
+      "kind": "method",
+      "signature": "def map[B](f: A => B): List[B]",
+      "description": "Transform list elements."
+    },
+    {
+      "name": "scala.collection",
+      "kind": "module",
+      "signature": "package scala.collection",
+      "description": "Collections library."
+    },
+    {
+      "name": "Cats",
+      "kind": "library",
+      "signature": "org.typelevel:cats-core",
+      "description": "Functional programming abstractions."
+    }
+  ],
+  "concepts": []
 }

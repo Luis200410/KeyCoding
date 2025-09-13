@@ -3,24 +3,83 @@
   "slug": "html",
   "version": "HTML5",
   "quick_start": [
-    {"title": "Basic page", "description": "Create index.html and open in browser.", "code": "<!doctype html>\n<html><head><meta charset=\"utf-8\"><title>Hello</title></head><body>Hello</body></html>"}
+    {
+      "title": "Basic page",
+      "description": "Create index.html and open in browser.",
+      "code": "<!doctype html>\n<html><head><meta charset=\"utf-8\"><title>Hello</title></head><body>Hello</body></html>"
+    }
   ],
   "common_tasks": [
-    {"group": "Elements", "tasks": [
-      {"title": "Link", "description": "Anchor tag", "code": "<a href=\"/\">Home</a>"}
-    ]}
+    {
+      "group": "Elements",
+      "tasks": [
+        {
+          "title": "Link",
+          "description": "Anchor tag",
+          "code": "<a href=\"/\">Home</a>"
+        },
+        {
+          "title": "Form",
+          "description": "Simple form",
+          "code": "<form action=\"/subscribe\" method=\"post\">\n  <input name=\"email\" type=\"email\" required>\n  <button type=\"submit\">Join</button>\n</form>"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "Landing page",
+      "summary": "Hero, features, CTA",
+      "description": "Basic multipane layout.",
+      "steps": [
+        {
+          "title": "index.html",
+          "code": "<!doctype html>\n<html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><title>Landing</title></head><body><header><h1>Product</h1><a href=\"#cta\">Get started</a></header><main><section><h2>Feature A</h2><p>...</p></section></main><footer id=\"cta\"><p>Ready?</p></footer></body></html>"
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Semantic HTML",
+      "definition": "Using meaningful tags (header, main, article, nav)."
+    },
+    {
+      "term": "Accessibility",
+      "definition": "Alt text, labels, roles, and keyboard navigation."
+    }
+  ],
+  "tips": [
+    {
+      "title": "Meta viewport",
+      "note": "Include responsive viewport for mobile."
+    }
   ],
   "stdlib": [
-    {"name": "Elements", "description": "div, span, a, img, form, ..."}
+    {
+      "name": "Elements",
+      "description": "div, span, a, img, form, ..."
+    }
   ],
   "tools": [
-    {"name": "Browser", "description": "Render engine"}
+    {
+      "name": "Browser",
+      "description": "Render engine"
+    }
   ],
   "links": [
-    {"title": "MDN HTML", "url": "https://developer.mozilla.org/docs/Web/HTML"}
+    {
+      "title": "MDN HTML",
+      "url": "https://developer.mozilla.org/docs/Web/HTML"
+    }
   ],
   "builtins": [
-    {"name": "<div>", "kind": "element", "signature": "<div>...</div>", "description": "Content container."}
-  ]
+    {
+      "name": "<div>",
+      "kind": "element",
+      "signature": "<div>...</div>",
+      "description": "Content container."
+    }
+  ],
+  "concepts": []
 }
-

@@ -3,31 +3,157 @@
   "slug": "powershell",
   "version": "7.x",
   "quick_start": [
-    {"title": "Run script", "description": "Basic script example.", "code": "Write-Output 'Hello, world!'"}
+    {
+      "title": "Run script",
+      "description": "Basic script example.",
+      "code": "Write-Output 'Hello, world!'"
+    }
   ],
   "common_tasks": [
-    {"group": "I/O", "tasks": [
-      {"title": "Read file", "description": "Get-Content", "code": "(Get-Content README.md -Raw).Substring(0,200)"}
-    ]},
-    {"group": "HTTP + APIs", "tasks": [
-      {"title": "GET JSON", "description": "Invoke-RestMethod", "code": "Invoke-RestMethod https://httpbin.org/json | ConvertTo-Json"}
-    ]}
+    {
+      "group": "Files & Data",
+      "tasks": [
+        {
+          "title": "Read file",
+          "description": "Get-Content",
+          "code": "(Get-Content README.md -Raw).Substring(0,200)"
+        },
+        {
+          "title": "Write JSON",
+          "description": "ConvertTo-Json + Set-Content",
+          "code": "$obj = [pscustomobject]@{ ok = $true; items = 1,2,3 }; $obj | ConvertTo-Json -Depth 3 | Set-Content -Encoding utf8 data.json"
+        }
+      ]
+    },
+    {
+      "group": "HTTP + APIs",
+      "tasks": [
+        {
+          "title": "GET JSON",
+          "description": "Invoke-RestMethod",
+          "code": "Invoke-RestMethod https://httpbin.org/json | ConvertTo-Json"
+        },
+        {
+          "title": "POST JSON",
+          "description": "Invoke-RestMethod -Method Post",
+          "code": "Invoke-RestMethod -Uri https://httpbin.org/post -Method Post -ContentType 'application/json' -Body '{\"ok\":true}' | ConvertTo-Json"
+        }
+      ]
+    },
+    {
+      "group": "Env & Config",
+      "tasks": [
+        {
+          "title": "Read environment",
+          "description": "Use default when missing",
+          "code": "$port = $env:PORT; if (-not $port) { $port = '8000' }; $port"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "To-Do CLI",
+      "summary": "Add/list tasks saved to a JSON file.",
+      "description": "Stores tasks in todo.json.",
+      "steps": [
+        {
+          "title": "Script",
+          "code": "$path = 'todo.json'; $cmd = $args[0]; $text = $args[1]; if (Test-Path $path) { $items = Get-Content $path -Raw | ConvertFrom-Json } else { $items = @() } if ($cmd -eq 'add' -and $text) { $items += [pscustomobject]@{ text=$text; done=$false }; $items | ConvertTo-Json -Depth 4 | Set-Content -Encoding utf8 $path } elseif ($cmd -eq 'list') { $i=1; foreach ($it in $items) { Write-Output (\"$i. $(if($it.done){'[x]'}else{'[ ]'}) $($it.text)\"); $i++ } } else { Write-Output 'usage: ps1 add <text> | list' }"
+        }
+      ]
+    },
+    {
+      "title": "Web Fetcher",
+      "summary": "Download JSON to disk.",
+      "description": "Invoke-RestMethod + Set-Content",
+      "steps": [
+        {
+          "title": "Script",
+          "code": "$r = Invoke-RestMethod https://httpbin.org/json -Method Get -UseBasicParsing; New-Item -ItemType Directory -Force -Path out | Out-Null; ($r | ConvertTo-Json -Depth 6) | Set-Content -Encoding utf8 out/data.json; 'saved to out/data.json'"
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Cmdlet",
+      "definition": "PowerShell-command implemented in .NET (Verb-Noun)."
+    },
+    {
+      "term": "Pipeline",
+      "definition": "Objects flow from one cmdlet to the next with |."
+    },
+    {
+      "term": "Module",
+      "definition": "Package of cmdlets and functions you can Import-Module."
+    }
+  ],
+  "tips": [
+    {
+      "title": "Encoding",
+      "note": "Use -Encoding utf8 when writing files."
+    },
+    {
+      "title": "Errors",
+      "note": "Use -ErrorAction Stop and try/catch for robust scripts."
+    }
   ],
   "stdlib": [
-    {"name": "Core", "description": "Core cmdlets"}
+    {
+      "name": "Core",
+      "description": "Core cmdlets"
+    }
   ],
   "tools": [
-    {"name": "pwsh", "description": "PowerShell"}
+    {
+      "name": "pwsh",
+      "description": "PowerShell"
+    }
   ],
   "links": [
-    {"title": "Docs", "url": "https://learn.microsoft.com/powershell/"}
+    {
+      "title": "Docs",
+      "url": "https://learn.microsoft.com/powershell/"
+    }
   ],
   "builtins": [
-    {"name": "Write-Output", "kind": "cmdlet", "signature": "Write-Output [-InputObject]", "description": "Outputs to the pipeline."},
-    {"name": "Get-Content", "kind": "cmdlet", "signature": "Get-Content -Path", "description": "Get content of files."},
-    {"name": "Get-ChildItem", "kind": "cmdlet", "signature": "Get-ChildItem [-Path]", "description": "List directory contents."},
-    {"name": "String.ToUpper", "kind": "method", "signature": "[String]::Copy('a').ToUpper()", "description": "Uppercase via .NET method."},
-    {"name": "Microsoft.PowerShell.Management", "kind": "module", "signature": "Import-Module Microsoft.PowerShell.Management", "description": "Core management cmdlets."},
-    {"name": "PSReadLine", "kind": "library", "signature": "PSReadLine", "description": "Enhanced command-line editing."}
-  ]
+    {
+      "name": "Write-Output",
+      "kind": "cmdlet",
+      "signature": "Write-Output [-InputObject]",
+      "description": "Outputs to the pipeline."
+    },
+    {
+      "name": "Get-Content",
+      "kind": "cmdlet",
+      "signature": "Get-Content -Path",
+      "description": "Get content of files."
+    },
+    {
+      "name": "Get-ChildItem",
+      "kind": "cmdlet",
+      "signature": "Get-ChildItem [-Path]",
+      "description": "List directory contents."
+    },
+    {
+      "name": "String.ToUpper",
+      "kind": "method",
+      "signature": "[String]::Copy('a').ToUpper()",
+      "description": "Uppercase via .NET method."
+    },
+    {
+      "name": "Microsoft.PowerShell.Management",
+      "kind": "module",
+      "signature": "Import-Module Microsoft.PowerShell.Management",
+      "description": "Core management cmdlets."
+    },
+    {
+      "name": "PSReadLine",
+      "kind": "library",
+      "signature": "PSReadLine",
+      "description": "Enhanced command-line editing."
+    }
+  ],
+  "concepts": []
 }

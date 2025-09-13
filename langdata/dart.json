@@ -3,33 +3,162 @@
   "slug": "dart",
   "version": "3.x",
   "quick_start": [
-    {"title": "Install Dart SDK", "description": "Install via dart.dev.", "code": "dart --version"},
-    {"title": "Hello, World", "description": "Run a script.", "code": "void main(){ print('Hello, world!'); }"}
+    {
+      "title": "Install Dart SDK",
+      "description": "Install via dart.dev.",
+      "code": "dart --version"
+    },
+    {
+      "title": "Hello, World",
+      "description": "Run a script.",
+      "code": "void main(){ print('Hello, world!'); }"
+    }
   ],
   "common_tasks": [
-    {"group": "I/O", "tasks": [
-      {"title": "Read a file", "description": "dart:io readAsString", "code": "import 'dart:io';\nvoid main() async { final s = await File('README.md').readAsString(); print(s.substring(0, 200)); }"}
-    ]},
-    {"group": "HTTP + APIs", "tasks": [
-      {"title": "GET JSON", "description": "http package", "code": "// pubspec: dependencies: http: ^1.0.0\nimport 'package:http/http.dart' as http;\nvoid main() async { final r = await http.get(Uri.parse('https://httpbin.org/json')); print(r.body); }"}
-    ]}
+    {
+      "group": "Files & Data",
+      "tasks": [
+        {
+          "title": "Read a file",
+          "description": "dart:io readAsString",
+          "code": "import 'dart:io';\nvoid main() async { final s = await File('README.md').readAsString(); print(s.substring(0, 200)); }"
+        },
+        {
+          "title": "Write JSON",
+          "description": "Write JSON string.",
+          "code": "import 'dart:io';\nvoid main(){ File('data.json').writeAsStringSync('{\\\"ok\\\":true}'); }"
+        }
+      ]
+    },
+    {
+      "group": "HTTP + APIs",
+      "tasks": [
+        {
+          "title": "GET JSON",
+          "description": "http package",
+          "code": "// pubspec: dependencies: http: ^1.0.0\nimport 'package:http/http.dart' as http;\nvoid main() async { final r = await http.get(Uri.parse('https://httpbin.org/json')); print(r.body); }"
+        },
+        {
+          "title": "POST JSON",
+          "description": "http POST",
+          "code": "import 'dart:convert';\nimport 'package:http/http.dart' as http;\nvoid main() async { final r = await http.post(Uri.parse('https://httpbin.org/post'), headers: {'content-type':'application/json'}, body: jsonEncode({'ok': true})); print(r.statusCode); }"
+        }
+      ]
+    },
+    {
+      "group": "Env & Config",
+      "tasks": [
+        {
+          "title": "Environment variables",
+          "description": "Use defaults.",
+          "code": "import 'dart:io';\nvoid main(){ final port = Platform.environment['PORT'] ?? '8000'; print(port); }"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "To-Do CLI",
+      "summary": "Append/list tasks in todo.txt.",
+      "description": "Simple file-based CLI.",
+      "steps": [
+        {
+          "title": "main.dart",
+          "code": "import 'dart:io';\nvoid main(List<String> args){ final path='todo.txt'; if(args.isNotEmpty && args[0]=='add' && args.length>1){ File(path).writeAsStringSync(args[1]+'\n', mode: FileMode.append); } else if(args.isNotEmpty && args[0]=='list'){ if(File(path).existsSync()) stdout.write(File(path).readAsStringSync()); } else { print('usage: dart main.dart add <text> | list'); } }"
+        }
+      ]
+    },
+    {
+      "title": "Web Fetcher",
+      "summary": "Download JSON to disk.",
+      "description": "http + writeFile.",
+      "steps": [
+        {
+          "title": "main.dart",
+          "code": "import 'dart:io';\nimport 'package:http/http.dart' as http;\nvoid main() async { final r = await http.get(Uri.parse('https://httpbin.org/json')); Directory('out').createSync(recursive: true); File('out/data.json').writeAsStringSync(r.body); print('saved to out/data.json'); }"
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Future",
+      "definition": "Represents a pending async computation result."
+    },
+    {
+      "term": "Stream",
+      "definition": "Sequence of asynchronous data events."
+    }
+  ],
+  "tips": [
+    {
+      "title": "Async",
+      "note": "Use async/await to work with Futures cleanly."
+    },
+    {
+      "title": "Packages",
+      "note": "Add dependencies in pubspec.yaml and run dart pub get."
+    }
   ],
   "stdlib": [
-    {"name": "dart:core", "description": "Core types"},
-    {"name": "dart:io", "description": "File, socket, HTTP (server)"}
+    {
+      "name": "dart:core",
+      "description": "Core types"
+    },
+    {
+      "name": "dart:io",
+      "description": "File, socket, HTTP (server)"
+    }
   ],
   "tools": [
-    {"name": "dart", "description": "Dart VM and tools"}
+    {
+      "name": "dart",
+      "description": "Dart VM and tools"
+    }
   ],
   "links": [
-    {"title": "Dart Docs", "url": "https://dart.dev/guides"}
+    {
+      "title": "Dart Docs",
+      "url": "https://dart.dev/guides"
+    }
   ],
   "builtins": [
-    {"name": "print", "kind": "function", "signature": "print(object)", "description": "Print a string representation."},
-    {"name": "List", "kind": "class", "signature": "List<T>", "description": "Growable list."},
-    {"name": "String.toUpperCase", "kind": "method", "signature": "String toUpperCase()", "description": "Uppercase a string."},
-    {"name": "Iterable.map", "kind": "method", "signature": "Iterable<E2> map<E2>(E2 f(E element))", "description": "Transform items."},
-    {"name": "dart:convert", "kind": "module", "signature": "import 'dart:convert'", "description": "JSON encoding/decoding."},
-    {"name": "http", "kind": "library", "signature": "package:http/http.dart", "description": "HTTP client package."}
-  ]
+    {
+      "name": "print",
+      "kind": "function",
+      "signature": "print(object)",
+      "description": "Print a string representation."
+    },
+    {
+      "name": "List",
+      "kind": "class",
+      "signature": "List<T>",
+      "description": "Growable list."
+    },
+    {
+      "name": "String.toUpperCase",
+      "kind": "method",
+      "signature": "String toUpperCase()",
+      "description": "Uppercase a string."
+    },
+    {
+      "name": "Iterable.map",
+      "kind": "method",
+      "signature": "Iterable<E2> map<E2>(E2 f(E element))",
+      "description": "Transform items."
+    },
+    {
+      "name": "dart:convert",
+      "kind": "module",
+      "signature": "import 'dart:convert'",
+      "description": "JSON encoding/decoding."
+    },
+    {
+      "name": "http",
+      "kind": "library",
+      "signature": "package:http/http.dart",
+      "description": "HTTP client package."
+    }
+  ],
+  "concepts": []
 }

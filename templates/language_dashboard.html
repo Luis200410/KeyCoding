@@ -119,6 +119,77 @@
         </div>
         {% endif %}
 
+        {% if lang.projects %}
+        <div class="card" data-reveal>
+          <div class="card-inner">
+            <h2>Mini Projects</h2>
+            <div class="grid-squares">
+              {% for p in lang.projects %}
+                <a class="tile card tile-sm" href="#project-{{ p.title|slugify }}" style="text-decoration:none;">
+                  <div class="tile-inner">
+                    <div class="title">{{ p.title }}</div>
+                    {% if p.summary %}<div class="meta">{{ p.summary }}</div>{% endif %}
+                  </div>
+                </a>
+              {% endfor %}
+            </div>
+            {% for p in lang.projects %}
+              <div class="card anchor-target" id="project-{{ p.title|slugify }}" style="margin-top:.8rem;">
+                <div class="card-inner">
+                  <h3 style="margin:0 0 .4rem;">{{ p.title }}</h3>
+                  {% if p.description %}<p class="muted">{{ p.description }}</p>{% endif %}
+                  {% if p.steps %}
+                    {% for s in p.steps %}
+                      <h4 style="margin:.6rem 0 .3rem;">{{ s.title|default:"Step" }}</h4>
+                      {% if s.text %}<p class="muted" style="margin:.2rem 0 .4rem;">{{ s.text }}</p>{% endif %}
+                      {% if s.code %}
+                        <div style="display:flex; justify-content:flex-end;">
+                          <button class="code-btn" type="button" data-code-copy>Copy</button>
+                        </div>
+                        <pre class="code"><code>{{ s.code }}</code></pre>
+                      {% endif %}
+                    {% endfor %}
+                  {% endif %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        {% if lang.glossary %}
+        <div class="card" data-reveal>
+          <div class="card-inner">
+            <h2>Glossary</h2>
+            <div class="grid-squares-sm">
+              {% for g in lang.glossary %}
+                <div class="tile card tile-sm">
+                  <div class="tile-inner">
+                    <div class="title">{{ g.term }}</div>
+                    <div class="meta">{{ g.definition }}</div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+        {% if lang.tips %}
+        <div class="card" data-reveal>
+          <div class="card-inner">
+            <h2>Beginner Tips</h2>
+            <ul style="margin:.4rem 0 0; padding-left:1.1rem;">
+              {% for t in lang.tips %}
+                <li style="margin:.25rem 0;">
+                  {% if t.title %}<strong>{{ t.title }}:</strong> {% endif %}{{ t.note|default:t }}
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        {% endif %}
+
         <div class="card">
           <div class="card-inner">
             <h2>Built-ins</h2>
@@ -217,6 +288,5 @@
   </section>
 {% endblock %}
 {% block scripts %}
-  <script src="{% static 'js/landing.js' %}"></script>
   <script src="{% static 'js/lang-dashboard.js' %}"></script>
 {% endblock %}

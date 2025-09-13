@@ -3,41 +3,237 @@
   "slug": "java",
   "version": "17+",
   "quick_start": [
-    {"title": "Install JDK", "description": "Install with SDKMAN or vendor packages.", "code": "brew install openjdk\njava -version"},
-    {"title": "Hello, World", "description": "Compile and run.", "code": "public class Hello {\n  public static void main(String[] args){\n    System.out.println(\"Hello, world!\");\n  }\n}\n// Save as Hello.java then:\n// javac Hello.java\n// java Hello"}
+    {
+      "title": "Install JDK",
+      "description": "Install with SDKMAN or vendor packages.",
+      "code": "brew install openjdk\njava -version"
+    },
+    {
+      "title": "Hello, World",
+      "description": "Compile and run.",
+      "code": "public class Hello {\n  public static void main(String[] args){\n    System.out.println(\"Hello, world!\");\n  }\n}\n// Save as Hello.java then:\n// javac Hello.java\n// java Hello"
+    }
   ],
   "common_tasks": [
-    {"group": "I/O", "tasks": [
-      {"title": "Read a file", "description": "Read as String.", "code": "import java.nio.file.*;\nclass R{ public static void main(String[] a) throws Exception {\n  String s = Files.readString(Path.of(\"README.md\"));\n  System.out.println(s.substring(0, Math.min(200, s.length()))); }}"}
-    ]},
-    {"group": "HTTP + APIs", "tasks": [
-      {"title": "GET JSON", "description": "HttpClient in Java 11+.", "code": "import java.net.http.*; import java.net.*;\nclass H{ public static void main(String[] a) throws Exception {\n  var c = HttpClient.newHttpClient();\n  var r = c.send(HttpRequest.newBuilder(new URI(\"https://httpbin.org/json\")).build(), HttpResponse.BodyHandlers.ofString());\n  System.out.println(r.body()); }}"}
-    ]}
+    {
+      "group": "Files & Data",
+      "tasks": [
+        {
+          "title": "Read a file",
+          "description": "Read whole file as String.",
+          "code": "import java.nio.file.*;\nclass R{ public static void main(String[] a) throws Exception {\n  String s = Files.readString(Path.of(\"README.md\"));\n  System.out.println(s.substring(0, Math.min(200, s.length()))); }}"
+        },
+        {
+          "title": "Write text",
+          "description": "Write a String to a file.",
+          "code": "import java.nio.file.*;\nclass W{ public static void main(String[] a) throws Exception {\n  Files.writeString(Path.of(\"out.txt\"), \"Hello!\\n\"); }}"
+        },
+        {
+          "title": "List files",
+          "description": "Walk a directory tree.",
+          "code": "import java.nio.file.*;\nclass L{ public static void main(String[] a) throws Exception {\n  try (var s = Files.walk(Path.of(\".\"))) { s.forEach(System.out::println); } }}"
+        },
+        {
+          "title": "ZIP files",
+          "description": "Create a ZIP archive.",
+          "code": "import java.util.zip.*; import java.nio.file.*;\nclass Z{ public static void main(String[] a) throws Exception {\n  try (var zos = new ZipOutputStream(Files.newOutputStream(Path.of(\"out.zip\")))) {\n    var e = new ZipEntry(\"hello.txt\"); zos.putNextEntry(e);\n    zos.write(\"Hello!\".getBytes()); zos.closeEntry(); } }}"
+        },
+        {
+          "title": "CSV (simple)",
+          "description": "Read CSV by splitting lines.",
+          "code": "import java.nio.file.*;\nclass C{ public static void main(String[] a) throws Exception {\n  for (String line : Files.readAllLines(Path.of(\"data.csv\"))) {\n    String[] cols = line.split(\",\"); System.out.println(java.util.Arrays.toString(cols)); } }}"
+        }
+      ]
+    },
+    {
+      "group": "HTTP + APIs",
+      "tasks": [
+        {
+          "title": "GET JSON",
+          "description": "HttpClient in Java 11+.",
+          "code": "import java.net.http.*; import java.net.*;\nclass H{ public static void main(String[] a) throws Exception {\n  var c = HttpClient.newHttpClient();\n  var r = c.send(HttpRequest.newBuilder(new URI(\"https://httpbin.org/json\")).build(), HttpResponse.BodyHandlers.ofString());\n  System.out.println(r.body()); }}"
+        },
+        {
+          "title": "POST JSON",
+          "description": "Send JSON with HttpClient.",
+          "code": "import java.net.http.*; import java.net.*;\nclass P{ public static void main(String[] a) throws Exception {\n  var c = HttpClient.newHttpClient();\n  var req = HttpRequest.newBuilder(new URI(\"https://httpbin.org/post\"))\n    .header(\"content-type\", \"application/json\")\n    .POST(HttpRequest.BodyPublishers.ofString(\"{\\\"ok\\\":true}\"))\n    .build();\n  var r = c.send(req, HttpResponse.BodyHandlers.ofString());\n  System.out.println(r.statusCode()); }}"
+        }
+      ]
+    },
+    {
+      "group": "Env & Config",
+      "tasks": [
+        {
+          "title": "Read environment variables",
+          "description": "Use defaults when missing.",
+          "code": "class E{ public static void main(String[] a){\n  String port = System.getenv().getOrDefault(\"PORT\", \"8000\"); System.out.println(port); }}"
+        }
+      ]
+    },
+    {
+      "group": "Logging",
+      "tasks": [
+        {
+          "title": "java.util.logging",
+          "description": "Basic logger.",
+          "code": "import java.util.logging.*;\nclass L{ private static final Logger log = Logger.getLogger(\"app\");\n  public static void main(String[] a){ log.info(\"Starting\"); log.warning(\"Careful\"); log.severe(\"Error\"); }}"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "To-Do CLI",
+      "summary": "Add/list tasks saved to a JSON file.",
+      "description": "Uses a simple JSON string (no external libs).",
+      "steps": [
+        {
+          "title": "Class",
+          "code": "import java.nio.file.*;\npublic class Todo {\n  static Path P = Path.of(\"todo.txt\");\n  public static void main(String[] a) throws Exception {\n    if (a.length>0 && a[0].equals(\"add\") && a.length>1) {\n      Files.writeString(P, a[1]+\"\\n\", StandardOpenOption.CREATE, StandardOpenOption.APPEND);\n    } else {\n      if (Files.exists(P)) System.out.print(Files.readString(P));\n    }\n  }\n}"
+        }
+      ]
+    },
+    {
+      "title": "Web Fetcher",
+      "summary": "Download JSON to disk.",
+      "description": "HttpClient + NIO.",
+      "steps": [
+        {
+          "title": "Class",
+          "code": "import java.net.http.*; import java.net.*; import java.nio.file.*;\nclass Fetch{ public static void main(String[] a) throws Exception {\n  var c = HttpClient.newHttpClient();\n  var r = c.send(HttpRequest.newBuilder(new URI(\"https://httpbin.org/json\")).build(), HttpResponse.BodyHandlers.ofString());\n  Files.createDirectories(Path.of(\"out\"));\n  Files.writeString(Path.of(\"out/data.json\"), r.body());\n  System.out.println(\"saved to out/data.json\"); }}"
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Class",
+      "definition": "Blueprint for objects; holds fields and methods."
+    },
+    {
+      "term": "Interface",
+      "definition": "Abstract type that specifies methods without implementations."
+    },
+    {
+      "term": "Package",
+      "definition": "Namespace for organizing classes (e.g., java.util)."
+    },
+    {
+      "term": "Module",
+      "definition": "Group of packages (Java 9+)."
+    }
+  ],
+  "tips": [
+    {
+      "title": "Version",
+      "note": "Prefer LTS JDK (e.g., 17)."
+    },
+    {
+      "title": "Build",
+      "note": "Use Maven or Gradle to manage dependencies."
+    },
+    {
+      "title": "Strings",
+      "note": "Use String.format or text blocks (\"\"\"...\"\"\")."
+    }
   ],
   "stdlib": [
-    {"name": "java.lang", "description": "Core classes"},
-    {"name": "java.util", "description": "Collections and utilities"},
-    {"name": "java.nio", "description": "NIO buffers and channels"},
-    {"name": "java.net.http", "description": "HTTP client"}
+    {
+      "name": "java.lang",
+      "description": "Core classes"
+    },
+    {
+      "name": "java.util",
+      "description": "Collections and utilities"
+    },
+    {
+      "name": "java.nio",
+      "description": "NIO buffers and channels"
+    },
+    {
+      "name": "java.net.http",
+      "description": "HTTP client"
+    }
   ],
   "tools": [
-    {"name": "javac", "description": "Java compiler"},
-    {"name": "maven", "description": "Build tool"},
-    {"name": "gradle", "description": "Build tool"}
+    {
+      "name": "javac",
+      "description": "Java compiler"
+    },
+    {
+      "name": "maven",
+      "description": "Build tool"
+    },
+    {
+      "name": "gradle",
+      "description": "Build tool"
+    }
   ],
   "links": [
-    {"title": "Java Tutorials", "url": "https://docs.oracle.com/javase/tutorial/"},
-    {"title": "API Docs", "url": "https://docs.oracle.com/en/java/javase/"}
+    {
+      "title": "Java Tutorials",
+      "url": "https://docs.oracle.com/javase/tutorial/"
+    },
+    {
+      "title": "API Docs",
+      "url": "https://docs.oracle.com/en/java/javase/"
+    }
   ],
   "builtins": [
-    {"name": "String", "kind": "class", "signature": "java.lang.String", "description": "UTF-16 strings."},
-    {"name": "System", "kind": "class", "signature": "java.lang.System", "description": "System facilities (in/out/err, properties)."},
-    {"name": "System.out.println", "kind": "method", "signature": "System.out.println(String x)", "description": "Print a line to standard output."},
-    {"name": "Math", "kind": "class", "signature": "java.lang.Math", "description": "Math utilities."},
-    {"name": "List", "kind": "interface", "signature": "java.util.List", "description": "List collection interface."},
-    {"name": "Map", "kind": "interface", "signature": "java.util.Map", "description": "Key-value maps."},
-    {"name": "java.util", "kind": "module", "signature": "package java.util", "description": "Collections and utilities."},
-    {"name": "java.nio.file", "kind": "module", "signature": "package java.nio.file", "description": "File I/O (NIO)."},
-    {"name": "java.net.http", "kind": "module", "signature": "package java.net.http", "description": "HTTP client (Java 11+)."}
-  ]
+    {
+      "name": "String",
+      "kind": "class",
+      "signature": "java.lang.String",
+      "description": "UTF-16 strings."
+    },
+    {
+      "name": "System",
+      "kind": "class",
+      "signature": "java.lang.System",
+      "description": "System facilities (in/out/err, properties)."
+    },
+    {
+      "name": "System.out.println",
+      "kind": "method",
+      "signature": "System.out.println(String x)",
+      "description": "Print a line to standard output."
+    },
+    {
+      "name": "Math",
+      "kind": "class",
+      "signature": "java.lang.Math",
+      "description": "Math utilities."
+    },
+    {
+      "name": "List",
+      "kind": "interface",
+      "signature": "java.util.List",
+      "description": "List collection interface."
+    },
+    {
+      "name": "Map",
+      "kind": "interface",
+      "signature": "java.util.Map",
+      "description": "Key-value maps."
+    },
+    {
+      "name": "java.util",
+      "kind": "module",
+      "signature": "package java.util",
+      "description": "Collections and utilities."
+    },
+    {
+      "name": "java.nio.file",
+      "kind": "module",
+      "signature": "package java.nio.file",
+      "description": "File I/O (NIO)."
+    },
+    {
+      "name": "java.net.http",
+      "kind": "module",
+      "signature": "package java.net.http",
+      "description": "HTTP client (Java 11+)."
+    }
+  ],
+  "concepts": []
 }

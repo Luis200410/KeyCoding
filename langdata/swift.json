@@ -3,34 +3,165 @@
   "slug": "swift",
   "version": "5.x",
   "quick_start": [
-    {"title": "Install Swift", "description": "Install Xcode (macOS) or Swift toolchains.", "code": "swift --version"},
-    {"title": "Hello, World", "description": "Run a script.", "code": "print(\"Hello, world!\")"}
+    {
+      "title": "Install Swift",
+      "description": "Install Xcode (macOS) or Swift toolchains.",
+      "code": "swift --version"
+    },
+    {
+      "title": "Hello, World",
+      "description": "Run a script.",
+      "code": "print(\"Hello, world!\")"
+    }
   ],
   "common_tasks": [
-    {"group": "I/O", "tasks": [
-      {"title": "Read a file", "description": "Read text from file.", "code": "import Foundation\nlet s = try String(contentsOfFile: \"README.md\", encoding: .utf8)\nprint(String(s.prefix(200)))"}
-    ]},
-    {"group": "HTTP + APIs", "tasks": [
-      {"title": "GET JSON", "description": "URLSession async/await.", "code": "import Foundation\n@main struct App{ static func main() async {\n  let (data, _) = try! await URLSession.shared.data(from: URL(string: \"https://httpbin.org/json\")!)\n  print(String(data: data, encoding: .utf8)!) } }"}
-    ]}
+    {
+      "group": "Files & Data",
+      "tasks": [
+        {
+          "title": "Read a file",
+          "description": "Read text from file.",
+          "code": "import Foundation\nlet s = try String(contentsOfFile: \"README.md\", encoding: .utf8)\nprint(String(s.prefix(200)))"
+        },
+        {
+          "title": "Write JSON",
+          "description": "Write a JSON string.",
+          "code": "import Foundation\ntry \"{\\\"ok\\\":true}\".write(to: URL(fileURLWithPath: \"data.json\"), atomically: true, encoding: .utf8)"
+        }
+      ]
+    },
+    {
+      "group": "HTTP + APIs",
+      "tasks": [
+        {
+          "title": "GET JSON",
+          "description": "URLSession async/await.",
+          "code": "import Foundation\n@main struct App{ static func main() async {\n  let (data, _) = try! await URLSession.shared.data(from: URL(string: \"https://httpbin.org/json\")!)\n  print(String(data: data, encoding: .utf8)!) } }"
+        }
+      ]
+    },
+    {
+      "group": "Env & Config",
+      "tasks": [
+        {
+          "title": "Environment variables",
+          "description": "Use defaults.",
+          "code": "import Foundation\nlet port = ProcessInfo.processInfo.environment[\"PORT\"] ?? \"8000\"\nprint(port)"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "To-Do CLI",
+      "summary": "Append/list tasks to todo.txt.",
+      "description": "Simple file-based CLI.",
+      "steps": [
+        {
+          "title": "main.swift",
+          "code": "import Foundation\nlet args = CommandLine.arguments.dropFirst()\nlet path = \"todo.txt\"\nif let cmd = args.first, cmd == \"add\", args.count>1 { try! (args[args.startIndex+1] + \"\\n\").write(toFile: path, atomically: true, encoding: .utf8) }\nelse if let cmd = args.first, cmd == \"list\" { if FileManager.default.fileExists(atPath: path) { print(try! String(contentsOfFile: path)) } }\nelse { print(\"usage: add <text> | list\") }"
+        }
+      ]
+    },
+    {
+      "title": "Web Fetcher",
+      "summary": "Download JSON to disk.",
+      "description": "URLSession + write file.",
+      "steps": [
+        {
+          "title": "main.swift",
+          "code": "import Foundation\n@main struct App{ static func main() async {\n  let (data, _) = try! await URLSession.shared.data(from: URL(string: \"https://httpbin.org/json\")!)\n  try! FileManager.default.createDirectory(atPath: \"out\", withIntermediateDirectories: true)\n  FileManager.default.createFile(atPath: \"out/data.json\", contents: data)\n  print(\"saved to out/data.json\") } }"
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Struct",
+      "definition": "Value type with copy semantics."
+    },
+    {
+      "term": "Optional",
+      "definition": "Type that may be nil, e.g., String?"
+    }
+  ],
+  "tips": [
+    {
+      "title": "Optionals",
+      "note": "Use if let / guard let to unwrap safely."
+    },
+    {
+      "title": "Concurrency",
+      "note": "Use async/await and Task for concurrency in Swift 5.5+."
+    }
   ],
   "stdlib": [
-    {"name": "Foundation", "description": "Core utilities"}
+    {
+      "name": "Foundation",
+      "description": "Core utilities"
+    }
   ],
   "tools": [
-    {"name": "swiftc", "description": "Swift compiler"}
+    {
+      "name": "swiftc",
+      "description": "Swift compiler"
+    }
   ],
   "links": [
-    {"title": "Swift.org Docs", "url": "https://www.swift.org/documentation/"}
+    {
+      "title": "Swift.org Docs",
+      "url": "https://www.swift.org/documentation/"
+    }
   ],
   "builtins": [
-    {"name": "print", "kind": "function", "signature": "print(_:separator:terminator:)", "description": "Print values."},
-    {"name": "Array", "kind": "type", "signature": "[T]", "description": "Ordered collection."},
-    {"name": "Dictionary", "kind": "type", "signature": "[Key:Value]", "description": "Key-value map."},
-    {"name": "String.uppercased()", "kind": "method", "signature": "func uppercased() -> String", "description": "Uppercase a string."},
-    {"name": "Array.map", "kind": "method", "signature": "func map<T>(_ transform: (Element) -> T) -> [T]", "description": "Transform array elements."},
-    {"name": "Foundation", "kind": "module", "signature": "import Foundation", "description": "Core utilities (URL, Date, JSON)."},
-    {"name": "URLSession", "kind": "class", "signature": "class URLSession", "description": "Networking session."},
-    {"name": "Combine", "kind": "library", "signature": "import Combine", "description": "Reactive programming framework."}
-  ]
+    {
+      "name": "print",
+      "kind": "function",
+      "signature": "print(_:separator:terminator:)",
+      "description": "Print values."
+    },
+    {
+      "name": "Array",
+      "kind": "type",
+      "signature": "[T]",
+      "description": "Ordered collection."
+    },
+    {
+      "name": "Dictionary",
+      "kind": "type",
+      "signature": "[Key:Value]",
+      "description": "Key-value map."
+    },
+    {
+      "name": "String.uppercased()",
+      "kind": "method",
+      "signature": "func uppercased() -> String",
+      "description": "Uppercase a string."
+    },
+    {
+      "name": "Array.map",
+      "kind": "method",
+      "signature": "func map<T>(_ transform: (Element) -> T) -> [T]",
+      "description": "Transform array elements."
+    },
+    {
+      "name": "Foundation",
+      "kind": "module",
+      "signature": "import Foundation",
+      "description": "Core utilities (URL, Date, JSON)."
+    },
+    {
+      "name": "URLSession",
+      "kind": "class",
+      "signature": "class URLSession",
+      "description": "Networking session."
+    },
+    {
+      "name": "Combine",
+      "kind": "library",
+      "signature": "import Combine",
+      "description": "Reactive programming framework."
+    }
+  ],
+  "concepts": []
 }

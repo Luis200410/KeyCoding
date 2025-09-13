@@ -3,25 +3,114 @@
   "slug": "matlab",
   "version": "R2024",
   "quick_start": [
-    {"title": "Run", "description": "Start interactive session or run .m file.", "code": "% hello.m\ndisp('Hello, world!')"}
+    {
+      "title": "Run",
+      "description": "Start interactive session or run .m file.",
+      "code": "% hello.m\ndisp('Hello, world!')"
+    }
   ],
   "common_tasks": [
-    {"group": "I/O", "tasks": [
-      {"title": "Read CSV", "description": "readtable", "code": "T = readtable('data.csv'); head(T)"}
-    ]}
+    {
+      "group": "Files & Data",
+      "tasks": [
+        {
+          "title": "Read CSV",
+          "description": "readtable",
+          "code": "T = readtable('data.csv'); head(T)"
+        },
+        {
+          "title": "Write JSON",
+          "description": "jsonencode",
+          "code": "s = struct('ok', true, 'items', { [1 2 3] }); fid = fopen('data.json','w'); fwrite(fid, jsonencode(s), 'char'); fclose(fid);"
+        }
+      ]
+    },
+    {
+      "group": "HTTP + APIs",
+      "tasks": [
+        {
+          "title": "GET JSON",
+          "description": "webread",
+          "code": "s = webread('https://httpbin.org/json'); disp(s)"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "CSV Summarizer",
+      "summary": "Count rows and average age.",
+      "description": "Summarize a CSV table.",
+      "steps": [
+        {
+          "title": "script",
+          "code": "T = readtable('data.csv'); disp(height(T)); if any(strcmp('age', T.Properties.VariableNames)), disp(mean(T.age,'omitnan')); end"
+        }
+      ]
+    },
+    {
+      "title": "Web Fetcher",
+      "summary": "Download JSON to disk.",
+      "description": "webread + file write.",
+      "steps": [
+        {
+          "title": "script",
+          "code": "s = webread('https://httpbin.org/json'); if ~exist('out','dir'), mkdir out, end; fid=fopen('out/data.json','w'); fwrite(fid, jsonencode(s),'char'); fclose(fid); disp('saved to out/data.json')"
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Matrix",
+      "definition": "2‑D numeric array (MATLAB is matrix-oriented)."
+    },
+    {
+      "term": "Table",
+      "definition": "Container for column‑oriented variables of different types."
+    }
+  ],
+  "tips": [
+    {
+      "title": "Scripts vs functions",
+      "note": "Use functions for reusable code; scripts for quick tasks."
+    },
+    {
+      "title": "Live scripts",
+      "note": "Use .mlx for interactive notebooks with output and figures."
+    }
   ],
   "stdlib": [
-    {"name": "matlab", "description": "Base functions"}
+    {
+      "name": "matlab",
+      "description": "Base functions"
+    }
   ],
   "tools": [
-    {"name": "matlab", "description": "MATLAB environment"}
+    {
+      "name": "matlab",
+      "description": "MATLAB environment"
+    }
   ],
   "links": [
-    {"title": "MATLAB Docs", "url": "https://www.mathworks.com/help/matlab/"}
+    {
+      "title": "MATLAB Docs",
+      "url": "https://www.mathworks.com/help/matlab/"
+    }
   ],
   "builtins": [
-    {"name": "disp", "kind": "function", "signature": "disp(X)", "description": "Display value."},
-    {"name": "sum", "kind": "function", "signature": "sum(X)", "description": "Sum elements."}
-  ]
+    {
+      "name": "disp",
+      "kind": "function",
+      "signature": "disp(X)",
+      "description": "Display value."
+    },
+    {
+      "name": "sum",
+      "kind": "function",
+      "signature": "sum(X)",
+      "description": "Sum elements."
+    }
+  ],
+  "concepts": []
 }
-

@@ -3,38 +3,183 @@
   "slug": "ruby",
   "version": "3.x",
   "quick_start": [
-    {"title": "Install Ruby", "description": "Use rbenv/rvm or system package.", "code": "ruby -v"},
-    {"title": "Hello, World", "description": "Run a simple script.", "code": "puts 'Hello, world!'"}
+    {
+      "title": "Install Ruby",
+      "description": "Use rbenv/rvm or system package.",
+      "code": "ruby -v"
+    },
+    {
+      "title": "Hello, World",
+      "description": "Run a simple script.",
+      "code": "puts 'Hello, world!'"
+    }
   ],
   "common_tasks": [
-    {"group": "I/O", "tasks": [
-      {"title": "Read a file", "description": "Read file contents.", "code": "s = File.read('README.md'); puts s[0,200]"},
-      {"title": "Write JSON", "description": "Write JSON file.", "code": "require 'json'\nFile.write('data.json', JSON.pretty_generate({ ok: true, items: [1,2,3] }))"}
-    ]},
-    {"group": "HTTP + APIs", "tasks": [
-      {"title": "GET JSON", "description": "Use Net::HTTP.", "code": "require 'net/http'; require 'json'\nuri = URI('https://httpbin.org/json')\nres = Net::HTTP.get(uri)\nputs JSON.parse(res)"}
-    ]}
+    {
+      "group": "Files & Data",
+      "tasks": [
+        {
+          "title": "Read a file",
+          "description": "Read file contents.",
+          "code": "s = File.read('README.md', encoding: 'UTF-8'); puts s[0,200]"
+        },
+        {
+          "title": "Write JSON",
+          "description": "Write JSON file.",
+          "code": "require 'json'\nFile.write('data.json', JSON.pretty_generate({ ok: true, items: [1,2,3] }))"
+        },
+        {
+          "title": "Read CSV",
+          "description": "Use CSV stdlib.",
+          "code": "require 'csv'\nCSV.foreach('data.csv') { |row| p row }"
+        }
+      ]
+    },
+    {
+      "group": "HTTP + APIs",
+      "tasks": [
+        {
+          "title": "GET JSON",
+          "description": "Use Net::HTTP.",
+          "code": "require 'net/http'\nuri = URI('https://httpbin.org/json')\nres = Net::HTTP.get(uri)\nputs res"
+        },
+        {
+          "title": "POST JSON",
+          "description": "Send JSON with Net::HTTP.",
+          "code": "require 'net/http'\nrequire 'json'\nuri = URI('https://httpbin.org/post')\nreq = Net::HTTP::Post.new(uri, 'Content-Type' => 'application/json')\nreq.body = JSON.dump({ ok: true })\nres = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) { |http| http.request(req) }\nputs res.code"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "To-Do CLI",
+      "summary": "Add/list tasks saved to a JSON file.",
+      "description": "Uses JSON stdlib for storage.",
+      "steps": [
+        {
+          "title": "Script",
+          "code": "# todo.rb\nrequire 'json'\npath = 'todo.json'\ncmd = ARGV[0] || 'list'\ntext = ARGV[1]\nitems = File.exist?(path) ? JSON.parse(File.read(path)) : []\nif cmd == 'add' && text\n  items << { 'text' => text, 'done' => false }\n  File.write(path, JSON.pretty_generate(items))\nelsif cmd == 'list'\n  items.each_with_index { |it,i| puts \"#{i+1}. #{it['done']?'[x]':'[ ]'} #{it['text']}\" }\nend"
+        }
+      ]
+    },
+    {
+      "title": "Web Fetcher",
+      "summary": "Download JSON to disk.",
+      "description": "Net::HTTP + File.write.",
+      "steps": [
+        {
+          "title": "Script",
+          "code": "# fetch.rb\nrequire 'net/http'\nuri = URI('https://httpbin.org/json')\nbody = Net::HTTP.get(uri)\ndir = 'out'; Dir.mkdir(dir) unless Dir.exist?(dir)\nFile.write(File.join(dir, 'data.json'), body)\nputs 'saved to out/data.json'"
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Symbol",
+      "definition": "Immutable interned string-like value (e.g., :name)."
+    },
+    {
+      "term": "Block",
+      "definition": "Anonymous chunk of code passed to methods."
+    },
+    {
+      "term": "Gem",
+      "definition": "A packaged Ruby library (managed by RubyGems)."
+    }
+  ],
+  "tips": [
+    {
+      "title": "Version",
+      "note": "Use a version manager (rbenv/rvm) to install Ruby."
+    },
+    {
+      "title": "JSON",
+      "note": "Prefer JSON.pretty_generate for readable output."
+    },
+    {
+      "title": "HTTP",
+      "note": "Net::HTTP is built-in; gems like Faraday/HTTParty add ergonomics."
+    }
   ],
   "stdlib": [
-    {"name": "json", "description": "JSON parser"},
-    {"name": "net/http", "description": "HTTP client"},
-    {"name": "fileutils", "description": "File utilities"}
+    {
+      "name": "json",
+      "description": "JSON parser"
+    },
+    {
+      "name": "net/http",
+      "description": "HTTP client"
+    },
+    {
+      "name": "fileutils",
+      "description": "File utilities"
+    }
   ],
   "tools": [
-    {"name": "gem", "description": "Package manager"},
-    {"name": "bundler", "description": "Dependency manager"}
+    {
+      "name": "gem",
+      "description": "Package manager"
+    },
+    {
+      "name": "bundler",
+      "description": "Dependency manager"
+    }
   ],
   "links": [
-    {"title": "Ruby Docs", "url": "https://ruby-doc.org/"},
-    {"title": "RubyGems", "url": "https://rubygems.org/"}
+    {
+      "title": "Ruby Docs",
+      "url": "https://ruby-doc.org/"
+    },
+    {
+      "title": "RubyGems",
+      "url": "https://rubygems.org/"
+    }
   ],
   "builtins": [
-    {"name": "puts", "kind": "method", "signature": "puts(obj)", "description": "Print with newline."},
-    {"name": "print", "kind": "method", "signature": "print(obj)", "description": "Print without newline."},
-    {"name": "Array", "kind": "class", "signature": "Array", "description": "Dynamic arrays."},
-    {"name": "Hash", "kind": "class", "signature": "Hash", "description": "Key-value map."},
-    {"name": "String#upcase", "kind": "method", "signature": "String#upcase", "description": "Uppercase a string."},
-    {"name": "Array#map", "kind": "method", "signature": "Array#map { |e| ... }", "description": "Transform array elements."},
-    {"name": "JSON", "kind": "module", "signature": "require 'json'", "description": "JSON parse/generate."}
-  ]
+    {
+      "name": "puts",
+      "kind": "method",
+      "signature": "puts(obj)",
+      "description": "Print with newline."
+    },
+    {
+      "name": "print",
+      "kind": "method",
+      "signature": "print(obj)",
+      "description": "Print without newline."
+    },
+    {
+      "name": "Array",
+      "kind": "class",
+      "signature": "Array",
+      "description": "Dynamic arrays."
+    },
+    {
+      "name": "Hash",
+      "kind": "class",
+      "signature": "Hash",
+      "description": "Key-value map."
+    },
+    {
+      "name": "String#upcase",
+      "kind": "method",
+      "signature": "String#upcase",
+      "description": "Uppercase a string."
+    },
+    {
+      "name": "Array#map",
+      "kind": "method",
+      "signature": "Array#map { |e| ... }",
+      "description": "Transform array elements."
+    },
+    {
+      "name": "JSON",
+      "kind": "module",
+      "signature": "require 'json'",
+      "description": "JSON parse/generate."
+    }
+  ],
+  "concepts": []
 }

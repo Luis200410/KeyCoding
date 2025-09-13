@@ -3,25 +3,98 @@
   "slug": "scheme",
   "version": "R7RS",
   "quick_start": [
-    {"title": "Install a Scheme", "description": "Use Guile, Racket, or Chicken.", "code": "guile --version"},
-    {"title": "Hello, World", "description": "Run code.", "code": "(display \"Hello, world!\") (newline)"}
+    {
+      "title": "Install a Scheme",
+      "description": "Use Guile, Racket, or Chicken.",
+      "code": "guile --version"
+    },
+    {
+      "title": "Hello, World",
+      "description": "Run code.",
+      "code": "(display \"Hello, world!\") (newline)"
+    }
   ],
   "common_tasks": [
-    {"group": "I/O", "tasks": [
-      {"title": "Read file", "description": "call-with-input-file", "code": "(call-with-input-file \"README.md\" (lambda (p) (display (read-line p))))"}
-    ]}
+    {
+      "group": "Files & Data",
+      "tasks": [
+        {
+          "title": "Read file",
+          "description": "call-with-input-file",
+          "code": "(call-with-input-file \"README.md\" (lambda (p) (display (read-line p))))"
+        },
+        {
+          "title": "Write JSON (string)",
+          "description": "write simple string",
+          "code": "(call-with-output-file \"data.json\" (lambda (p) (display \"{\\\"ok\\\":true}\" p)))"
+        }
+      ]
+    },
+    {
+      "group": "HTTP + APIs",
+      "tasks": [
+        {
+          "title": "GET (curl)",
+          "description": "shell out",
+          "code": "(system \"curl -s https://httpbin.org/json > out.json\")"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "To-Do",
+      "summary": "Append/list tasks in a text file.",
+      "description": "R7RS portable approach.",
+      "steps": [
+        {
+          "title": "Script",
+          "code": "(define path \"todo.txt\") (define (main args) (let ((cmd (if (null? args) \"list\" (car args)))) (cond ((string=? cmd \"add\") (let ((text (cadr args))) (call-with-output-file path (lambda (p) (display text p) (newline p)) 'append))) ((string=? cmd \"list\") (when (file-exists? path) (call-with-input-file path (lambda (p) (let loop() (let ((l (read-line p 'any))) (unless (eof-object? l) (display l) (newline) (loop)))))))) (else (display \"usage: add <text> | list\") (newline)))))"
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Procedure",
+      "definition": "Function (first-class)."
+    },
+    {
+      "term": "List",
+      "definition": "Linked list built from pairs (cons)."
+    }
+  ],
+  "tips": [
+    {
+      "title": "REPL",
+      "note": "Use the Scheme REPL for quick experiments."
+    }
   ],
   "stdlib": [
-    {"name": "(scheme base)", "description": "R7RS base"}
+    {
+      "name": "(scheme base)",
+      "description": "R7RS base"
+    }
   ],
   "tools": [
-    {"name": "guile", "description": "GNU Guile"}
+    {
+      "name": "guile",
+      "description": "GNU Guile"
+    }
   ],
   "links": [
-    {"title": "R7RS", "url": "https://small.r7rs.org/"}
+    {
+      "title": "R7RS",
+      "url": "https://small.r7rs.org/"
+    }
   ],
   "builtins": [
-    {"name": "+", "kind": "procedure", "signature": "(+ x y ...)", "description": "Addition."}
-  ]
+    {
+      "name": "+",
+      "kind": "procedure",
+      "signature": "(+ x y ...)",
+      "description": "Addition."
+    }
+  ],
+  "concepts": []
 }
-

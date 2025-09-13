@@ -3,35 +3,172 @@
   "slug": "kotlin",
   "version": "1.9+",
   "quick_start": [
-    {"title": "Install Kotlin", "description": "Install Kotlin/Native or use the JVM via SDKMAN.", "code": "kotlinc -version"},
-    {"title": "Hello, World", "description": "Compile and run.", "code": "fun main(){ println(\"Hello, world!\") }\n// Save as Hello.kt then:\n// kotlinc Hello.kt -include-runtime -d hello.jar\n// java -jar hello.jar"}
+    {
+      "title": "Install Kotlin",
+      "description": "Install Kotlin/Native or use the JVM via SDKMAN.",
+      "code": "kotlinc -version"
+    },
+    {
+      "title": "Hello, World",
+      "description": "Compile and run.",
+      "code": "fun main(){ println(\"Hello, world!\") }\n// Save as Hello.kt then:\n// kotlinc Hello.kt -include-runtime -d hello.jar\n// java -jar hello.jar"
+    }
   ],
   "common_tasks": [
-    {"group": "I/O", "tasks": [
-      {"title": "Read a file", "description": "Read text.", "code": "import java.io.File\nfun main(){ val s = File(\"README.md\").readText(); println(s.take(200)) }"}
-    ]},
-    {"group": "HTTP + APIs", "tasks": [
-      {"title": "GET JSON (Java 11)", "description": "Use java.net.http.", "code": "import java.net.http.*; import java.net.URI\nfun main(){ val c = HttpClient.newHttpClient(); val r = c.send(HttpRequest.newBuilder(URI(\"https://httpbin.org/json\")).build(), HttpResponse.BodyHandlers.ofString()); println(r.body()); }"}
-    ]}
+    {
+      "group": "Files & Data",
+      "tasks": [
+        {
+          "title": "Read a file",
+          "description": "Read text.",
+          "code": "import java.io.File\nfun main(){ val s = File(\"README.md\").readText(); println(s.take(200)) }"
+        },
+        {
+          "title": "Write JSON",
+          "description": "Write JSON string (no deps).",
+          "code": "import java.io.File\nfun main(){ val json = \"{\\\"ok\\\":true,\\\"items\\\":[1,2,3]}\"; File(\"data.json\").writeText(json) }"
+        }
+      ]
+    },
+    {
+      "group": "HTTP + APIs",
+      "tasks": [
+        {
+          "title": "GET JSON (Java 11)",
+          "description": "Use java.net.http.",
+          "code": "import java.net.http.*; import java.net.URI\nfun main(){ val c = HttpClient.newHttpClient(); val r = c.send(HttpRequest.newBuilder(URI(\"https://httpbin.org/json\")).build(), HttpResponse.BodyHandlers.ofString()); println(r.body()); }"
+        },
+        {
+          "title": "POST JSON",
+          "description": "Send JSON with HttpClient.",
+          "code": "import java.net.http.*; import java.net.URI\nfun main(){ val c = HttpClient.newHttpClient(); val req = HttpRequest.newBuilder(URI(\"https://httpbin.org/post\"))\n  .header(\"content-type\", \"application/json\").POST(HttpRequest.BodyPublishers.ofString(\"{\\\"ok\\\":true}\")).build();\n  val r = c.send(req, HttpResponse.BodyHandlers.ofString()); println(r.statusCode()); }"
+        }
+      ]
+    },
+    {
+      "group": "Env & Config",
+      "tasks": [
+        {
+          "title": "Environment variables",
+          "description": "Read with default.",
+          "code": "fun main(){ val port = System.getenv(\"PORT\") ?: \"8000\"; println(port) }"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "To-Do CLI",
+      "summary": "Add/list tasks to a text file.",
+      "description": "Stores one task per line in todo.txt.",
+      "steps": [
+        {
+          "title": "Main.kt",
+          "code": "import java.io.File\nfun main(args: Array<String>){ val path=File(\"todo.txt\"); when(args.firstOrNull()){ \"add\" -> { val text=args.getOrNull(1)?:return; path.appendText(text+\n\n); } \"list\" -> { if (path.exists()) print(path.readText()) } else -> println(\"usage: add <text> | list\") } }"
+        }
+      ]
+    },
+    {
+      "title": "Web Fetcher",
+      "summary": "Download JSON to disk.",
+      "description": "HttpClient + write file.",
+      "steps": [
+        {
+          "title": "Main.kt",
+          "code": "import java.net.http.*; import java.net.URI; import java.nio.file.*\nfun main(){ val c=HttpClient.newHttpClient(); val r=c.send(HttpRequest.newBuilder(URI(\"https://httpbin.org/json\")).build(), HttpResponse.BodyHandlers.ofString()); Files.createDirectories(Path.of(\"out\")); Files.writeString(Path.of(\"out/data.json\"), r.body()); println(\"saved to out/data.json\"); }"
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Data class",
+      "definition": "Class for holding data; auto-generates equals/hashCode/toString."
+    },
+    {
+      "term": "Coroutine",
+      "definition": "Lightweight concurrency with suspend functions."
+    }
+  ],
+  "tips": [
+    {
+      "title": "Null safety",
+      "note": "Prefer non-null types; handle nullable with ?. and ?: operators."
+    },
+    {
+      "title": "JVM interop",
+      "note": "You can reuse Java libraries directly from Kotlin."
+    }
   ],
   "stdlib": [
-    {"name": "kotlin.collections", "description": "Collections"},
-    {"name": "kotlin.io", "description": "I/O helpers"}
+    {
+      "name": "kotlin.collections",
+      "description": "Collections"
+    },
+    {
+      "name": "kotlin.io",
+      "description": "I/O helpers"
+    }
   ],
   "tools": [
-    {"name": "kotlinc", "description": "Kotlin compiler"},
-    {"name": "gradle", "description": "Build tool"}
+    {
+      "name": "kotlinc",
+      "description": "Kotlin compiler"
+    },
+    {
+      "name": "gradle",
+      "description": "Build tool"
+    }
   ],
   "links": [
-    {"title": "Kotlin Docs", "url": "https://kotlinlang.org/docs/home.html"}
+    {
+      "title": "Kotlin Docs",
+      "url": "https://kotlinlang.org/docs/home.html"
+    }
   ],
   "builtins": [
-    {"name": "println", "kind": "function", "signature": "println(any)", "description": "Print line."},
-    {"name": "listOf", "kind": "function", "signature": "listOf(elements)", "description": "Immutable list."},
-    {"name": "mutableListOf", "kind": "function", "signature": "mutableListOf(elements)", "description": "Mutable list."},
-    {"name": "String.uppercase()", "kind": "method", "signature": "fun String.uppercase(): String", "description": "Uppercase a string."},
-    {"name": "List.map", "kind": "method", "signature": "fun <T, R> List<T>.map(transform: (T) -> R): List<R>", "description": "Transform list elements."},
-    {"name": "kotlin.collections", "kind": "module", "signature": "package kotlin.collections", "description": "Collections utilities."},
-    {"name": "kotlinx.coroutines", "kind": "library", "signature": "org.jetbrains.kotlinx:kotlinx-coroutines-core", "description": "Coroutines library."}
-  ]
+    {
+      "name": "println",
+      "kind": "function",
+      "signature": "println(any)",
+      "description": "Print line."
+    },
+    {
+      "name": "listOf",
+      "kind": "function",
+      "signature": "listOf(elements)",
+      "description": "Immutable list."
+    },
+    {
+      "name": "mutableListOf",
+      "kind": "function",
+      "signature": "mutableListOf(elements)",
+      "description": "Mutable list."
+    },
+    {
+      "name": "String.uppercase()",
+      "kind": "method",
+      "signature": "fun String.uppercase(): String",
+      "description": "Uppercase a string."
+    },
+    {
+      "name": "List.map",
+      "kind": "method",
+      "signature": "fun <T, R> List<T>.map(transform: (T) -> R): List<R>",
+      "description": "Transform list elements."
+    },
+    {
+      "name": "kotlin.collections",
+      "kind": "module",
+      "signature": "package kotlin.collections",
+      "description": "Collections utilities."
+    },
+    {
+      "name": "kotlinx.coroutines",
+      "kind": "library",
+      "signature": "org.jetbrains.kotlinx:kotlinx-coroutines-core",
+      "description": "Coroutines library."
+    }
+  ],
+  "concepts": []
 }

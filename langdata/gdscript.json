@@ -3,24 +3,88 @@
   "slug": "gdscript",
   "version": "4.x",
   "quick_start": [
-    {"title": "Godot", "description": "Create a script on a Node.", "code": "func _ready():\n    print(\"Hello, world!\")"}
+    {
+      "title": "Godot",
+      "description": "Create a script on a Node.",
+      "code": "func _ready():\n    print(\"Hello, world!\")"
+    }
   ],
   "common_tasks": [
-    {"group": "Signals", "tasks": [
-      {"title": "Connect signal", "description": "Connect to a button.", "code": "func _ready():\n    $Button.pressed.connect(_on_button_pressed)\n\nfunc _on_button_pressed():\n    print(\"Clicked\")"}
-    ]}
+    {
+      "group": "Signals",
+      "tasks": [
+        {
+          "title": "Connect signal",
+          "description": "Connect to a button.",
+          "code": "func _ready():\n    $Button.pressed.connect(_on_button_pressed)\n\nfunc _on_button_pressed():\n    print(\"Clicked\")"
+        }
+      ]
+    },
+    {
+      "group": "Files & Data",
+      "tasks": [
+        {
+          "title": "Write JSON",
+          "description": "FileAccess store_string",
+          "code": "func _ready():\n    var f = FileAccess.open('user://data.json', FileAccess.WRITE)\n    f.store_string('{\"ok\":true}')\n    f.close()"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "Button Counter",
+      "summary": "Increment a label when button is pressed.",
+      "description": "Minimal UI logic.",
+      "steps": [
+        {
+          "title": "Node script",
+          "code": "extends Node\nvar n := 0\nfunc _ready():\n  $Button.pressed.connect(_on_pressed)\nfunc _on_pressed():\n  n += 1\n  $Label.text = str(n)"
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Node",
+      "definition": "Basic building block in Godot scene tree."
+    },
+    {
+      "term": "Signal",
+      "definition": "Event mechanism for nodes to communicate."
+    }
+  ],
+  "tips": [
+    {
+      "title": "Paths",
+      "note": "Use user:// for writable files; res:// is read-only in exports."
+    }
   ],
   "stdlib": [
-    {"name": "Godot API", "description": "Nodes, Signals, Resources"}
+    {
+      "name": "Godot API",
+      "description": "Nodes, Signals, Resources"
+    }
   ],
   "tools": [
-    {"name": "Godot", "description": "Game engine"}
+    {
+      "name": "Godot",
+      "description": "Game engine"
+    }
   ],
   "links": [
-    {"title": "Godot Docs", "url": "https://docs.godotengine.org/"}
+    {
+      "title": "Godot Docs",
+      "url": "https://docs.godotengine.org/"
+    }
   ],
   "builtins": [
-    {"name": "print", "kind": "function", "signature": "print(x)", "description": "Print to console."}
-  ]
+    {
+      "name": "print",
+      "kind": "function",
+      "signature": "print(x)",
+      "description": "Print to console."
+    }
+  ],
+  "concepts": []
 }
-

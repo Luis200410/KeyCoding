@@ -3,24 +3,52 @@
   "slug": "abap",
   "version": "7.5+",
   "quick_start": [
-    {"title": "SAP system", "description": "ABAP runs inside SAP.", "code": "WRITE 'Hello, world!'."}
+    {
+      "title": "SAP system",
+      "description": "ABAP runs inside SAP.",
+      "code": "WRITE 'Hello, world!'."
+    }
   ],
   "common_tasks": [
-    {"group": "Console", "tasks": [
-      {"title": "WRITE", "description": "Output text.", "code": "WRITE 'Message'."}
-    ]}
+    {
+      "group": "Console",
+      "tasks": [
+        {
+          "title": "WRITE",
+          "description": "Output text.",
+          "code": "WRITE 'Message'."
+        }
+      ]
+    }
   ],
   "stdlib": [
-    {"name": "ABAP Core", "description": "Core statements"}
+    {
+      "name": "ABAP Core",
+      "description": "Core statements"
+    }
   ],
   "tools": [
-    {"name": "SAP GUI / ADT", "description": "Editors"}
+    {
+      "name": "SAP GUI / ADT",
+      "description": "Editors"
+    }
   ],
   "links": [
-    {"title": "ABAP Keyword Docu", "url": "https://help.sap.com/"}
+    {
+      "title": "ABAP Keyword Docu",
+      "url": "https://help.sap.com/"
+    }
   ],
   "builtins": [
-    {"name": "WRITE", "kind": "statement", "signature": "WRITE expr", "description": "Output to list."}
-  ]
+    {
+      "name": "WRITE",
+      "kind": "statement",
+      "signature": "WRITE expr",
+      "description": "Output to list."
+    }
+  ],
+  "concepts": [],
+  "projects": [],
+  "glossary": [],
+  "tips": []
 }
-

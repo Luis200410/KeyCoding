@@ -3,25 +3,98 @@
   "slug": "prolog",
   "version": "SWI 9+",
   "quick_start": [
-    {"title": "Install SWI-Prolog", "description": "Install from swi-prolog.org.", "code": "swipl --version"},
-    {"title": "Hello, World", "description": "Run a fact and query.", "code": "say :- writeln('Hello, world!').\n% swipl then ?- say."}
+    {
+      "title": "Install SWI-Prolog",
+      "description": "Install from swi-prolog.org.",
+      "code": "swipl --version"
+    },
+    {
+      "title": "Hello, World",
+      "description": "Run a fact and query.",
+      "code": "say :- writeln('Hello, world!').\n% swipl then ?- say."
+    }
   ],
   "common_tasks": [
-    {"group": "I/O", "tasks": [
-      {"title": "Read file", "description": "read_file_to_string", "code": ":- use_module(library(readutil)).\n:- initialization(main).\nmain :- read_file_to_string('README.md', S, []), sub_string(S,0,200,_,Out), writeln(Out)."}
-    ]}
+    {
+      "group": "Files & Data",
+      "tasks": [
+        {
+          "title": "Read file",
+          "description": "read_file_to_string",
+          "code": ":- use_module(library(readutil)).\n:- initialization(main).\nmain :- read_file_to_string('README.md', S, []), sub_string(S,0,200,_,Out), writeln(Out)."
+        },
+        {
+          "title": "Write JSON (string)",
+          "description": "open/write",
+          "code": ":- initialization(main).\nmain :- open('data.json', write, S), format(S, '{~w:true}', [ok]), close(S)."
+        }
+      ]
+    },
+    {
+      "group": "HTTP + APIs",
+      "tasks": [
+        {
+          "title": "GET (http_open)",
+          "description": "library(http/http_open)",
+          "code": ":- use_module(library(http/http_open)).\n:- initialization(main).\nmain :- http_open('https://httpbin.org/json', In, []), copy_stream_data(In, user_output), close(In)."
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "To-Do (facts)",
+      "summary": "Store tasks as dynamic facts.",
+      "description": "Simple in-memory DB.",
+      "steps": [
+        {
+          "title": "todo.pl",
+          "code": ":- dynamic task/2. add(Text) :- assertz(task(Text, false)). list :- forall(task(T,D), (format('~w ~w~n', [D, T])))."
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Predicate",
+      "definition": "Relation (true/false) defined by clauses."
+    },
+    {
+      "term": "Unification",
+      "definition": "Binding of variables to make terms equal."
+    }
+  ],
+  "tips": [
+    {
+      "title": "Queries",
+      "note": "Use ?- Goal. in the REPL; end with a period."
+    }
   ],
   "stdlib": [
-    {"name": "library(lists)", "description": "List utilities"}
+    {
+      "name": "library(lists)",
+      "description": "List utilities"
+    }
   ],
   "tools": [
-    {"name": "swipl", "description": "Prolog REPL"}
+    {
+      "name": "swipl",
+      "description": "Prolog REPL"
+    }
   ],
   "links": [
-    {"title": "SWI-Prolog Manual", "url": "https://www.swi-prolog.org/pldoc/"}
+    {
+      "title": "SWI-Prolog Manual",
+      "url": "https://www.swi-prolog.org/pldoc/"
+    }
   ],
   "builtins": [
-    {"name": "writeln/1", "kind": "predicate", "signature": "writeln(X)", "description": "Write term with newline."}
-  ]
+    {
+      "name": "writeln/1",
+      "kind": "predicate",
+      "signature": "writeln(X)",
+      "description": "Write term with newline."
+    }
+  ],
+  "concepts": []
 }
-

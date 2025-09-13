@@ -3,24 +3,83 @@
   "slug": "css",
   "version": "3",
   "quick_start": [
-    {"title": "Basic style", "description": "Link a stylesheet.", "code": "<link rel=\"stylesheet\" href=\"styles.css\">\n/* styles.css */\nbody { font-family: system-ui; }"}
+    {
+      "title": "Basic style",
+      "description": "Link a stylesheet.",
+      "code": "<link rel=\"stylesheet\" href=\"styles.css\">\n/* styles.css */\nbody { font-family: system-ui; }"
+    }
   ],
   "common_tasks": [
-    {"group": "Selectors", "tasks": [
-      {"title": "Class selector", "description": ".class", "code": ".btn { padding: .5rem 1rem; }"}
-    ]}
+    {
+      "group": "Selectors",
+      "tasks": [
+        {
+          "title": "Class selector",
+          "description": ".class",
+          "code": ".btn { padding: .5rem 1rem; }"
+        },
+        {
+          "title": "Responsive",
+          "description": "Media query",
+          "code": "@media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "Card UI",
+      "summary": "Card with hover + responsive grid.",
+      "description": "Demonstrates spacing and media queries.",
+      "steps": [
+        {
+          "title": "styles.css",
+          "code": ".grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; } .card { padding: 1rem; border: 1px solid #ddd; border-radius: .5rem; transition: box-shadow .2s } .card:hover { box-shadow: 0 6px 20px rgba(0,0,0,.1) } @media (max-width: 600px) { .grid { grid-template-columns: 1fr } }"
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Cascade",
+      "definition": "Order rules apply: specificity, origin, importance."
+    },
+    {
+      "term": "Box model",
+      "definition": "Content + padding + border + margin."
+    }
+  ],
+  "tips": [
+    {
+      "title": "Custom properties",
+      "note": "Use --var + var() to theme consistently."
+    }
   ],
   "stdlib": [
-    {"name": "Properties", "description": "color, margin, padding, ..."}
+    {
+      "name": "Properties",
+      "description": "color, margin, padding, ..."
+    }
   ],
   "tools": [
-    {"name": "Browser devtools", "description": "Inspect styles"}
+    {
+      "name": "Browser devtools",
+      "description": "Inspect styles"
+    }
   ],
   "links": [
-    {"title": "MDN CSS", "url": "https://developer.mozilla.org/docs/Web/CSS"}
+    {
+      "title": "MDN CSS",
+      "url": "https://developer.mozilla.org/docs/Web/CSS"
+    }
   ],
   "builtins": [
-    {"name": "var()", "kind": "function", "signature": "var(--name)", "description": "Use CSS custom property."}
-  ]
+    {
+      "name": "var()",
+      "kind": "function",
+      "signature": "var(--name)",
+      "description": "Use CSS custom property."
+    }
+  ],
+  "concepts": []
 }
-

@@ -3,24 +3,83 @@
   "slug": "vhdl",
   "version": "2008",
   "quick_start": [
-    {"title": "Toolchain", "description": "Use GHDL or vendor tools.", "code": "ghdl --version"}
+    {
+      "title": "Toolchain",
+      "description": "Use GHDL or vendor tools.",
+      "code": "ghdl --version"
+    }
   ],
   "common_tasks": [
-    {"group": "Hello", "tasks": [
-      {"title": "Entity", "description": "Minimal entity/arch.", "code": "entity hello is end;\narchitecture rtl of hello is begin end;"}
-    ]}
+    {
+      "group": "Design & Sim",
+      "tasks": [
+        {
+          "title": "Entity",
+          "description": "Minimal entity/arch.",
+          "code": "entity hello is end;\narchitecture rtl of hello is begin end;"
+        },
+        {
+          "title": "Testbench",
+          "description": "Simple simulation",
+          "code": "library ieee; use ieee.std_logic_1164.all;\nentity tb is end; architecture sim of tb is begin process begin report \"Hello\"; wait; end process; end;"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "LED Blinker (sim)",
+      "summary": "Counter toggles output.",
+      "description": "Demonstrates process and std_logic.",
+      "steps": [
+        {
+          "title": "Design",
+          "code": "library ieee; use ieee.std_logic_1164.all; use ieee.numeric_std.all; entity blinky is port(clk: in std_logic; led: out std_logic); end; architecture rtl of blinky is signal cnt: unsigned(23 downto 0); begin process(clk) begin if rising_edge(clk) then cnt <= cnt + 1; end if; end process; led <= cnt(cnt'high); end;"
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Entity/Architecture",
+      "definition": "Interface/implementation split of a design."
+    },
+    {
+      "term": "std_logic",
+      "definition": "Resolved 9‑value logic type from IEEE 1164."
+    }
+  ],
+  "tips": [
+    {
+      "title": "Analyze/Elab/Run",
+      "note": "With GHDL: -a (analyze), -e (elaborate), -r (run)."
+    }
   ],
   "stdlib": [
-    {"name": "ieee.std_logic_1164", "description": "Logic types"}
+    {
+      "name": "ieee.std_logic_1164",
+      "description": "Logic types"
+    }
   ],
   "tools": [
-    {"name": "ghdl", "description": "VHDL analyzer/simulator"}
+    {
+      "name": "ghdl",
+      "description": "VHDL analyzer/simulator"
+    }
   ],
   "links": [
-    {"title": "GHDL Docs", "url": "https://ghdl.github.io/ghdl/"}
+    {
+      "title": "GHDL Docs",
+      "url": "https://ghdl.github.io/ghdl/"
+    }
   ],
   "builtins": [
-    {"name": "std_logic", "kind": "type", "signature": "std_logic", "description": "Logic type."}
-  ]
+    {
+      "name": "std_logic",
+      "kind": "type",
+      "signature": "std_logic",
+      "description": "Logic type."
+    }
+  ],
+  "concepts": []
 }
-

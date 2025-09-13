@@ -2,118 +2,4174 @@
   "name": "Python",
   "slug": "python",
   "version": "3.x",
+  "concepts": [
+    {
+      "id": "repl",
+      "title": "REPL & Scripts",
+      "description": "Use the interactive prompt (REPL) to try small ideas, and save code in .py files to run as scripts.",
+      "code": ">>> 2 + 2\n4\n>>> print('Hello')\nHello\n\n# hello.py\nprint('Hello, world!')\n\n# Run in terminal\n# python3 hello.py"
+    },
+    {
+      "id": "variables",
+      "title": "Variables & Types",
+      "description": "Names point to values. Basic types: int, float, bool, str. Collections: list, tuple, dict, set.",
+      "code": "answer = 42            # int\npi = 3.14              # float\nok = True              # bool\nname = 'Ada'           # str\nnums = [1, 2, 3]       # list (mutable)\npoint = (3, 4)         # tuple (immutable)\nuser = {'name': name}  # dict (key-value)\ntags = {'py', 'code'}  # set (unique)\nprint(type(nums), user['name'])"
+    },
+    {
+      "id": "strings",
+      "title": "Strings & f-strings",
+      "description": "Use single, double, or triple quotes. f-strings format values directly in text.",
+      "code": "greet = 'Hello'\nname = 'Ada'\nmsg = f'{greet}, {name}! You have {3+2} messages.'\nprint(msg)\nmultiline = \"\"\"This is\na multi-line string.\"\"\"\nprint(multiline)"
+    },
+    {
+      "id": "operators",
+      "title": "Operators",
+      "description": "Arithmetic (+, -, *, /, //, %), comparisons (==, !=, <, >), and logical (and, or, not).",
+      "code": "a, b = 7, 3\nprint(a + b, a * b, a // b, a % b)\nprint(a == 7, b < a, not False, (a > 0) and (b > 0))"
+    },
+    {
+      "id": "control",
+      "title": "Control Flow",
+      "description": "Use if/elif/else for decisions and for/while loops for repetition.",
+      "code": "n = 5\nif n % 2 == 0:\n    print('even')\nelif n % 3 == 0:\n    print('divisible by 3')\nelse:\n    print('odd')\n\nfor i in range(3):\n    print('for', i)\n\ni = 0\nwhile i < 2:\n    print('while', i)\n    i += 1"
+    },
+    {
+      "id": "functions",
+      "title": "Functions",
+      "description": "Group steps into reusable functions. Use defaults and return values.",
+      "code": "def greet(name='world'):\n    return f'Hello, {name}!'\n\nprint(greet(), greet('Ada'))\n\n# Docstring helps users and tools\ndef area(w: float, h: float) -> float:\n    \"\"\"Compute rectangle area in square units.\"\"\"\n    return w * h\n\nprint(area(3, 4))"
+    },
+    {
+      "id": "collections",
+      "title": "Lists, Dicts, Sets, Tuples",
+      "description": "Common operations with Python collections.",
+      "code": "nums = [1, 2, 3]\nnums.append(4)\nfirst, *rest = nums\nuser = {'name': 'Ada', 'age': 36}\nuser['lang'] = 'Python'\ntags = {'py', 'dev'}\ntags.add('ai')\npoint = (3, 4)  # tuple\nprint(first, rest, user.get('lang'), 'py' in tags, point)"
+    },
+    {
+      "id": "comprehensions",
+      "title": "Comprehensions",
+      "description": "Build collections concisely from iterables.",
+      "code": "squares = [x*x for x in range(5)]\nodd_map = {x: 'odd' for x in range(6) if x % 2}\nletters = {c for c in 'banana'}\nprint(squares, odd_map, letters)"
+    },
+    {
+      "id": "exceptions",
+      "title": "Errors & Exceptions",
+      "description": "Handle failures gracefully with try/except and clean up with finally.",
+      "code": "try:\n    n = int('not-a-number')\nexcept ValueError as e:\n    print('Problem:', e)\nfinally:\n    print('Always runs')"
+    },
+    {
+      "id": "files",
+      "title": "Files & Paths",
+      "description": "Use pathlib for paths and with-open to manage files.",
+      "code": "from pathlib import Path\npath = Path('notes.txt')\npath.write_text('Hello file!\\n', encoding='utf-8')\nprint(path.read_text(encoding='utf-8'))\nprint('Exists?', path.exists())"
+    },
+    {
+      "id": "modules",
+      "title": "Modules & Packages",
+      "description": "Split code into files (modules) and folders (packages). Install libraries with pip.",
+      "code": "# utils.py\ndef add(a, b):\n    return a + b\n\n# main.py\nfrom utils import add\nprint(add(2, 3))\n\n# Install a package\n# pip install requests"
+    },
+    {
+      "id": "typing",
+      "title": "Type Hints",
+      "description": "Annotate function parameters and variables to help tools catch mistakes.",
+      "code": "from typing import List, Dict\n\n\ndef total(items: List[int]) -> int:\n    return sum(items)\n\nuser: Dict[str, str] = {'name': 'Ada'}\nprint(total([1,2,3]), user['name'])"
+    },
+    {
+      "id": "oop",
+      "title": "Classes & Dataclasses",
+      "description": "Model real-world things with classes. dataclass writes boilerplate for you.",
+      "code": "class Rectangle:\n    def __init__(self, w: float, h: float):\n        self.w = w; self.h = h\n    def area(self) -> float:\n        return self.w * self.h\n\nfrom dataclasses import dataclass\n@dataclass\nclass User:\n    name: str\n    age: int = 0\n\nprint(Rectangle(3,4).area(), User('Ada', 36))"
+    },
+    {
+      "id": "cli",
+      "title": "Command Line (argparse)",
+      "description": "Create user-friendly programs that accept options and flags.",
+      "code": "import argparse\nparser = argparse.ArgumentParser(description='Greeter')\nparser.add_argument('--name', default='world')\nargs = parser.parse_args([])  # replace [] with actual args in real runs\nprint(f'Hello {args.name}!')"
+    },
+    {
+      "id": "http",
+      "title": "HTTP & JSON",
+      "description": "Get data from the web and parse JSON.",
+      "code": "import json, urllib.request\nwith urllib.request.urlopen('https://httpbin.org/json') as r:\n    data = json.load(r)\nprint(data['slideshow']['title'])"
+    },
+    {
+      "id": "async",
+      "title": "Async Basics",
+      "description": "Use asyncio to run tasks concurrently (like multiple web requests).",
+      "code": "import asyncio, time\n\nasync def work(n):\n    await asyncio.sleep(0.2)\n    return f'done {n}'\n\nasync def main():\n    t0 = time.perf_counter()\n    results = await asyncio.gather(*(work(i) for i in range(3)))\n    print(results, 'in', round(time.perf_counter()-t0, 2), 's')\n\nasyncio.run(main())"
+    },
+    {
+      "id": "testing",
+      "title": "Testing (pytest)",
+      "description": "Write small tests to check your code automatically.",
+      "code": "# test_math.py\nfrom math import sqrt\n\ndef test_sqrt():\n    assert sqrt(9) == 3\n\n# Run tests\n# pytest -q"
+    },
+    {
+      "id": "env",
+      "title": "Environments & pip",
+      "description": "Create a virtual environment so each project has isolated packages.",
+      "code": "python3 -m venv .venv\nsource .venv/bin/activate  # Windows: .venv\\\\Scripts\\\\activate\npip install requests pytest black\npython -m pip list"
+    }
+  ],
   "quick_start": [
-    {"title": "Install Python", "description": "Install from python.org or using your OS package manager.", "code": "# macOS (Homebrew)\nbrew install python\n\n# Ubuntu\nsudo apt-get update && sudo apt-get install -y python3 python3-pip\n\n# Windows\n# Download installer from https://www.python.org/downloads/"},
-    {"title": "Hello, World", "description": "Create a script and run it.", "code": "print('Hello, world!')\n\n# Run\n# python3 hello.py"},
-    {"title": "Virtual environment + pip", "description": "Isolate dependencies per project.", "code": "python3 -m venv .venv\nsource .venv/bin/activate  # Windows: .venv\\Scripts\\activate\npip install requests"}
+    {
+      "title": "Install Python",
+      "description": "Install from python.org or using your OS package manager.",
+      "code": "# macOS (Homebrew)\nbrew install python\n\n# Ubuntu\nsudo apt-get update && sudo apt-get install -y python3 python3-pip\n\n# Windows\n# Download installer from https://www.python.org/downloads/"
+    },
+    {
+      "title": "Hello, World",
+      "description": "Create a script and run it.",
+      "code": "print('Hello, world!')\n\n# Run\n# python3 hello.py"
+    },
+    {
+      "title": "Virtual environment + pip",
+      "description": "Isolate dependencies per project.",
+      "code": "python3 -m venv .venv\nsource .venv/bin/activate  # Windows: .venv\\Scripts\\activate\npip install requests"
+    }
   ],
   "common_tasks": [
-    {"group": "I/O", "tasks": [
-      {"title": "Read a text file", "description": "Open and read file contents.", "code": "from pathlib import Path\ntext = Path('README.md').read_text(encoding='utf-8')\nprint(text[:200])"},
-      {"title": "Write JSON", "description": "Serialize a dict to JSON file.", "code": "import json\ndata = {'ok': True, 'items': [1,2,3]}\nwith open('data.json', 'w', encoding='utf-8') as f:\n    json.dump(data, f, indent=2)"}
-    ]},
-    {"group": "HTTP + APIs", "tasks": [
-      {"title": "GET JSON", "description": "Fetch and parse JSON.", "code": "import requests\nr = requests.get('https://httpbin.org/json', timeout=10)\nr.raise_for_status()\nprint(r.json())"}
-    ]},
-    {"group": "CLI", "tasks": [
-      {"title": "Arguments", "description": "Parse command-line args.", "code": "import argparse\nparser = argparse.ArgumentParser()\nparser.add_argument('--name', default='world')\nprint(f'Hello {parser.parse_args().name}!')"}
-    ]}
+    {
+      "group": "Files & Data",
+      "tasks": [
+        {
+          "title": "Read a text file",
+          "description": "Open and read file contents.",
+          "code": "from pathlib import Path\ntext = Path('README.md').read_text(encoding='utf-8')\nprint(text[:200])"
+        },
+        {
+          "title": "Write JSON",
+          "description": "Serialize a dict to a JSON file.",
+          "code": "import json\ndata = {'ok': True, 'items': [1,2,3]}\nwith open('data.json', 'w', encoding='utf-8') as f:\n    json.dump(data, f, indent=2)"
+        },
+        {
+          "title": "Read CSV",
+          "description": "Load rows from a CSV file.",
+          "code": "import csv\nwith open('people.csv', newline='', encoding='utf-8') as f:\n    for row in csv.DictReader(f):\n        print(row['name'], row['age'])"
+        },
+        {
+          "title": "Write CSV",
+          "description": "Write rows to a CSV file.",
+          "code": "import csv\nrows = [{'name':'Ada','age':36},{'name':'Linus','age':54}]\nwith open('out.csv', 'w', newline='', encoding='utf-8') as f:\n    w = csv.DictWriter(f, fieldnames=['name','age'])\n    w.writeheader(); w.writerows(rows)"
+        },
+        {
+          "title": "SQLite (database)",
+          "description": "Create a table, insert, and query.",
+          "code": "import sqlite3\ncon = sqlite3.connect('app.db')\ncur = con.cursor()\ncur.execute('CREATE TABLE IF NOT EXISTS users (name TEXT, age INT)')\ncur.executemany('INSERT INTO users VALUES (?, ?)', [('Ada',36),('Guido',68)])\nfor name, age in cur.execute('SELECT name, age FROM users ORDER BY age DESC'):\n    print(name, age)\ncon.commit(); con.close()"
+        },
+        {
+          "title": "ZIP files",
+          "description": "Zip and unzip files/folders.",
+          "code": "import zipfile, pathlib\n# Create zip\nwith zipfile.ZipFile('site.zip', 'w', zipfile.ZIP_DEFLATED) as z:\n    z.write('index.html')\n# Extract\npathlib.Path('unzipped').mkdir(exist_ok=True)\nwith zipfile.ZipFile('site.zip') as z:\n    z.extractall('unzipped')"
+        },
+        {
+          "title": "List files (glob)",
+          "description": "Find files by pattern.",
+          "code": "from pathlib import Path\nfor p in Path('.').glob('**/*.py'):\n    print(p)"
+        }
+      ]
+    },
+    {
+      "group": "HTTP + APIs",
+      "tasks": [
+        {
+          "title": "GET JSON (stdlib)",
+          "description": "Fetch JSON using urllib.",
+          "code": "import json, urllib.request\nwith urllib.request.urlopen('https://httpbin.org/json') as r:\n    data = json.load(r)\nprint(data['slideshow']['title'])"
+        },
+        {
+          "title": "GET JSON",
+          "description": "Fetch and parse JSON.",
+          "code": "import requests\nr = requests.get('https://httpbin.org/json', timeout=10)\nr.raise_for_status()\nprint(r.json())"
+        },
+        {
+          "title": "POST JSON (requests)",
+          "description": "Send data as JSON (pip install requests).",
+          "code": "# pip install requests\nimport requests\nr = requests.post('https://httpbin.org/post', json={'ok': True}, timeout=10)\nr.raise_for_status()\nprint(r.json()['json'])"
+        }
+      ]
+    },
+    {
+      "group": "CLI",
+      "tasks": [
+        {
+          "title": "Arguments",
+          "description": "Parse command-line args.",
+          "code": "import argparse\nparser = argparse.ArgumentParser()\nparser.add_argument('--name', default='world')\nprint(f'Hello {parser.parse_args().name}!')"
+        }
+      ]
+    },
+    {
+      "group": "Text & Regex",
+      "tasks": [
+        {
+          "title": "Find emails",
+          "description": "Extract emails with a regex.",
+          "code": "import re\ntext = 'Contact us: team@example.com or help@site.org'\nprint(re.findall(r'[\\w.-]+@[\\w.-]+', text))"
+        },
+        {
+          "title": "Replace text",
+          "description": "Substitute patterns in text.",
+          "code": "import re\ns = 'color colour'\nprint(re.sub(r'colou?r', 'shade', s))"
+        },
+        {
+          "title": "Split / join",
+          "description": "Split into words and join back.",
+          "code": "s = 'one two  three'\nparts = s.split()\nprint(parts, ' | '.join(parts))"
+        }
+      ]
+    },
+    {
+      "group": "Env & Config",
+      "tasks": [
+        {
+          "title": "Read environment variables",
+          "description": "Use defaults when not set.",
+          "code": "import os\nport = int(os.environ.get('PORT', 8000))\nmode = os.environ.get('MODE', 'dev')\nprint(port, mode)"
+        }
+      ]
+    },
+    {
+      "group": "Logging",
+      "tasks": [
+        {
+          "title": "Basic logging",
+          "description": "Log info, warnings, and errors.",
+          "code": "import logging\nlogging.basicConfig(level=logging.INFO, format='%(levelname)s:%(message)s')\nlogging.info('Starting...')\nlogging.warning('Careful!')\nlogging.error('Something went wrong')"
+        }
+      ]
+    },
+    {
+      "group": "Concurrency",
+      "tasks": [
+        {
+          "title": "Thread pool",
+          "description": "Run tasks in parallel threads.",
+          "code": "from concurrent.futures import ThreadPoolExecutor\nimport urllib.request\nurls = ['https://example.com','https://httpbin.org/get']\nwith ThreadPoolExecutor(max_workers=4) as ex:\n    for html in ex.map(lambda u: urllib.request.urlopen(u).read(), urls):\n        print(len(html))"
+        }
+      ]
+    }
   ],
   "stdlib": [
-    {"name": "os", "description": "Miscellaneous operating system interfaces."},
-    {"name": "sys", "description": "System-specific parameters and functions."},
-    {"name": "pathlib", "description": "Object-oriented filesystem paths."},
-    {"name": "json", "description": "JSON encoder and decoder."},
-    {"name": "re", "description": "Regular expression operations."},
-    {"name": "datetime", "description": "Basic date and time types."},
-    {"name": "subprocess", "description": "Subprocess management."},
-    {"name": "typing", "description": "Support for type hints."}
+    {
+      "name": "os",
+      "description": "Miscellaneous operating system interfaces."
+    },
+    {
+      "name": "sys",
+      "description": "System-specific parameters and functions."
+    },
+    {
+      "name": "pathlib",
+      "description": "Object-oriented filesystem paths."
+    },
+    {
+      "name": "json",
+      "description": "JSON encoder and decoder."
+    },
+    {
+      "name": "re",
+      "description": "Regular expression operations."
+    },
+    {
+      "name": "datetime",
+      "description": "Basic date and time types."
+    },
+    {
+      "name": "subprocess",
+      "description": "Subprocess management."
+    },
+    {
+      "name": "typing",
+      "description": "Support for type hints."
+    }
   ],
-  "tools": ["Interpreter (python3)", "pip", "venv", "pytest", "black", "mypy"],
+  "tools": [
+    "Interpreter (python3)",
+    "pip",
+    "venv",
+    "pytest",
+    "black",
+    "mypy"
+  ],
   "links": [
-    {"title": "Official docs", "url": "https://docs.python.org/3/"},
-    {"title": "PyPI", "url": "https://pypi.org/"},
-    {"title": "PEP 8 (Style Guide)", "url": "https://peps.python.org/pep-0008/"}
+    {
+      "title": "Official docs",
+      "url": "https://docs.python.org/3/"
+    },
+    {
+      "title": "PyPI",
+      "url": "https://pypi.org/"
+    },
+    {
+      "title": "PEP 8 (Style Guide)",
+      "url": "https://peps.python.org/pep-0008/"
+    }
   ],
   "builtins": [
-    {"name": "abs", "kind": "function", "signature": "abs(x)", "description": "Return the absolute value of a number.", "category": "Numeric & Math"},
-    {"name": "all", "kind": "function", "signature": "all(iterable)", "description": "Return True if all elements of the iterable are true.", "category": "Iteration & Functional"},
-    {"name": "any", "kind": "function", "signature": "any(iterable)", "description": "Return True if any element of the iterable is true.", "category": "Iteration & Functional"},
-    {"name": "ascii", "kind": "function", "signature": "ascii(obj)", "description": "Return a printable representation with non-ASCII replaced by escapes.", "category": "Conversion & Formatting"},
-    {"name": "bin", "kind": "function", "signature": "bin(x)", "description": "Convert an integer to a binary string prefixed with '0b'.", "category": "Conversion & Formatting"},
-    {"name": "bool", "kind": "type", "signature": "bool([x])", "description": "Truth value testing and Boolean operations.", "category": "Types"},
-    {"name": "bytearray", "kind": "type", "signature": "bytearray([source[, encoding[, errors]]])", "description": "Mutable sequence of bytes.", "category": "Types"},
-    {"name": "bytes", "kind": "type", "signature": "bytes([source[, encoding[, errors]]])", "description": "Immutable sequence of bytes.", "category": "Types"},
-    {"name": "callable", "kind": "function", "signature": "callable(obj)", "description": "Return True if the object appears callable.", "category": "Introspection"},
-    {"name": "chr", "kind": "function", "signature": "chr(i)", "description": "Return the string representing a Unicode code point.", "category": "Conversion & Formatting"},
-    {"name": "classmethod", "kind": "decorator", "signature": "classmethod(function)", "description": "Transform a method into a class method.", "category": "OOP"},
-    {"name": "compile", "kind": "function", "signature": "compile(source, filename, mode, flags=0, dont_inherit=False, optimize=-1)", "description": "Compile source into a code object.", "category": "Runtime & Exec"},
-    {"name": "complex", "kind": "type", "signature": "complex([real[, imag]])", "description": "Create a complex number.", "category": "Types"},
-    {"name": "dict", "kind": "type", "signature": "dict(**kwargs)", "description": "Create a new dictionary.", "category": "Types"},
-    {"name": "dir", "kind": "function", "signature": "dir([object])", "description": "List attributes of object or current scope.", "category": "Introspection"},
-    {"name": "divmod", "kind": "function", "signature": "divmod(a, b)", "description": "Pair of (a // b, a % b).", "category": "Numeric & Math"},
-    {"name": "enumerate", "kind": "function", "signature": "enumerate(iterable, start=0)", "description": "Return an enumerate object.", "category": "Iteration & Functional"},
-    {"name": "eval", "kind": "function", "signature": "eval(expression, globals=None, locals=None)", "description": "Evaluate the expression string.", "category": "Runtime & Exec"},
-    {"name": "exec", "kind": "function", "signature": "exec(object, globals=None, locals=None)", "description": "Execute dynamically created program.", "category": "Runtime & Exec"},
-    {"name": "filter", "kind": "function", "signature": "filter(function, iterable)", "description": "Construct an iterator from elements where function returns true.", "category": "Iteration & Functional"},
-    {"name": "float", "kind": "type", "signature": "float([x])", "description": "Create a floating point number.", "category": "Types"},
-    {"name": "format", "kind": "function", "signature": "format(value[, format_spec])", "description": "Format a value using a format spec.", "category": "Conversion & Formatting"},
-    {"name": "frozenset", "kind": "type", "signature": "frozenset([iterable])", "description": "Immutable set.", "category": "Types"},
-    {"name": "getattr", "kind": "function", "signature": "getattr(object, name[, default])", "description": "Get attribute by name.", "category": "Introspection"},
-    {"name": "globals", "kind": "function", "signature": "globals()", "description": "Return the global symbol table as a dict.", "category": "Runtime & Exec"},
-    {"name": "hasattr", "kind": "function", "signature": "hasattr(object, name)", "description": "Return whether object has attribute.", "category": "Introspection"},
-    {"name": "hash", "kind": "function", "signature": "hash(obj)", "description": "Return the hash value of the object.", "category": "Introspection"},
-    {"name": "help", "kind": "function", "signature": "help([object])", "description": "Invoke the built-in help system.", "category": "Introspection"},
-    {"name": "hex", "kind": "function", "signature": "hex(x)", "description": "Convert int to hex string prefixed with '0x'.", "category": "Conversion & Formatting"},
-    {"name": "id", "kind": "function", "signature": "id(object)", "description": "Return the identity of an object.", "category": "Introspection"},
-    {"name": "input", "kind": "function", "signature": "input([prompt])", "description": "Read a line from input.", "category": "I/O"},
-    {"name": "int", "kind": "type", "signature": "int([x[, base]])", "description": "Create an integer from a number or string.", "category": "Types"},
-    {"name": "isinstance", "kind": "function", "signature": "isinstance(obj, class_or_tuple)", "description": "Check object’s type.", "category": "Introspection"},
-    {"name": "issubclass", "kind": "function", "signature": "issubclass(cls, class_or_tuple)", "description": "Check class inheritance.", "category": "Introspection"},
-    {"name": "iter", "kind": "function", "signature": "iter(object[, sentinel])", "description": "Return an iterator object.", "category": "Iteration & Functional"},
-    {"name": "len", "kind": "function", "signature": "len(s)", "description": "Return the length of a container.", "category": "Iteration & Functional"},
-    {"name": "list", "kind": "type", "signature": "list([iterable])", "description": "Create a list.", "category": "Types"},
-    {"name": "locals", "kind": "function", "signature": "locals()", "description": "Return a dict of the current local symbol table.", "category": "Runtime & Exec"},
-    {"name": "map", "kind": "function", "signature": "map(function, *iterables)", "description": "Apply function to items of iterables.", "category": "Iteration & Functional"},
-    {"name": "max", "kind": "function", "signature": "max(iterable, *[, key, default])", "description": "Return the largest item.", "category": "Numeric & Math"},
-    {"name": "min", "kind": "function", "signature": "min(iterable, *[, key, default])", "description": "Return the smallest item.", "category": "Numeric & Math"},
-    {"name": "next", "kind": "function", "signature": "next(iterator[, default])", "description": "Retrieve the next item from an iterator.", "category": "Iteration & Functional"},
-    {"name": "object", "kind": "type", "signature": "object()", "description": "Base type of all classes.", "category": "Types"},
-    {"name": "oct", "kind": "function", "signature": "oct(x)", "description": "Convert int to octal string prefixed with '0o'.", "category": "Conversion & Formatting"},
-    {"name": "open", "kind": "function", "signature": "open(file, mode='r', buffering=-1, encoding=None, errors=None, newline=None, closefd=True, opener=None)", "description": "Open file and return a file object.", "category": "I/O"},
-    {"name": "ord", "kind": "function", "signature": "ord(c)", "description": "Return Unicode code point for a one-character string.", "category": "Conversion & Formatting"},
-    {"name": "pow", "kind": "function", "signature": "pow(x, y[, z])", "description": "Return x**y or (x**y) % z if z provided.", "category": "Numeric & Math"},
-    {"name": "print", "kind": "function", "signature": "print(*objects, sep=' ', end='\n', file=sys.stdout, flush=False)", "description": "Print objects to the text stream file.", "category": "I/O"},
-    {"name": "property", "kind": "type", "signature": "property(fget=None, fset=None, fdel=None, doc=None)", "description": "Property attribute.", "category": "OOP"},
-    {"name": "range", "kind": "type", "signature": "range(start, stop[, step])", "description": "Immutable sequence of numbers.", "category": "Types"},
-    {"name": "repr", "kind": "function", "signature": "repr(object)", "description": "Return a string containing a printable representation.", "category": "Conversion & Formatting"},
-    {"name": "reversed", "kind": "function", "signature": "reversed(seq)", "description": "Return a reverse iterator.", "category": "Iteration & Functional"},
-    {"name": "round", "kind": "function", "signature": "round(number[, ndigits])", "description": "Round to a given precision in decimal digits.", "category": "Numeric & Math"},
-    {"name": "set", "kind": "type", "signature": "set([iterable])", "description": "Create a new set object.", "category": "Types"},
-    {"name": "setattr", "kind": "function", "signature": "setattr(object, name, value)", "description": "Set attribute on object.", "category": "Introspection"},
-    {"name": "slice", "kind": "type", "signature": "slice(stop) | slice(start, stop[, step])", "description": "Slice object.", "category": "Types"},
-    {"name": "sorted", "kind": "function", "signature": "sorted(iterable, /, *, key=None, reverse=False)", "description": "Return a new sorted list.", "category": "Iteration & Functional"},
-    {"name": "staticmethod", "kind": "decorator", "signature": "staticmethod(function)", "description": "Transform a method into a static method.", "category": "OOP"},
-    {"name": "str", "kind": "type", "signature": "str(object='')", "description": "String type.", "category": "Types"},
-    {"name": "sum", "kind": "function", "signature": "sum(iterable, /, start=0)", "description": "Sum start and the items of an iterable.", "category": "Numeric & Math"},
-    {"name": "super", "kind": "type", "signature": "super([type[, object-or-type]])", "description": "Return a proxy object that delegates method calls.", "category": "OOP"},
-    {"name": "tuple", "kind": "type", "signature": "tuple([iterable])", "description": "Immutable sequence.", "category": "Types"},
-    {"name": "type", "kind": "type", "signature": "type(object) | type(name, bases, dict)", "description": "Return type or create a new type.", "category": "Introspection"},
-    {"name": "vars", "kind": "function", "signature": "vars([object])", "description": "Return __dict__ of object.", "category": "Introspection"},
-    {"name": "zip", "kind": "function", "signature": "zip(*iterables, strict=False)", "description": "Aggregate elements from iterables.", "category": "Iteration & Functional"},
-    {"name": "list.append", "kind": "method", "signature": "list.append(x)", "description": "Append an item to the end of the list.", "category": "Containers"},
-    {"name": "dict.get", "kind": "method", "signature": "dict.get(key[, default])", "description": "Return the value for key if key is in the dictionary.", "category": "Containers"},
-    {"name": "str.upper", "kind": "method", "signature": "str.upper()", "description": "Return a copy of the string with all the cased characters converted to uppercase.", "category": "Text"},
-    {"name": "os", "kind": "module", "signature": "import os", "description": "Miscellaneous operating system interfaces.", "category": "Stdlib"},
-    {"name": "sys", "kind": "module", "signature": "import sys", "description": "System-specific parameters and functions.", "category": "Stdlib"},
-    {"name": "json", "kind": "module", "signature": "import json", "description": "JSON encoder and decoder.", "category": "Stdlib"},
-    {"name": "re", "kind": "module", "signature": "import re", "description": "Regular expression operations.", "category": "Stdlib"},
-    {"name": "math", "kind": "module", "signature": "import math", "description": "Mathematical functions.", "category": "Stdlib"},
-    {"name": "datetime", "kind": "module", "signature": "from datetime import datetime", "description": "Basic date and time types.", "category": "Stdlib"},
-    {"name": "pathlib", "kind": "module", "signature": "from pathlib import Path", "description": "Object-oriented filesystem paths.", "category": "Stdlib"},
-    {"name": "subprocess", "kind": "module", "signature": "import subprocess", "description": "Subprocess management.", "category": "Stdlib"},
-    {"name": "typing", "kind": "module", "signature": "from typing import List", "description": "Type hints support.", "category": "Stdlib"},
-    {"name": "functools", "kind": "module", "signature": "import functools", "description": "Higher-order functions and operations on callable objects.", "category": "Stdlib"},
-    {"name": "itertools", "kind": "module", "signature": "import itertools", "description": "Functions creating iterators for efficient looping.", "category": "Stdlib"}
+    {
+      "name": "bytearray.append",
+      "kind": "method",
+      "signature": "append(self, item, /)",
+      "description": "Append a single item to the end of the bytearray.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.capitalize",
+      "kind": "method",
+      "signature": "capitalize(self, /)",
+      "description": "B.capitalize() -> copy of B",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.center",
+      "kind": "method",
+      "signature": "center(self, width, fillchar=b' ', /)",
+      "description": "Return a centered string of length width.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.clear",
+      "kind": "method",
+      "signature": "clear(self, /)",
+      "description": "Remove all items from the bytearray.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.copy",
+      "kind": "method",
+      "signature": "copy(self, /)",
+      "description": "Return a copy of B.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.count",
+      "kind": "method",
+      "signature": "count(...)",
+      "description": "Return the number of non-overlapping occurrences of subsection 'sub' in bytes B[start:end].",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.decode",
+      "kind": "method",
+      "signature": "decode(self, /, encoding='utf-8', errors='strict')",
+      "description": "Decode the bytearray using the codec registered for encoding.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.endswith",
+      "kind": "method",
+      "signature": "endswith(...)",
+      "description": "Return True if the bytearray ends with the specified suffix, False otherwise.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.expandtabs",
+      "kind": "method",
+      "signature": "expandtabs(self, /, tabsize=8)",
+      "description": "Return a copy where all tab characters are expanded using spaces.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.extend",
+      "kind": "method",
+      "signature": "extend(self, iterable_of_ints, /)",
+      "description": "Append all the items from the iterator or sequence to the end of the bytearray.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.find",
+      "kind": "method",
+      "signature": "find(...)",
+      "description": "Return the lowest index in B where subsection 'sub' is found, such that 'sub' is contained within B[start:end].",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.fromhex",
+      "kind": "method",
+      "signature": "fromhex(string, /)",
+      "description": "Create a bytearray object from a string of hexadecimal numbers.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.hex",
+      "kind": "method",
+      "signature": "hex(...)",
+      "description": "Create a string of hexadecimal numbers from a bytearray object.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.index",
+      "kind": "method",
+      "signature": "index(...)",
+      "description": "Return the lowest index in B where subsection 'sub' is found, such that 'sub' is contained within B[start:end].",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.insert",
+      "kind": "method",
+      "signature": "insert(self, index, item, /)",
+      "description": "Insert a single item into the bytearray before the given index.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.isalnum",
+      "kind": "method",
+      "signature": "isalnum(self, /)",
+      "description": "B.isalnum() -> bool",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.isalpha",
+      "kind": "method",
+      "signature": "isalpha(self, /)",
+      "description": "B.isalpha() -> bool",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.isascii",
+      "kind": "method",
+      "signature": "isascii(self, /)",
+      "description": "B.isascii() -> bool",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.isdigit",
+      "kind": "method",
+      "signature": "isdigit(self, /)",
+      "description": "B.isdigit() -> bool",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.islower",
+      "kind": "method",
+      "signature": "islower(self, /)",
+      "description": "B.islower() -> bool",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.isspace",
+      "kind": "method",
+      "signature": "isspace(self, /)",
+      "description": "B.isspace() -> bool",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.istitle",
+      "kind": "method",
+      "signature": "istitle(self, /)",
+      "description": "B.istitle() -> bool",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.isupper",
+      "kind": "method",
+      "signature": "isupper(self, /)",
+      "description": "B.isupper() -> bool",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.join",
+      "kind": "method",
+      "signature": "join(self, iterable_of_bytes, /)",
+      "description": "Concatenate any number of bytes/bytearray objects.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.ljust",
+      "kind": "method",
+      "signature": "ljust(self, width, fillchar=b' ', /)",
+      "description": "Return a left-justified string of length width.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.lower",
+      "kind": "method",
+      "signature": "lower(self, /)",
+      "description": "B.lower() -> copy of B",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.lstrip",
+      "kind": "method",
+      "signature": "lstrip(self, bytes=None, /)",
+      "description": "Strip leading bytes contained in the argument.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.maketrans",
+      "kind": "method",
+      "signature": "maketrans(frm, to, /)",
+      "description": "Return a translation table usable for the bytes or bytearray translate method.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.partition",
+      "kind": "method",
+      "signature": "partition(self, sep, /)",
+      "description": "Partition the bytearray into three parts using the given separator.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.pop",
+      "kind": "method",
+      "signature": "pop(self, index=-1, /)",
+      "description": "Remove and return a single item from B.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.remove",
+      "kind": "method",
+      "signature": "remove(self, value, /)",
+      "description": "Remove the first occurrence of a value in the bytearray.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.removeprefix",
+      "kind": "method",
+      "signature": "removeprefix(self, prefix, /)",
+      "description": "Return a bytearray with the given prefix string removed if present.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.removesuffix",
+      "kind": "method",
+      "signature": "removesuffix(self, suffix, /)",
+      "description": "Return a bytearray with the given suffix string removed if present.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.replace",
+      "kind": "method",
+      "signature": "replace(self, old, new, count=-1, /)",
+      "description": "Return a copy with all occurrences of substring old replaced by new.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.reverse",
+      "kind": "method",
+      "signature": "reverse(self, /)",
+      "description": "Reverse the order of the values in B in place.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.rfind",
+      "kind": "method",
+      "signature": "rfind(...)",
+      "description": "Return the highest index in B where subsection 'sub' is found, such that 'sub' is contained within B[start:end].",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.rindex",
+      "kind": "method",
+      "signature": "rindex(...)",
+      "description": "Return the highest index in B where subsection 'sub' is found, such that 'sub' is contained within B[start:end].",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.rjust",
+      "kind": "method",
+      "signature": "rjust(self, width, fillchar=b' ', /)",
+      "description": "Return a right-justified string of length width.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.rpartition",
+      "kind": "method",
+      "signature": "rpartition(self, sep, /)",
+      "description": "Partition the bytearray into three parts using the given separator.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.rsplit",
+      "kind": "method",
+      "signature": "rsplit(self, /, sep=None, maxsplit=-1)",
+      "description": "Return a list of the sections in the bytearray, using sep as the delimiter.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.rstrip",
+      "kind": "method",
+      "signature": "rstrip(self, bytes=None, /)",
+      "description": "Strip trailing bytes contained in the argument.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.split",
+      "kind": "method",
+      "signature": "split(self, /, sep=None, maxsplit=-1)",
+      "description": "Return a list of the sections in the bytearray, using sep as the delimiter.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.splitlines",
+      "kind": "method",
+      "signature": "splitlines(self, /, keepends=False)",
+      "description": "Return a list of the lines in the bytearray, breaking at line boundaries.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.startswith",
+      "kind": "method",
+      "signature": "startswith(...)",
+      "description": "Return True if the bytearray starts with the specified prefix, False otherwise.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.strip",
+      "kind": "method",
+      "signature": "strip(self, bytes=None, /)",
+      "description": "Strip leading and trailing bytes contained in the argument.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.swapcase",
+      "kind": "method",
+      "signature": "swapcase(self, /)",
+      "description": "B.swapcase() -> copy of B",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.title",
+      "kind": "method",
+      "signature": "title(self, /)",
+      "description": "B.title() -> copy of B",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.translate",
+      "kind": "method",
+      "signature": "translate(self, table, /, delete=b'')",
+      "description": "Return a copy with each character mapped by the given translation table.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.upper",
+      "kind": "method",
+      "signature": "upper(self, /)",
+      "description": "B.upper() -> copy of B",
+      "category": "Binary"
+    },
+    {
+      "name": "bytearray.zfill",
+      "kind": "method",
+      "signature": "zfill(self, width, /)",
+      "description": "Pad a numeric string with zeros on the left, to fill a field of the given width.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.capitalize",
+      "kind": "method",
+      "signature": "capitalize(self, /)",
+      "description": "B.capitalize() -> copy of B",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.center",
+      "kind": "method",
+      "signature": "center(self, width, fillchar=b' ', /)",
+      "description": "Return a centered string of length width.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.count",
+      "kind": "method",
+      "signature": "count(...)",
+      "description": "Return the number of non-overlapping occurrences of subsection 'sub' in bytes B[start:end].",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.decode",
+      "kind": "method",
+      "signature": "decode(self, /, encoding='utf-8', errors='strict')",
+      "description": "Decode the bytes using the codec registered for encoding.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.endswith",
+      "kind": "method",
+      "signature": "endswith(...)",
+      "description": "Return True if the bytes ends with the specified suffix, False otherwise.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.expandtabs",
+      "kind": "method",
+      "signature": "expandtabs(self, /, tabsize=8)",
+      "description": "Return a copy where all tab characters are expanded using spaces.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.find",
+      "kind": "method",
+      "signature": "find(...)",
+      "description": "Return the lowest index in B where subsection 'sub' is found, such that 'sub' is contained within B[start,end].",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.fromhex",
+      "kind": "method",
+      "signature": "fromhex(string, /)",
+      "description": "Create a bytes object from a string of hexadecimal numbers.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.hex",
+      "kind": "method",
+      "signature": "hex(...)",
+      "description": "Create a string of hexadecimal numbers from a bytes object.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.index",
+      "kind": "method",
+      "signature": "index(...)",
+      "description": "Return the lowest index in B where subsection 'sub' is found, such that 'sub' is contained within B[start,end].",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.isalnum",
+      "kind": "method",
+      "signature": "isalnum(self, /)",
+      "description": "B.isalnum() -> bool",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.isalpha",
+      "kind": "method",
+      "signature": "isalpha(self, /)",
+      "description": "B.isalpha() -> bool",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.isascii",
+      "kind": "method",
+      "signature": "isascii(self, /)",
+      "description": "B.isascii() -> bool",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.isdigit",
+      "kind": "method",
+      "signature": "isdigit(self, /)",
+      "description": "B.isdigit() -> bool",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.islower",
+      "kind": "method",
+      "signature": "islower(self, /)",
+      "description": "B.islower() -> bool",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.isspace",
+      "kind": "method",
+      "signature": "isspace(self, /)",
+      "description": "B.isspace() -> bool",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.istitle",
+      "kind": "method",
+      "signature": "istitle(self, /)",
+      "description": "B.istitle() -> bool",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.isupper",
+      "kind": "method",
+      "signature": "isupper(self, /)",
+      "description": "B.isupper() -> bool",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.join",
+      "kind": "method",
+      "signature": "join(self, iterable_of_bytes, /)",
+      "description": "Concatenate any number of bytes objects.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.ljust",
+      "kind": "method",
+      "signature": "ljust(self, width, fillchar=b' ', /)",
+      "description": "Return a left-justified string of length width.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.lower",
+      "kind": "method",
+      "signature": "lower(self, /)",
+      "description": "B.lower() -> copy of B",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.lstrip",
+      "kind": "method",
+      "signature": "lstrip(self, bytes=None, /)",
+      "description": "Strip leading bytes contained in the argument.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.maketrans",
+      "kind": "method",
+      "signature": "maketrans(frm, to, /)",
+      "description": "Return a translation table usable for the bytes or bytearray translate method.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.partition",
+      "kind": "method",
+      "signature": "partition(self, sep, /)",
+      "description": "Partition the bytes into three parts using the given separator.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.removeprefix",
+      "kind": "method",
+      "signature": "removeprefix(self, prefix, /)",
+      "description": "Return a bytes object with the given prefix string removed if present.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.removesuffix",
+      "kind": "method",
+      "signature": "removesuffix(self, suffix, /)",
+      "description": "Return a bytes object with the given suffix string removed if present.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.replace",
+      "kind": "method",
+      "signature": "replace(self, old, new, count=-1, /)",
+      "description": "Return a copy with all occurrences of substring old replaced by new.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.rfind",
+      "kind": "method",
+      "signature": "rfind(...)",
+      "description": "Return the highest index in B where subsection 'sub' is found, such that 'sub' is contained within B[start,end].",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.rindex",
+      "kind": "method",
+      "signature": "rindex(...)",
+      "description": "Return the highest index in B where subsection 'sub' is found, such that 'sub' is contained within B[start,end].",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.rjust",
+      "kind": "method",
+      "signature": "rjust(self, width, fillchar=b' ', /)",
+      "description": "Return a right-justified string of length width.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.rpartition",
+      "kind": "method",
+      "signature": "rpartition(self, sep, /)",
+      "description": "Partition the bytes into three parts using the given separator.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.rsplit",
+      "kind": "method",
+      "signature": "rsplit(self, /, sep=None, maxsplit=-1)",
+      "description": "Return a list of the sections in the bytes, using sep as the delimiter.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.rstrip",
+      "kind": "method",
+      "signature": "rstrip(self, bytes=None, /)",
+      "description": "Strip trailing bytes contained in the argument.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.split",
+      "kind": "method",
+      "signature": "split(self, /, sep=None, maxsplit=-1)",
+      "description": "Return a list of the sections in the bytes, using sep as the delimiter.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.splitlines",
+      "kind": "method",
+      "signature": "splitlines(self, /, keepends=False)",
+      "description": "Return a list of the lines in the bytes, breaking at line boundaries.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.startswith",
+      "kind": "method",
+      "signature": "startswith(...)",
+      "description": "Return True if the bytes starts with the specified prefix, False otherwise.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.strip",
+      "kind": "method",
+      "signature": "strip(self, bytes=None, /)",
+      "description": "Strip leading and trailing bytes contained in the argument.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.swapcase",
+      "kind": "method",
+      "signature": "swapcase(self, /)",
+      "description": "B.swapcase() -> copy of B",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.title",
+      "kind": "method",
+      "signature": "title(self, /)",
+      "description": "B.title() -> copy of B",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.translate",
+      "kind": "method",
+      "signature": "translate(self, table, /, delete=b'')",
+      "description": "Return a copy with each character mapped by the given translation table.",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.upper",
+      "kind": "method",
+      "signature": "upper(self, /)",
+      "description": "B.upper() -> copy of B",
+      "category": "Binary"
+    },
+    {
+      "name": "bytes.zfill",
+      "kind": "method",
+      "signature": "zfill(self, width, /)",
+      "description": "Pad a numeric string with zeros on the left, to fill a field of the given width.",
+      "category": "Binary"
+    },
+    {
+      "name": "memoryview.cast",
+      "kind": "method",
+      "signature": "cast(...)",
+      "description": "Cast a memoryview to a new format or shape.",
+      "category": "Binary"
+    },
+    {
+      "name": "memoryview.hex",
+      "kind": "method",
+      "signature": "hex(...)",
+      "description": "Return the data in the buffer as a str of hexadecimal numbers.",
+      "category": "Binary"
+    },
+    {
+      "name": "memoryview.release",
+      "kind": "method",
+      "signature": "release(self, /)",
+      "description": "Release the underlying buffer exposed by the memoryview object.",
+      "category": "Binary"
+    },
+    {
+      "name": "memoryview.tobytes",
+      "kind": "method",
+      "signature": "tobytes(self, /, order='C')",
+      "description": "Return the data in the buffer as a byte string.",
+      "category": "Binary"
+    },
+    {
+      "name": "memoryview.tolist",
+      "kind": "method",
+      "signature": "tolist(self, /)",
+      "description": "Return the data in the buffer as a list of elements.",
+      "category": "Binary"
+    },
+    {
+      "name": "memoryview.toreadonly",
+      "kind": "method",
+      "signature": "toreadonly(self, /)",
+      "description": "Return a readonly version of the memoryview.",
+      "category": "Binary"
+    },
+    {
+      "name": "dict.clear",
+      "kind": "method",
+      "signature": "clear(self, /)",
+      "description": "Remove all items from the dict.",
+      "category": "Containers"
+    },
+    {
+      "name": "dict.copy",
+      "kind": "method",
+      "signature": "copy(self, /)",
+      "description": "Return a shallow copy of the dict.",
+      "category": "Containers"
+    },
+    {
+      "name": "dict.fromkeys",
+      "kind": "method",
+      "signature": "fromkeys(iterable, value=None, /)",
+      "description": "Create a new dictionary with keys from iterable and values set to value.",
+      "category": "Containers"
+    },
+    {
+      "name": "dict.get",
+      "kind": "method",
+      "signature": "get(self, key, default=None, /)",
+      "description": "Return the value for key if key is in the dictionary, else default.",
+      "category": "Containers"
+    },
+    {
+      "name": "dict.items",
+      "kind": "method",
+      "signature": "items(self, /)",
+      "description": "Return a set-like object providing a view on the dict's items.",
+      "category": "Containers"
+    },
+    {
+      "name": "dict.keys",
+      "kind": "method",
+      "signature": "keys(self, /)",
+      "description": "Return a set-like object providing a view on the dict's keys.",
+      "category": "Containers"
+    },
+    {
+      "name": "dict.pop",
+      "kind": "method",
+      "signature": "pop(...)",
+      "description": "D.pop(k[,d]) -> v, remove specified key and return the corresponding value.",
+      "category": "Containers"
+    },
+    {
+      "name": "dict.popitem",
+      "kind": "method",
+      "signature": "popitem(self, /)",
+      "description": "Remove and return a (key, value) pair as a 2-tuple.",
+      "category": "Containers"
+    },
+    {
+      "name": "dict.setdefault",
+      "kind": "method",
+      "signature": "setdefault(self, key, default=None, /)",
+      "description": "Insert key with a value of default if key is not in the dictionary.",
+      "category": "Containers"
+    },
+    {
+      "name": "dict.update",
+      "kind": "method",
+      "signature": "update(...)",
+      "description": "D.update([E, ]**F) -> None.  Update D from mapping/iterable E and F.",
+      "category": "Containers"
+    },
+    {
+      "name": "dict.values",
+      "kind": "method",
+      "signature": "values(self, /)",
+      "description": "Return an object providing a view on the dict's values.",
+      "category": "Containers"
+    },
+    {
+      "name": "list.append",
+      "kind": "method",
+      "signature": "append(self, object, /)",
+      "description": "Append object to the end of the list.",
+      "category": "Containers"
+    },
+    {
+      "name": "list.clear",
+      "kind": "method",
+      "signature": "clear(self, /)",
+      "description": "Remove all items from list.",
+      "category": "Containers"
+    },
+    {
+      "name": "list.copy",
+      "kind": "method",
+      "signature": "copy(self, /)",
+      "description": "Return a shallow copy of the list.",
+      "category": "Containers"
+    },
+    {
+      "name": "list.count",
+      "kind": "method",
+      "signature": "count(self, value, /)",
+      "description": "Return number of occurrences of value.",
+      "category": "Containers"
+    },
+    {
+      "name": "list.extend",
+      "kind": "method",
+      "signature": "extend(self, iterable, /)",
+      "description": "Extend list by appending elements from the iterable.",
+      "category": "Containers"
+    },
+    {
+      "name": "list.index",
+      "kind": "method",
+      "signature": "index(self, value, start=0, stop=9223372036854775807, /)",
+      "description": "Return first index of value.",
+      "category": "Containers"
+    },
+    {
+      "name": "list.insert",
+      "kind": "method",
+      "signature": "insert(self, index, object, /)",
+      "description": "Insert object before index.",
+      "category": "Containers"
+    },
+    {
+      "name": "list.pop",
+      "kind": "method",
+      "signature": "pop(self, index=-1, /)",
+      "description": "Remove and return item at index (default last).",
+      "category": "Containers"
+    },
+    {
+      "name": "list.remove",
+      "kind": "method",
+      "signature": "remove(self, value, /)",
+      "description": "Remove first occurrence of value.",
+      "category": "Containers"
+    },
+    {
+      "name": "list.reverse",
+      "kind": "method",
+      "signature": "reverse(self, /)",
+      "description": "Reverse *IN PLACE*.",
+      "category": "Containers"
+    },
+    {
+      "name": "list.sort",
+      "kind": "method",
+      "signature": "sort(self, /, *, key=None, reverse=False)",
+      "description": "Sort the list in ascending order and return None.",
+      "category": "Containers"
+    },
+    {
+      "name": "set.add",
+      "kind": "method",
+      "signature": "add(self, object, /)",
+      "description": "Add an element to a set.",
+      "category": "Containers"
+    },
+    {
+      "name": "set.clear",
+      "kind": "method",
+      "signature": "clear(self, /)",
+      "description": "Remove all elements from this set.",
+      "category": "Containers"
+    },
+    {
+      "name": "set.copy",
+      "kind": "method",
+      "signature": "copy(self, /)",
+      "description": "Return a shallow copy of a set.",
+      "category": "Containers"
+    },
+    {
+      "name": "set.difference",
+      "kind": "method",
+      "signature": "difference(self, /, *others)",
+      "description": "Return a new set with elements in the set that are not in the others.",
+      "category": "Containers"
+    },
+    {
+      "name": "set.difference_update",
+      "kind": "method",
+      "signature": "difference_update(self, /, *others)",
+      "description": "Update the set, removing elements found in others.",
+      "category": "Containers"
+    },
+    {
+      "name": "set.discard",
+      "kind": "method",
+      "signature": "discard(self, object, /)",
+      "description": "Remove an element from a set if it is a member.",
+      "category": "Containers"
+    },
+    {
+      "name": "set.intersection",
+      "kind": "method",
+      "signature": "intersection(self, /, *others)",
+      "description": "Return a new set with elements common to the set and all others.",
+      "category": "Containers"
+    },
+    {
+      "name": "set.intersection_update",
+      "kind": "method",
+      "signature": "intersection_update(self, /, *others)",
+      "description": "Update the set, keeping only elements found in it and all others.",
+      "category": "Containers"
+    },
+    {
+      "name": "set.isdisjoint",
+      "kind": "method",
+      "signature": "isdisjoint(self, other, /)",
+      "description": "Return True if two sets have a null intersection.",
+      "category": "Containers"
+    },
+    {
+      "name": "set.issubset",
+      "kind": "method",
+      "signature": "issubset(self, other, /)",
+      "description": "Report whether another set contains this set.",
+      "category": "Containers"
+    },
+    {
+      "name": "set.issuperset",
+      "kind": "method",
+      "signature": "issuperset(self, other, /)",
+      "description": "Report whether this set contains another set.",
+      "category": "Containers"
+    },
+    {
+      "name": "set.pop",
+      "kind": "method",
+      "signature": "pop(self, /)",
+      "description": "Remove and return an arbitrary set element.",
+      "category": "Containers"
+    },
+    {
+      "name": "set.remove",
+      "kind": "method",
+      "signature": "remove(self, object, /)",
+      "description": "Remove an element from a set; it must be a member.",
+      "category": "Containers"
+    },
+    {
+      "name": "set.symmetric_difference",
+      "kind": "method",
+      "signature": "symmetric_difference(self, other, /)",
+      "description": "Return a new set with elements in either the set or other but not both.",
+      "category": "Containers"
+    },
+    {
+      "name": "set.symmetric_difference_update",
+      "kind": "method",
+      "signature": "symmetric_difference_update(self, other, /)",
+      "description": "Update the set, keeping only elements found in either set, but not in both.",
+      "category": "Containers"
+    },
+    {
+      "name": "set.union",
+      "kind": "method",
+      "signature": "union(self, /, *others)",
+      "description": "Return a new set with elements from the set and all others.",
+      "category": "Containers"
+    },
+    {
+      "name": "set.update",
+      "kind": "method",
+      "signature": "update(self, /, *others)",
+      "description": "Update the set, adding elements from all others.",
+      "category": "Containers"
+    },
+    {
+      "name": "tuple.count",
+      "kind": "method",
+      "signature": "count(self, value, /)",
+      "description": "Return number of occurrences of value.",
+      "category": "Containers"
+    },
+    {
+      "name": "tuple.index",
+      "kind": "method",
+      "signature": "index(self, value, start=0, stop=9223372036854775807, /)",
+      "description": "Return first index of value.",
+      "category": "Containers"
+    },
+    {
+      "name": "ArithmeticError",
+      "kind": "class",
+      "signature": "ArithmeticError(...)",
+      "description": "Base class for arithmetic errors.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "AssertionError",
+      "kind": "class",
+      "signature": "AssertionError(...)",
+      "description": "Assertion failed.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "AttributeError",
+      "kind": "class",
+      "signature": "AttributeError(...)",
+      "description": "Attribute not found.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "BaseException",
+      "kind": "class",
+      "signature": "BaseException(...)",
+      "description": "Common base class for all exceptions",
+      "category": "Exceptions"
+    },
+    {
+      "name": "BaseExceptionGroup",
+      "kind": "class",
+      "signature": "BaseExceptionGroup(...)",
+      "description": "A combination of multiple unrelated exceptions.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "BlockingIOError",
+      "kind": "class",
+      "signature": "BlockingIOError(...)",
+      "description": "I/O operation would block.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "BrokenPipeError",
+      "kind": "class",
+      "signature": "BrokenPipeError(...)",
+      "description": "Broken pipe.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "BufferError",
+      "kind": "class",
+      "signature": "BufferError(...)",
+      "description": "Buffer error.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "BytesWarning",
+      "kind": "class",
+      "signature": "BytesWarning(...)",
+      "description": "Base class for warnings about bytes and buffer related problems, mostly",
+      "category": "Exceptions"
+    },
+    {
+      "name": "ChildProcessError",
+      "kind": "class",
+      "signature": "ChildProcessError(...)",
+      "description": "Child process error.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "ConnectionAbortedError",
+      "kind": "class",
+      "signature": "ConnectionAbortedError(...)",
+      "description": "Connection aborted.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "ConnectionError",
+      "kind": "class",
+      "signature": "ConnectionError(...)",
+      "description": "Connection error.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "ConnectionRefusedError",
+      "kind": "class",
+      "signature": "ConnectionRefusedError(...)",
+      "description": "Connection refused.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "ConnectionResetError",
+      "kind": "class",
+      "signature": "ConnectionResetError(...)",
+      "description": "Connection reset.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "DeprecationWarning",
+      "kind": "class",
+      "signature": "DeprecationWarning(...)",
+      "description": "Base class for warnings about deprecated features.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "EOFError",
+      "kind": "class",
+      "signature": "EOFError(...)",
+      "description": "Read beyond end of file.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "EncodingWarning",
+      "kind": "class",
+      "signature": "EncodingWarning(...)",
+      "description": "Base class for warnings about encodings.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "EnvironmentError",
+      "kind": "class",
+      "signature": "EnvironmentError(...)",
+      "description": "Base class for I/O related errors.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "Exception",
+      "kind": "class",
+      "signature": "Exception(...)",
+      "description": "Common base class for all non-exit exceptions.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "ExceptionGroup",
+      "kind": "class",
+      "signature": "ExceptionGroup(...)",
+      "description": "",
+      "category": "Exceptions"
+    },
+    {
+      "name": "FileExistsError",
+      "kind": "class",
+      "signature": "FileExistsError(...)",
+      "description": "File already exists.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "FileNotFoundError",
+      "kind": "class",
+      "signature": "FileNotFoundError(...)",
+      "description": "File not found.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "FloatingPointError",
+      "kind": "class",
+      "signature": "FloatingPointError(...)",
+      "description": "Floating-point operation failed.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "FutureWarning",
+      "kind": "class",
+      "signature": "FutureWarning(...)",
+      "description": "Base class for warnings about constructs that will change semantically",
+      "category": "Exceptions"
+    },
+    {
+      "name": "GeneratorExit",
+      "kind": "class",
+      "signature": "GeneratorExit(...)",
+      "description": "Request that a generator exit.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "IOError",
+      "kind": "class",
+      "signature": "IOError(...)",
+      "description": "Base class for I/O related errors.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "ImportError",
+      "kind": "class",
+      "signature": "ImportError(...)",
+      "description": "Import can't find module, or can't find name in module.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "ImportWarning",
+      "kind": "class",
+      "signature": "ImportWarning(...)",
+      "description": "Base class for warnings about probable mistakes in module imports",
+      "category": "Exceptions"
+    },
+    {
+      "name": "IndentationError",
+      "kind": "class",
+      "signature": "IndentationError(...)",
+      "description": "Improper indentation.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "IndexError",
+      "kind": "class",
+      "signature": "IndexError(...)",
+      "description": "Sequence index out of range.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "InterruptedError",
+      "kind": "class",
+      "signature": "InterruptedError(...)",
+      "description": "Interrupted by signal.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "IsADirectoryError",
+      "kind": "class",
+      "signature": "IsADirectoryError(...)",
+      "description": "Operation doesn't work on directories.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "KeyError",
+      "kind": "class",
+      "signature": "KeyError(...)",
+      "description": "Mapping key not found.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "KeyboardInterrupt",
+      "kind": "class",
+      "signature": "KeyboardInterrupt(...)",
+      "description": "Program interrupted by user.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "LookupError",
+      "kind": "class",
+      "signature": "LookupError(...)",
+      "description": "Base class for lookup errors.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "MemoryError",
+      "kind": "class",
+      "signature": "MemoryError(...)",
+      "description": "Out of memory.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "ModuleNotFoundError",
+      "kind": "class",
+      "signature": "ModuleNotFoundError(...)",
+      "description": "Module not found.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "NameError",
+      "kind": "class",
+      "signature": "NameError(...)",
+      "description": "Name not found globally.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "NotADirectoryError",
+      "kind": "class",
+      "signature": "NotADirectoryError(...)",
+      "description": "Operation only works on directories.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "NotImplementedError",
+      "kind": "class",
+      "signature": "NotImplementedError(...)",
+      "description": "Method or function hasn't been implemented yet.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "OSError",
+      "kind": "class",
+      "signature": "OSError(...)",
+      "description": "Base class for I/O related errors.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "OverflowError",
+      "kind": "class",
+      "signature": "OverflowError(...)",
+      "description": "Result too large to be represented.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "PendingDeprecationWarning",
+      "kind": "class",
+      "signature": "PendingDeprecationWarning(...)",
+      "description": "Base class for warnings about features which will be deprecated",
+      "category": "Exceptions"
+    },
+    {
+      "name": "PermissionError",
+      "kind": "class",
+      "signature": "PermissionError(...)",
+      "description": "Not enough permissions.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "ProcessLookupError",
+      "kind": "class",
+      "signature": "ProcessLookupError(...)",
+      "description": "Process not found.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "PythonFinalizationError",
+      "kind": "class",
+      "signature": "PythonFinalizationError(...)",
+      "description": "Operation blocked during Python finalization.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "RecursionError",
+      "kind": "class",
+      "signature": "RecursionError(...)",
+      "description": "Recursion limit exceeded.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "ReferenceError",
+      "kind": "class",
+      "signature": "ReferenceError(...)",
+      "description": "Weak ref proxy used after referent went away.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "ResourceWarning",
+      "kind": "class",
+      "signature": "ResourceWarning(...)",
+      "description": "Base class for warnings about resource usage.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "RuntimeError",
+      "kind": "class",
+      "signature": "RuntimeError(...)",
+      "description": "Unspecified run-time error.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "RuntimeWarning",
+      "kind": "class",
+      "signature": "RuntimeWarning(...)",
+      "description": "Base class for warnings about dubious runtime behavior.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "StopAsyncIteration",
+      "kind": "class",
+      "signature": "StopAsyncIteration(...)",
+      "description": "Signal the end from iterator.__anext__().",
+      "category": "Exceptions"
+    },
+    {
+      "name": "StopIteration",
+      "kind": "class",
+      "signature": "StopIteration(...)",
+      "description": "Signal the end from iterator.__next__().",
+      "category": "Exceptions"
+    },
+    {
+      "name": "SyntaxError",
+      "kind": "class",
+      "signature": "SyntaxError(...)",
+      "description": "Invalid syntax.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "SyntaxWarning",
+      "kind": "class",
+      "signature": "SyntaxWarning(...)",
+      "description": "Base class for warnings about dubious syntax.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "SystemError",
+      "kind": "class",
+      "signature": "SystemError(...)",
+      "description": "Internal error in the Python interpreter.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "SystemExit",
+      "kind": "class",
+      "signature": "SystemExit(...)",
+      "description": "Request to exit from the interpreter.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "TabError",
+      "kind": "class",
+      "signature": "TabError(...)",
+      "description": "Improper mixture of spaces and tabs.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "TimeoutError",
+      "kind": "class",
+      "signature": "TimeoutError(...)",
+      "description": "Timeout expired.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "TypeError",
+      "kind": "class",
+      "signature": "TypeError(...)",
+      "description": "Inappropriate argument type.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "UnboundLocalError",
+      "kind": "class",
+      "signature": "UnboundLocalError(...)",
+      "description": "Local name referenced but not bound to a value.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "UnicodeDecodeError",
+      "kind": "class",
+      "signature": "UnicodeDecodeError(...)",
+      "description": "Unicode decoding error.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "UnicodeEncodeError",
+      "kind": "class",
+      "signature": "UnicodeEncodeError(...)",
+      "description": "Unicode encoding error.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "UnicodeError",
+      "kind": "class",
+      "signature": "UnicodeError(...)",
+      "description": "Unicode related error.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "UnicodeTranslateError",
+      "kind": "class",
+      "signature": "UnicodeTranslateError(...)",
+      "description": "Unicode translation error.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "UnicodeWarning",
+      "kind": "class",
+      "signature": "UnicodeWarning(...)",
+      "description": "Base class for warnings about Unicode related problems, mostly",
+      "category": "Exceptions"
+    },
+    {
+      "name": "UserWarning",
+      "kind": "class",
+      "signature": "UserWarning(...)",
+      "description": "Base class for warnings generated by user code.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "ValueError",
+      "kind": "class",
+      "signature": "ValueError(...)",
+      "description": "Inappropriate argument value (of correct type).",
+      "category": "Exceptions"
+    },
+    {
+      "name": "Warning",
+      "kind": "class",
+      "signature": "Warning(...)",
+      "description": "Base class for warning categories.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "ZeroDivisionError",
+      "kind": "class",
+      "signature": "ZeroDivisionError(...)",
+      "description": "Second argument to a division or modulo operation was zero.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "_IncompleteInputError",
+      "kind": "class",
+      "signature": "_IncompleteInputError(...)",
+      "description": "incomplete input.",
+      "category": "Exceptions"
+    },
+    {
+      "name": "abs",
+      "kind": "function",
+      "signature": "abs(x, /)",
+      "description": "Return the absolute value of the argument.",
+      "category": "Functions"
+    },
+    {
+      "name": "aiter",
+      "kind": "function",
+      "signature": "aiter(async_iterable, /)",
+      "description": "Return an AsyncIterator for an AsyncIterable object.",
+      "category": "Functions"
+    },
+    {
+      "name": "all",
+      "kind": "function",
+      "signature": "all(iterable, /)",
+      "description": "Return True if bool(x) is True for all values x in the iterable.",
+      "category": "Functions"
+    },
+    {
+      "name": "anext",
+      "kind": "function",
+      "signature": "anext(...)",
+      "description": "Return the next item from the async iterator.",
+      "category": "Functions"
+    },
+    {
+      "name": "any",
+      "kind": "function",
+      "signature": "any(iterable, /)",
+      "description": "Return True if bool(x) is True for any x in the iterable.",
+      "category": "Functions"
+    },
+    {
+      "name": "ascii",
+      "kind": "function",
+      "signature": "ascii(obj, /)",
+      "description": "Return an ASCII-only representation of an object.",
+      "category": "Functions"
+    },
+    {
+      "name": "bin",
+      "kind": "function",
+      "signature": "bin(number, /)",
+      "description": "Return the binary representation of an integer.",
+      "category": "Functions"
+    },
+    {
+      "name": "breakpoint",
+      "kind": "function",
+      "signature": "breakpoint(*args, **kws)",
+      "description": "Call sys.breakpointhook(*args, **kws).  sys.breakpointhook() must accept",
+      "category": "Functions"
+    },
+    {
+      "name": "callable",
+      "kind": "function",
+      "signature": "callable(obj, /)",
+      "description": "Return whether the object is callable (i.e., some kind of function).",
+      "category": "Functions"
+    },
+    {
+      "name": "chr",
+      "kind": "function",
+      "signature": "chr(i, /)",
+      "description": "Return a Unicode string of one character with ordinal i; 0 <= i <= 0x10ffff.",
+      "category": "Functions"
+    },
+    {
+      "name": "compile",
+      "kind": "function",
+      "signature": "compile(source, filename, mode, flags=0, dont_inherit=False, optimize=-1, *, _feature_version=-1)",
+      "description": "Compile source into a code object that can be executed by exec() or eval().",
+      "category": "Functions"
+    },
+    {
+      "name": "delattr",
+      "kind": "function",
+      "signature": "delattr(obj, name, /)",
+      "description": "Deletes the named attribute from the given object.",
+      "category": "Functions"
+    },
+    {
+      "name": "dir",
+      "kind": "function",
+      "signature": "dir(...)",
+      "description": "dir([object]) -> list of strings",
+      "category": "Functions"
+    },
+    {
+      "name": "divmod",
+      "kind": "function",
+      "signature": "divmod(x, y, /)",
+      "description": "Return the tuple (x//y, x%y).  Invariant: div*y + mod == x.",
+      "category": "Functions"
+    },
+    {
+      "name": "eval",
+      "kind": "function",
+      "signature": "eval(source, /, globals=None, locals=None)",
+      "description": "Evaluate the given source in the context of globals and locals.",
+      "category": "Functions"
+    },
+    {
+      "name": "exec",
+      "kind": "function",
+      "signature": "exec(source, /, globals=None, locals=None, *, closure=None)",
+      "description": "Execute the given source in the context of globals and locals.",
+      "category": "Functions"
+    },
+    {
+      "name": "format",
+      "kind": "function",
+      "signature": "format(value, format_spec='', /)",
+      "description": "Return type(value).__format__(value, format_spec)",
+      "category": "Functions"
+    },
+    {
+      "name": "getattr",
+      "kind": "function",
+      "signature": "getattr(...)",
+      "description": "getattr(object, name[, default]) -> value",
+      "category": "Functions"
+    },
+    {
+      "name": "globals",
+      "kind": "function",
+      "signature": "globals()",
+      "description": "Return the dictionary containing the current scope's global variables.",
+      "category": "Functions"
+    },
+    {
+      "name": "hasattr",
+      "kind": "function",
+      "signature": "hasattr(obj, name, /)",
+      "description": "Return whether the object has an attribute with the given name.",
+      "category": "Functions"
+    },
+    {
+      "name": "hash",
+      "kind": "function",
+      "signature": "hash(obj, /)",
+      "description": "Return the hash value for the given object.",
+      "category": "Functions"
+    },
+    {
+      "name": "hex",
+      "kind": "function",
+      "signature": "hex(number, /)",
+      "description": "Return the hexadecimal representation of an integer.",
+      "category": "Functions"
+    },
+    {
+      "name": "id",
+      "kind": "function",
+      "signature": "id(obj, /)",
+      "description": "Return the identity of an object.",
+      "category": "Functions"
+    },
+    {
+      "name": "input",
+      "kind": "function",
+      "signature": "input(prompt='', /)",
+      "description": "Read a string from standard input.  The trailing newline is stripped.",
+      "category": "Functions"
+    },
+    {
+      "name": "isinstance",
+      "kind": "function",
+      "signature": "isinstance(obj, class_or_tuple, /)",
+      "description": "Return whether an object is an instance of a class or of a subclass thereof.",
+      "category": "Functions"
+    },
+    {
+      "name": "issubclass",
+      "kind": "function",
+      "signature": "issubclass(cls, class_or_tuple, /)",
+      "description": "Return whether 'cls' is derived from another class or is the same class.",
+      "category": "Functions"
+    },
+    {
+      "name": "iter",
+      "kind": "function",
+      "signature": "iter(...)",
+      "description": "iter(iterable) -> iterator",
+      "category": "Functions"
+    },
+    {
+      "name": "len",
+      "kind": "function",
+      "signature": "len(obj, /)",
+      "description": "Return the number of items in a container.",
+      "category": "Functions"
+    },
+    {
+      "name": "locals",
+      "kind": "function",
+      "signature": "locals()",
+      "description": "Return a dictionary containing the current scope's local variables.",
+      "category": "Functions"
+    },
+    {
+      "name": "max",
+      "kind": "function",
+      "signature": "max(...)",
+      "description": "max(iterable, *[, default=obj, key=func]) -> value",
+      "category": "Functions"
+    },
+    {
+      "name": "min",
+      "kind": "function",
+      "signature": "min(...)",
+      "description": "min(iterable, *[, default=obj, key=func]) -> value",
+      "category": "Functions"
+    },
+    {
+      "name": "next",
+      "kind": "function",
+      "signature": "next(...)",
+      "description": "next(iterator[, default])",
+      "category": "Functions"
+    },
+    {
+      "name": "oct",
+      "kind": "function",
+      "signature": "oct(number, /)",
+      "description": "Return the octal representation of an integer.",
+      "category": "Functions"
+    },
+    {
+      "name": "open",
+      "kind": "function",
+      "signature": "open(file, mode='r', buffering=-1, encoding=None, errors=None, newline=None, closefd=True, opener=None)",
+      "description": "Open file and return a stream.  Raise OSError upon failure.",
+      "category": "Functions"
+    },
+    {
+      "name": "ord",
+      "kind": "function",
+      "signature": "ord(c, /)",
+      "description": "Return the Unicode code point for a one-character string.",
+      "category": "Functions"
+    },
+    {
+      "name": "pow",
+      "kind": "function",
+      "signature": "pow(base, exp, mod=None)",
+      "description": "Equivalent to base**exp with 2 arguments or base**exp % mod with 3 arguments",
+      "category": "Functions"
+    },
+    {
+      "name": "print",
+      "kind": "function",
+      "signature": "print(*args, sep=' ', end='\\n', file=None, flush=False)",
+      "description": "Prints the values to a stream, or to sys.stdout by default.",
+      "category": "Functions"
+    },
+    {
+      "name": "repr",
+      "kind": "function",
+      "signature": "repr(obj, /)",
+      "description": "Return the canonical string representation of the object.",
+      "category": "Functions"
+    },
+    {
+      "name": "round",
+      "kind": "function",
+      "signature": "round(number, ndigits=None)",
+      "description": "Round a number to a given precision in decimal digits.",
+      "category": "Functions"
+    },
+    {
+      "name": "setattr",
+      "kind": "function",
+      "signature": "setattr(obj, name, value, /)",
+      "description": "Sets the named attribute on the given object to the specified value.",
+      "category": "Functions"
+    },
+    {
+      "name": "sorted",
+      "kind": "function",
+      "signature": "sorted(iterable, /, *, key=None, reverse=False)",
+      "description": "Return a new list containing all items from the iterable in ascending order.",
+      "category": "Functions"
+    },
+    {
+      "name": "sum",
+      "kind": "function",
+      "signature": "sum(iterable, /, start=0)",
+      "description": "Return the sum of a 'start' value (default: 0) plus an iterable of numbers",
+      "category": "Functions"
+    },
+    {
+      "name": "vars",
+      "kind": "function",
+      "signature": "vars(...)",
+      "description": "vars([object]) -> dictionary",
+      "category": "Functions"
+    },
+    {
+      "name": "range.count",
+      "kind": "method",
+      "signature": "count(self, object, /)",
+      "description": "rangeobject.count(value) -> integer -- return number of occurrences of value",
+      "category": "Iteration & Functional"
+    },
+    {
+      "name": "range.index",
+      "kind": "method",
+      "signature": "index(self, object, /)",
+      "description": "rangeobject.index(value) -> integer -- return index of value.",
+      "category": "Iteration & Functional"
+    },
+    {
+      "name": "complex.conjugate",
+      "kind": "method",
+      "signature": "conjugate(self, /)",
+      "description": "Return the complex conjugate of its argument. (3-4j).conjugate() == 3+4j.",
+      "category": "Numeric & Math"
+    },
+    {
+      "name": "float.as_integer_ratio",
+      "kind": "method",
+      "signature": "as_integer_ratio(self, /)",
+      "description": "Return a pair of integers, whose ratio is exactly equal to the original float.",
+      "category": "Numeric & Math"
+    },
+    {
+      "name": "float.conjugate",
+      "kind": "method",
+      "signature": "conjugate(self, /)",
+      "description": "Return self, the complex conjugate of any float.",
+      "category": "Numeric & Math"
+    },
+    {
+      "name": "float.fromhex",
+      "kind": "method",
+      "signature": "fromhex(string, /)",
+      "description": "Create a floating-point number from a hexadecimal string.",
+      "category": "Numeric & Math"
+    },
+    {
+      "name": "float.hex",
+      "kind": "method",
+      "signature": "hex(self, /)",
+      "description": "Return a hexadecimal representation of a floating-point number.",
+      "category": "Numeric & Math"
+    },
+    {
+      "name": "float.is_integer",
+      "kind": "method",
+      "signature": "is_integer(self, /)",
+      "description": "Return True if the float is an integer.",
+      "category": "Numeric & Math"
+    },
+    {
+      "name": "int.as_integer_ratio",
+      "kind": "method",
+      "signature": "as_integer_ratio(self, /)",
+      "description": "Return a pair of integers, whose ratio is equal to the original int.",
+      "category": "Numeric & Math"
+    },
+    {
+      "name": "int.bit_count",
+      "kind": "method",
+      "signature": "bit_count(self, /)",
+      "description": "Number of ones in the binary representation of the absolute value of self.",
+      "category": "Numeric & Math"
+    },
+    {
+      "name": "int.bit_length",
+      "kind": "method",
+      "signature": "bit_length(self, /)",
+      "description": "Number of bits necessary to represent self in binary.",
+      "category": "Numeric & Math"
+    },
+    {
+      "name": "int.conjugate",
+      "kind": "method",
+      "signature": "conjugate(self, /)",
+      "description": "Returns self, the complex conjugate of any int.",
+      "category": "Numeric & Math"
+    },
+    {
+      "name": "int.from_bytes",
+      "kind": "method",
+      "signature": "from_bytes(bytes, byteorder='big', *, signed=False)",
+      "description": "Return the integer represented by the given array of bytes.",
+      "category": "Numeric & Math"
+    },
+    {
+      "name": "int.is_integer",
+      "kind": "method",
+      "signature": "is_integer(self, /)",
+      "description": "Returns True. Exists for duck type compatibility with float.is_integer.",
+      "category": "Numeric & Math"
+    },
+    {
+      "name": "int.to_bytes",
+      "kind": "method",
+      "signature": "to_bytes(self, /, length=1, byteorder='big', *, signed=False)",
+      "description": "Return an array of bytes representing an integer.",
+      "category": "Numeric & Math"
+    },
+    {
+      "name": "abc",
+      "kind": "module",
+      "signature": "import abc",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "antigravity",
+      "kind": "module",
+      "signature": "import antigravity",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "argparse",
+      "kind": "module",
+      "signature": "import argparse",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "array",
+      "kind": "module",
+      "signature": "import array",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "ast",
+      "kind": "module",
+      "signature": "import ast",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "asyncio",
+      "kind": "module",
+      "signature": "import asyncio",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "atexit",
+      "kind": "module",
+      "signature": "import atexit",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "base64",
+      "kind": "module",
+      "signature": "import base64",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "bdb",
+      "kind": "module",
+      "signature": "import bdb",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "binascii",
+      "kind": "module",
+      "signature": "import binascii",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "bisect",
+      "kind": "module",
+      "signature": "import bisect",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "builtins",
+      "kind": "module",
+      "signature": "import builtins",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "bz2",
+      "kind": "module",
+      "signature": "import bz2",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "cProfile",
+      "kind": "module",
+      "signature": "import cProfile",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "calendar",
+      "kind": "module",
+      "signature": "import calendar",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "cmath",
+      "kind": "module",
+      "signature": "import cmath",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "cmd",
+      "kind": "module",
+      "signature": "import cmd",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "code",
+      "kind": "module",
+      "signature": "import code",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "codecs",
+      "kind": "module",
+      "signature": "import codecs",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "codeop",
+      "kind": "module",
+      "signature": "import codeop",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "collections",
+      "kind": "module",
+      "signature": "import collections",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "colorsys",
+      "kind": "module",
+      "signature": "import colorsys",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "compileall",
+      "kind": "module",
+      "signature": "import compileall",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "concurrent",
+      "kind": "module",
+      "signature": "import concurrent",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "configparser",
+      "kind": "module",
+      "signature": "import configparser",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "contextlib",
+      "kind": "module",
+      "signature": "import contextlib",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "contextvars",
+      "kind": "module",
+      "signature": "import contextvars",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "copy",
+      "kind": "module",
+      "signature": "import copy",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "copyreg",
+      "kind": "module",
+      "signature": "import copyreg",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "csv",
+      "kind": "module",
+      "signature": "import csv",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "ctypes",
+      "kind": "module",
+      "signature": "import ctypes",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "curses",
+      "kind": "module",
+      "signature": "import curses",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "dataclasses",
+      "kind": "module",
+      "signature": "import dataclasses",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "datetime",
+      "kind": "module",
+      "signature": "import datetime",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "dbm",
+      "kind": "module",
+      "signature": "import dbm",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "decimal",
+      "kind": "module",
+      "signature": "import decimal",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "difflib",
+      "kind": "module",
+      "signature": "import difflib",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "dis",
+      "kind": "module",
+      "signature": "import dis",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "doctest",
+      "kind": "module",
+      "signature": "import doctest",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "email",
+      "kind": "module",
+      "signature": "import email",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "encodings",
+      "kind": "module",
+      "signature": "import encodings",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "ensurepip",
+      "kind": "module",
+      "signature": "import ensurepip",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "enum",
+      "kind": "module",
+      "signature": "import enum",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "errno",
+      "kind": "module",
+      "signature": "import errno",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "faulthandler",
+      "kind": "module",
+      "signature": "import faulthandler",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "fcntl",
+      "kind": "module",
+      "signature": "import fcntl",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "filecmp",
+      "kind": "module",
+      "signature": "import filecmp",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "fileinput",
+      "kind": "module",
+      "signature": "import fileinput",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "fnmatch",
+      "kind": "module",
+      "signature": "import fnmatch",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "fractions",
+      "kind": "module",
+      "signature": "import fractions",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "ftplib",
+      "kind": "module",
+      "signature": "import ftplib",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "functools",
+      "kind": "module",
+      "signature": "import functools",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "gc",
+      "kind": "module",
+      "signature": "import gc",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "genericpath",
+      "kind": "module",
+      "signature": "import genericpath",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "getopt",
+      "kind": "module",
+      "signature": "import getopt",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "getpass",
+      "kind": "module",
+      "signature": "import getpass",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "gettext",
+      "kind": "module",
+      "signature": "import gettext",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "glob",
+      "kind": "module",
+      "signature": "import glob",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "graphlib",
+      "kind": "module",
+      "signature": "import graphlib",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "grp",
+      "kind": "module",
+      "signature": "import grp",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "gzip",
+      "kind": "module",
+      "signature": "import gzip",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "hashlib",
+      "kind": "module",
+      "signature": "import hashlib",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "heapq",
+      "kind": "module",
+      "signature": "import heapq",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "hmac",
+      "kind": "module",
+      "signature": "import hmac",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "html",
+      "kind": "module",
+      "signature": "import html",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "http",
+      "kind": "module",
+      "signature": "import http",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "idlelib",
+      "kind": "module",
+      "signature": "import idlelib",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "imaplib",
+      "kind": "module",
+      "signature": "import imaplib",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "importlib",
+      "kind": "module",
+      "signature": "import importlib",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "inspect",
+      "kind": "module",
+      "signature": "import inspect",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "io",
+      "kind": "module",
+      "signature": "import io",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "ipaddress",
+      "kind": "module",
+      "signature": "import ipaddress",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "itertools",
+      "kind": "module",
+      "signature": "import itertools",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "json",
+      "kind": "module",
+      "signature": "import json",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "keyword",
+      "kind": "module",
+      "signature": "import keyword",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "linecache",
+      "kind": "module",
+      "signature": "import linecache",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "locale",
+      "kind": "module",
+      "signature": "import locale",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "logging",
+      "kind": "module",
+      "signature": "import logging",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "lzma",
+      "kind": "module",
+      "signature": "import lzma",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "mailbox",
+      "kind": "module",
+      "signature": "import mailbox",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "marshal",
+      "kind": "module",
+      "signature": "import marshal",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "math",
+      "kind": "module",
+      "signature": "import math",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "mimetypes",
+      "kind": "module",
+      "signature": "import mimetypes",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "mmap",
+      "kind": "module",
+      "signature": "import mmap",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "modulefinder",
+      "kind": "module",
+      "signature": "import modulefinder",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "msvcrt",
+      "kind": "module",
+      "signature": "import msvcrt",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "multiprocessing",
+      "kind": "module",
+      "signature": "import multiprocessing",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "netrc",
+      "kind": "module",
+      "signature": "import netrc",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "nt",
+      "kind": "module",
+      "signature": "import nt",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "ntpath",
+      "kind": "module",
+      "signature": "import ntpath",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "nturl2path",
+      "kind": "module",
+      "signature": "import nturl2path",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "numbers",
+      "kind": "module",
+      "signature": "import numbers",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "opcode",
+      "kind": "module",
+      "signature": "import opcode",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "operator",
+      "kind": "module",
+      "signature": "import operator",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "optparse",
+      "kind": "module",
+      "signature": "import optparse",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "os",
+      "kind": "module",
+      "signature": "import os",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "pathlib",
+      "kind": "module",
+      "signature": "import pathlib",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "pdb",
+      "kind": "module",
+      "signature": "import pdb",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "pickle",
+      "kind": "module",
+      "signature": "import pickle",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "pickletools",
+      "kind": "module",
+      "signature": "import pickletools",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "pkgutil",
+      "kind": "module",
+      "signature": "import pkgutil",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "platform",
+      "kind": "module",
+      "signature": "import platform",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "plistlib",
+      "kind": "module",
+      "signature": "import plistlib",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "poplib",
+      "kind": "module",
+      "signature": "import poplib",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "posix",
+      "kind": "module",
+      "signature": "import posix",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "posixpath",
+      "kind": "module",
+      "signature": "import posixpath",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "pprint",
+      "kind": "module",
+      "signature": "import pprint",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "profile",
+      "kind": "module",
+      "signature": "import profile",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "pstats",
+      "kind": "module",
+      "signature": "import pstats",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "pty",
+      "kind": "module",
+      "signature": "import pty",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "pwd",
+      "kind": "module",
+      "signature": "import pwd",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "py_compile",
+      "kind": "module",
+      "signature": "import py_compile",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "pyclbr",
+      "kind": "module",
+      "signature": "import pyclbr",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "pydoc",
+      "kind": "module",
+      "signature": "import pydoc",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "pydoc_data",
+      "kind": "module",
+      "signature": "import pydoc_data",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "pyexpat",
+      "kind": "module",
+      "signature": "import pyexpat",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "queue",
+      "kind": "module",
+      "signature": "import queue",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "quopri",
+      "kind": "module",
+      "signature": "import quopri",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "random",
+      "kind": "module",
+      "signature": "import random",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "re",
+      "kind": "module",
+      "signature": "import re",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "readline",
+      "kind": "module",
+      "signature": "import readline",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "reprlib",
+      "kind": "module",
+      "signature": "import reprlib",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "resource",
+      "kind": "module",
+      "signature": "import resource",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "rlcompleter",
+      "kind": "module",
+      "signature": "import rlcompleter",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "runpy",
+      "kind": "module",
+      "signature": "import runpy",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "sched",
+      "kind": "module",
+      "signature": "import sched",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "secrets",
+      "kind": "module",
+      "signature": "import secrets",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "select",
+      "kind": "module",
+      "signature": "import select",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "selectors",
+      "kind": "module",
+      "signature": "import selectors",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "shelve",
+      "kind": "module",
+      "signature": "import shelve",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "shlex",
+      "kind": "module",
+      "signature": "import shlex",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "shutil",
+      "kind": "module",
+      "signature": "import shutil",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "signal",
+      "kind": "module",
+      "signature": "import signal",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "site",
+      "kind": "module",
+      "signature": "import site",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "smtplib",
+      "kind": "module",
+      "signature": "import smtplib",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "socket",
+      "kind": "module",
+      "signature": "import socket",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "socketserver",
+      "kind": "module",
+      "signature": "import socketserver",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "sqlite3",
+      "kind": "module",
+      "signature": "import sqlite3",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "sre_compile",
+      "kind": "module",
+      "signature": "import sre_compile",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "sre_constants",
+      "kind": "module",
+      "signature": "import sre_constants",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "sre_parse",
+      "kind": "module",
+      "signature": "import sre_parse",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "ssl",
+      "kind": "module",
+      "signature": "import ssl",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "stat",
+      "kind": "module",
+      "signature": "import stat",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "statistics",
+      "kind": "module",
+      "signature": "import statistics",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "string",
+      "kind": "module",
+      "signature": "import string",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "stringprep",
+      "kind": "module",
+      "signature": "import stringprep",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "struct",
+      "kind": "module",
+      "signature": "import struct",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "subprocess",
+      "kind": "module",
+      "signature": "import subprocess",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "symtable",
+      "kind": "module",
+      "signature": "import symtable",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "sys",
+      "kind": "module",
+      "signature": "import sys",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "sysconfig",
+      "kind": "module",
+      "signature": "import sysconfig",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "syslog",
+      "kind": "module",
+      "signature": "import syslog",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "tabnanny",
+      "kind": "module",
+      "signature": "import tabnanny",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "tarfile",
+      "kind": "module",
+      "signature": "import tarfile",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "tempfile",
+      "kind": "module",
+      "signature": "import tempfile",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "termios",
+      "kind": "module",
+      "signature": "import termios",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "textwrap",
+      "kind": "module",
+      "signature": "import textwrap",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "this",
+      "kind": "module",
+      "signature": "import this",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "threading",
+      "kind": "module",
+      "signature": "import threading",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "time",
+      "kind": "module",
+      "signature": "import time",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "timeit",
+      "kind": "module",
+      "signature": "import timeit",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "tkinter",
+      "kind": "module",
+      "signature": "import tkinter",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "token",
+      "kind": "module",
+      "signature": "import token",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "tokenize",
+      "kind": "module",
+      "signature": "import tokenize",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "tomllib",
+      "kind": "module",
+      "signature": "import tomllib",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "trace",
+      "kind": "module",
+      "signature": "import trace",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "traceback",
+      "kind": "module",
+      "signature": "import traceback",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "tracemalloc",
+      "kind": "module",
+      "signature": "import tracemalloc",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "tty",
+      "kind": "module",
+      "signature": "import tty",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "turtle",
+      "kind": "module",
+      "signature": "import turtle",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "turtledemo",
+      "kind": "module",
+      "signature": "import turtledemo",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "types",
+      "kind": "module",
+      "signature": "import types",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "typing",
+      "kind": "module",
+      "signature": "import typing",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "unicodedata",
+      "kind": "module",
+      "signature": "import unicodedata",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "unittest",
+      "kind": "module",
+      "signature": "import unittest",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "urllib",
+      "kind": "module",
+      "signature": "import urllib",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "uuid",
+      "kind": "module",
+      "signature": "import uuid",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "venv",
+      "kind": "module",
+      "signature": "import venv",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "warnings",
+      "kind": "module",
+      "signature": "import warnings",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "wave",
+      "kind": "module",
+      "signature": "import wave",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "weakref",
+      "kind": "module",
+      "signature": "import weakref",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "webbrowser",
+      "kind": "module",
+      "signature": "import webbrowser",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "winreg",
+      "kind": "module",
+      "signature": "import winreg",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "winsound",
+      "kind": "module",
+      "signature": "import winsound",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "wsgiref",
+      "kind": "module",
+      "signature": "import wsgiref",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "xml",
+      "kind": "module",
+      "signature": "import xml",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "xmlrpc",
+      "kind": "module",
+      "signature": "import xmlrpc",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "zipapp",
+      "kind": "module",
+      "signature": "import zipapp",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "zipfile",
+      "kind": "module",
+      "signature": "import zipfile",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "zipimport",
+      "kind": "module",
+      "signature": "import zipimport",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "zlib",
+      "kind": "module",
+      "signature": "import zlib",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "zoneinfo",
+      "kind": "module",
+      "signature": "import zoneinfo",
+      "description": "Standard library module.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "str.capitalize",
+      "kind": "method",
+      "signature": "capitalize(self, /)",
+      "description": "Return a capitalized version of the string.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.casefold",
+      "kind": "method",
+      "signature": "casefold(self, /)",
+      "description": "Return a version of the string suitable for caseless comparisons.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.center",
+      "kind": "method",
+      "signature": "center(self, width, fillchar=' ', /)",
+      "description": "Return a centered string of length width.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.count",
+      "kind": "method",
+      "signature": "count(...)",
+      "description": "Return the number of non-overlapping occurrences of substring sub in string S[start:end].",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.encode",
+      "kind": "method",
+      "signature": "encode(self, /, encoding='utf-8', errors='strict')",
+      "description": "Encode the string using the codec registered for encoding.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.endswith",
+      "kind": "method",
+      "signature": "endswith(...)",
+      "description": "Return True if the string ends with the specified suffix, False otherwise.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.expandtabs",
+      "kind": "method",
+      "signature": "expandtabs(self, /, tabsize=8)",
+      "description": "Return a copy where all tab characters are expanded using spaces.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.find",
+      "kind": "method",
+      "signature": "find(...)",
+      "description": "Return the lowest index in S where substring sub is found, such that sub is contained within S[start:end].",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.format",
+      "kind": "method",
+      "signature": "format(self, /, *args, **kwargs)",
+      "description": "Return a formatted version of the string, using substitutions from args and kwargs.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.format_map",
+      "kind": "method",
+      "signature": "format_map(self, mapping, /)",
+      "description": "Return a formatted version of the string, using substitutions from mapping.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.index",
+      "kind": "method",
+      "signature": "index(...)",
+      "description": "Return the lowest index in S where substring sub is found, such that sub is contained within S[start:end].",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.isalnum",
+      "kind": "method",
+      "signature": "isalnum(self, /)",
+      "description": "Return True if the string is an alpha-numeric string, False otherwise.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.isalpha",
+      "kind": "method",
+      "signature": "isalpha(self, /)",
+      "description": "Return True if the string is an alphabetic string, False otherwise.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.isascii",
+      "kind": "method",
+      "signature": "isascii(self, /)",
+      "description": "Return True if all characters in the string are ASCII, False otherwise.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.isdecimal",
+      "kind": "method",
+      "signature": "isdecimal(self, /)",
+      "description": "Return True if the string is a decimal string, False otherwise.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.isdigit",
+      "kind": "method",
+      "signature": "isdigit(self, /)",
+      "description": "Return True if the string is a digit string, False otherwise.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.isidentifier",
+      "kind": "method",
+      "signature": "isidentifier(self, /)",
+      "description": "Return True if the string is a valid Python identifier, False otherwise.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.islower",
+      "kind": "method",
+      "signature": "islower(self, /)",
+      "description": "Return True if the string is a lowercase string, False otherwise.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.isnumeric",
+      "kind": "method",
+      "signature": "isnumeric(self, /)",
+      "description": "Return True if the string is a numeric string, False otherwise.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.isprintable",
+      "kind": "method",
+      "signature": "isprintable(self, /)",
+      "description": "Return True if all characters in the string are printable, False otherwise.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.isspace",
+      "kind": "method",
+      "signature": "isspace(self, /)",
+      "description": "Return True if the string is a whitespace string, False otherwise.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.istitle",
+      "kind": "method",
+      "signature": "istitle(self, /)",
+      "description": "Return True if the string is a title-cased string, False otherwise.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.isupper",
+      "kind": "method",
+      "signature": "isupper(self, /)",
+      "description": "Return True if the string is an uppercase string, False otherwise.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.join",
+      "kind": "method",
+      "signature": "join(self, iterable, /)",
+      "description": "Concatenate any number of strings.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.ljust",
+      "kind": "method",
+      "signature": "ljust(self, width, fillchar=' ', /)",
+      "description": "Return a left-justified string of length width.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.lower",
+      "kind": "method",
+      "signature": "lower(self, /)",
+      "description": "Return a copy of the string converted to lowercase.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.lstrip",
+      "kind": "method",
+      "signature": "lstrip(self, chars=None, /)",
+      "description": "Return a copy of the string with leading whitespace removed.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.maketrans",
+      "kind": "method",
+      "signature": "maketrans(...)",
+      "description": "Return a translation table usable for str.translate().",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.partition",
+      "kind": "method",
+      "signature": "partition(self, sep, /)",
+      "description": "Partition the string into three parts using the given separator.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.removeprefix",
+      "kind": "method",
+      "signature": "removeprefix(self, prefix, /)",
+      "description": "Return a str with the given prefix string removed if present.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.removesuffix",
+      "kind": "method",
+      "signature": "removesuffix(self, suffix, /)",
+      "description": "Return a str with the given suffix string removed if present.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.replace",
+      "kind": "method",
+      "signature": "replace(self, old, new, /, count=-1)",
+      "description": "Return a copy with all occurrences of substring old replaced by new.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.rfind",
+      "kind": "method",
+      "signature": "rfind(...)",
+      "description": "Return the highest index in S where substring sub is found, such that sub is contained within S[start:end].",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.rindex",
+      "kind": "method",
+      "signature": "rindex(...)",
+      "description": "Return the highest index in S where substring sub is found, such that sub is contained within S[start:end].",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.rjust",
+      "kind": "method",
+      "signature": "rjust(self, width, fillchar=' ', /)",
+      "description": "Return a right-justified string of length width.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.rpartition",
+      "kind": "method",
+      "signature": "rpartition(self, sep, /)",
+      "description": "Partition the string into three parts using the given separator.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.rsplit",
+      "kind": "method",
+      "signature": "rsplit(self, /, sep=None, maxsplit=-1)",
+      "description": "Return a list of the substrings in the string, using sep as the separator string.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.rstrip",
+      "kind": "method",
+      "signature": "rstrip(self, chars=None, /)",
+      "description": "Return a copy of the string with trailing whitespace removed.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.split",
+      "kind": "method",
+      "signature": "split(self, /, sep=None, maxsplit=-1)",
+      "description": "Return a list of the substrings in the string, using sep as the separator string.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.splitlines",
+      "kind": "method",
+      "signature": "splitlines(self, /, keepends=False)",
+      "description": "Return a list of the lines in the string, breaking at line boundaries.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.startswith",
+      "kind": "method",
+      "signature": "startswith(...)",
+      "description": "Return True if the string starts with the specified prefix, False otherwise.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.strip",
+      "kind": "method",
+      "signature": "strip(self, chars=None, /)",
+      "description": "Return a copy of the string with leading and trailing whitespace removed.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.swapcase",
+      "kind": "method",
+      "signature": "swapcase(self, /)",
+      "description": "Convert uppercase characters to lowercase and lowercase characters to uppercase.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.title",
+      "kind": "method",
+      "signature": "title(self, /)",
+      "description": "Return a version of the string where each word is titlecased.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.translate",
+      "kind": "method",
+      "signature": "translate(self, table, /)",
+      "description": "Replace each character in the string using the given translation table.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.upper",
+      "kind": "method",
+      "signature": "upper(self, /)",
+      "description": "Return a copy of the string converted to uppercase.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "str.zfill",
+      "kind": "method",
+      "signature": "zfill(self, width, /)",
+      "description": "Pad a numeric string with zeros on the left, to fill a field of the given width.",
+      "category": "Text & RegExp"
+    },
+    {
+      "name": "bool",
+      "kind": "class",
+      "signature": "bool(...)",
+      "description": "Returns True when the argument is true, False otherwise.",
+      "category": "Types"
+    },
+    {
+      "name": "bytearray",
+      "kind": "class",
+      "signature": "bytearray(...)",
+      "description": "bytearray(iterable_of_ints) -> bytearray",
+      "category": "Types"
+    },
+    {
+      "name": "bytes",
+      "kind": "class",
+      "signature": "bytes(...)",
+      "description": "bytes(iterable_of_ints) -> bytes",
+      "category": "Types"
+    },
+    {
+      "name": "complex",
+      "kind": "class",
+      "signature": "complex(...)",
+      "description": "Create a complex number from a string or numbers.",
+      "category": "Types"
+    },
+    {
+      "name": "dict",
+      "kind": "class",
+      "signature": "dict(...)",
+      "description": "dict() -> new empty dictionary",
+      "category": "Types"
+    },
+    {
+      "name": "float",
+      "kind": "class",
+      "signature": "float(...)",
+      "description": "Convert a string or number to a floating-point number, if possible.",
+      "category": "Types"
+    },
+    {
+      "name": "int",
+      "kind": "class",
+      "signature": "int(...)",
+      "description": "int([x]) -> integer",
+      "category": "Types"
+    },
+    {
+      "name": "list",
+      "kind": "class",
+      "signature": "list(...)",
+      "description": "Built-in mutable sequence.",
+      "category": "Types"
+    },
+    {
+      "name": "memoryview",
+      "kind": "class",
+      "signature": "memoryview(...)",
+      "description": "Create a new memoryview object which references the given object.",
+      "category": "Types"
+    },
+    {
+      "name": "object",
+      "kind": "class",
+      "signature": "object(...)",
+      "description": "The base class of the class hierarchy.",
+      "category": "Types"
+    },
+    {
+      "name": "range",
+      "kind": "class",
+      "signature": "range(...)",
+      "description": "range(stop) -> range object",
+      "category": "Types"
+    },
+    {
+      "name": "set",
+      "kind": "class",
+      "signature": "set(...)",
+      "description": "Build an unordered collection of unique elements.",
+      "category": "Types"
+    },
+    {
+      "name": "slice",
+      "kind": "class",
+      "signature": "slice(...)",
+      "description": "slice(stop)",
+      "category": "Types"
+    },
+    {
+      "name": "str",
+      "kind": "class",
+      "signature": "str(...)",
+      "description": "str(object='') -> str",
+      "category": "Types"
+    },
+    {
+      "name": "tuple",
+      "kind": "class",
+      "signature": "tuple(...)",
+      "description": "Built-in immutable sequence.",
+      "category": "Types"
+    },
+    {
+      "name": "type",
+      "kind": "class",
+      "signature": "type(...)",
+      "description": "type(object) -> the object's type",
+      "category": "Types"
+    },
+    {
+      "name": "classmethod",
+      "kind": "class",
+      "signature": "classmethod(...)",
+      "description": "Convert a function to be a class method.",
+      "category": "Utilities"
+    },
+    {
+      "name": "enumerate",
+      "kind": "class",
+      "signature": "enumerate(...)",
+      "description": "Return an enumerate object.",
+      "category": "Utilities"
+    },
+    {
+      "name": "filter",
+      "kind": "class",
+      "signature": "filter(...)",
+      "description": "Return an iterator yielding those items of iterable for which function(item)",
+      "category": "Utilities"
+    },
+    {
+      "name": "map",
+      "kind": "class",
+      "signature": "map(...)",
+      "description": "Make an iterator that computes the function using arguments from",
+      "category": "Utilities"
+    },
+    {
+      "name": "property",
+      "kind": "class",
+      "signature": "property(...)",
+      "description": "Property attribute.",
+      "category": "Utilities"
+    },
+    {
+      "name": "reversed",
+      "kind": "class",
+      "signature": "reversed(...)",
+      "description": "Return a reverse iterator over the values of the given sequence.",
+      "category": "Utilities"
+    },
+    {
+      "name": "staticmethod",
+      "kind": "class",
+      "signature": "staticmethod(...)",
+      "description": "Convert a function to be a static method.",
+      "category": "Utilities"
+    },
+    {
+      "name": "super",
+      "kind": "class",
+      "signature": "super(...)",
+      "description": "super() -> same as super(__class__, <first argument>)",
+      "category": "Utilities"
+    },
+    {
+      "name": "zip",
+      "kind": "class",
+      "signature": "zip(...)",
+      "description": "The zip object yields n-length tuples, where n is the number of iterables",
+      "category": "Utilities"
+    }
+  ],
+  "projects": [
+    {
+      "title": "To-Do CLI",
+      "summary": "Add/list tasks saved to a JSON file.",
+      "description": "A simple command-line app that stores tasks in todo.json.",
+      "steps": [
+        {
+          "title": "Script",
+          "code": "# todo.py\nimport argparse, json, pathlib\nPATH = pathlib.Path('todo.json')\n\ndef load():\n    return json.loads(PATH.read_text()) if PATH.exists() else []\n\ndef save(items):\n    PATH.write_text(json.dumps(items, indent=2))\n\nparser = argparse.ArgumentParser()\nparser.add_argument('cmd', choices=['add','list'])\nparser.add_argument('text', nargs='?')\nargs = parser.parse_args([])  # replace [] with real args when running\nitems = load()\nif args.cmd == 'add' and args.text:\n    items.append({'text': args.text, 'done': False})\n    save(items)\nif args.cmd == 'list':\n    for i, it in enumerate(items, 1):\n        print(f\"{i}. {'[x]' if it['done'] else '[ ]'} {it['text']}\")"
+        }
+      ]
+    },
+    {
+      "title": "CSV Summarizer",
+      "summary": "Compute quick stats from a CSV file.",
+      "description": "Reads a CSV and prints count and averages.",
+      "steps": [
+        {
+          "title": "Script",
+          "code": "# summarize.py\nimport csv, statistics as stats\nwith open('data.csv', newline='', encoding='utf-8') as f:\n    rows = list(csv.DictReader(f))\n    ages = [int(r['age']) for r in rows if r.get('age')]\nprint('rows:', len(rows))\nprint('avg age:', round(stats.mean(ages), 1))"
+        }
+      ]
+    },
+    {
+      "title": "Web Fetcher",
+      "summary": "Download JSON and save to disk.",
+      "description": "Fetch an API and store the response.",
+      "steps": [
+        {
+          "title": "Script",
+          "code": "# fetch.py\nimport json, urllib.request, pathlib\nurl = 'https://httpbin.org/json'\nwith urllib.request.urlopen(url) as r:\n    data = json.load(r)\npathlib.Path('out').mkdir(exist_ok=True)\nopen('out/data.json','w',encoding='utf-8').write(json.dumps(data, indent=2))\nprint('saved to out/data.json')"
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Variable",
+      "definition": "A named reference to a value (e.g., x = 3)."
+    },
+    {
+      "term": "Function",
+      "definition": "Reusable block of code that can take inputs and return a value."
+    },
+    {
+      "term": "Module",
+      "definition": "A .py file with code you can import."
+    },
+    {
+      "term": "Package",
+      "definition": "A folder of modules (often with __init__.py)."
+    },
+    {
+      "term": "Virtual environment",
+      "definition": "Self-contained folder for project-specific Python and packages."
+    },
+    {
+      "term": "pip",
+      "definition": "Python’s package installer (downloads from PyPI)."
+    },
+    {
+      "term": "Standard library",
+      "definition": "Batteries-included modules that ship with Python."
+    },
+    {
+      "term": "REPL",
+      "definition": "Interactive prompt where you can type and run Python line by line."
+    },
+    {
+      "term": "Exception",
+      "definition": "An error you can handle with try/except."
+    },
+    {
+      "term": "Iterable",
+      "definition": "Something you can loop over (like list, str, file)."
+    },
+    {
+      "term": "Dict",
+      "definition": "Key–value mapping, e.g., {'name':'Ada'}."
+    },
+    {
+      "term": "List",
+      "definition": "Ordered, changeable collection: [1, 2, 3]."
+    },
+    {
+      "term": "Tuple",
+      "definition": "Ordered, unchangeable collection: (1, 2)."
+    },
+    {
+      "term": "Set",
+      "definition": "Unordered collection of unique items: {'a','b'}."
+    },
+    {
+      "term": "Comprehension",
+      "definition": "Compact way to build a list/dict/set from a loop."
+    },
+    {
+      "term": "Decorator",
+      "definition": "Function that modifies another function or method."
+    },
+    {
+      "term": "Dataclass",
+      "definition": "Class helper that auto-generates __init__ and more for data fields."
+    }
+  ],
+  "tips": [
+    {
+      "title": "Indentation",
+      "note": "Use 4 spaces (not tabs) and keep it consistent."
+    },
+    {
+      "title": "Virtualenv",
+      "note": "Create a venv per project; install packages inside it."
+    },
+    {
+      "title": "Formatting",
+      "note": "Use f-strings for readable messages: f'User {name}'."
+    },
+    {
+      "title": "Paths",
+      "note": "Prefer pathlib.Path over os.path for file work."
+    },
+    {
+      "title": "Files",
+      "note": "Use with open(...) so files always close."
+    },
+    {
+      "title": "Errors",
+      "note": "Catch specific exceptions (ValueError, FileNotFoundError), not bare except."
+    },
+    {
+      "title": "Loops",
+      "note": "Use enumerate(list) instead of manual indexes."
+    },
+    {
+      "title": "Help",
+      "note": "Use help(name) in the REPL to read docs quickly."
+    }
   ]
 }

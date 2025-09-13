@@ -3,33 +3,150 @@
   "slug": "elixir",
   "version": "1.16+",
   "quick_start": [
-    {"title": "Install Elixir", "description": "Use asdf or your OS packages.", "code": "elixir -v"},
-    {"title": "Hello, World", "description": "Run a script.", "code": "IO.puts(\"Hello, world!\")"}
+    {
+      "title": "Install Elixir",
+      "description": "Use asdf or your OS packages.",
+      "code": "elixir -v"
+    },
+    {
+      "title": "Hello, World",
+      "description": "Run a script.",
+      "code": "IO.puts(\"Hello, world!\")"
+    }
   ],
   "common_tasks": [
-    {"group": "I/O", "tasks": [
-      {"title": "Read a file", "description": "File.read!", "code": "s = File.read!(\\"README.md\\"); IO.puts(String.slice(s, 0, 200))"}
-    ]},
-    {"group": "HTTP + APIs", "tasks": [
-      {"title": "GET JSON", "description": ":httpc simple request", "code": "{:ok, {{_, 200, _}, _headers, body}} = :httpc.request(:get, {'https://httpbin.org/json', []}, [], [])\nIO.puts(body)"}
-    ]}
+    {
+      "group": "Files & Data",
+      "tasks": [
+        {
+          "title": "Read a file",
+          "description": "File.read!",
+          "code": "s = File.read!('README.md'); IO.puts(String.slice(s, 0, 200))"
+        },
+        {
+          "title": "Write JSON",
+          "description": "Write a JSON-like string.",
+          "code": "File.write!('data.json', '{ok:true}')"
+        }
+      ]
+    },
+    {
+      "group": "HTTP + APIs",
+      "tasks": [
+        {
+          "title": "GET JSON",
+          "description": ":httpc simple request",
+          "code": "{:ok, {{_, 200, _}, _headers, body}} = :httpc.request(:get, {'https://httpbin.org/json', []}, [], [])\nIO.puts(body)"
+        },
+        {
+          "title": "POST JSON",
+          "description": ":httpc post",
+          "code": ":inets.start()\n:ssl.start()\nheaders = [{'content-type', 'application/json'}]\nbody = '{ok:true}'\n{:ok, {{_, status, _}, _h, resp}} = :httpc.request(:post, {'https://httpbin.org/post', headers, 'application/json', body}, [], [])\nIO.inspect(status)"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "To-Do CLI",
+      "summary": "Append/list lines in todo.txt.",
+      "description": "Simple file-based tasks.",
+      "steps": [
+        {
+          "title": "todo.exs",
+          "code": "path = \"todo.txt\"\ncase System.argv() do\n  [\"add\", text] -> File.write!(path, text <> \"\\n\", [:append])\n  [\"list\"] -> if File.exists?(path), do: IO.write(File.read!(path))\n  _ -> IO.puts(\"usage: elixir todo.exs add <text> | list\")\nend"
+        }
+      ]
+    },
+    {
+      "title": "Web Fetcher",
+      "summary": "Download JSON to disk.",
+      "description": ":httpc + File.write!",
+      "steps": [
+        {
+          "title": "fetch.exs",
+          "code": ":inets.start(); :ssl.start()\n{:ok, {{_, 200, _}, _h, body}} = :httpc.request(:get, {'https://httpbin.org/json', []}, [], [])\nFile.mkdir_p!(\"out\")\nFile.write!(\"out/data.json\", body)\nIO.puts(\"saved to out/data.json\")"
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Process",
+      "definition": "Lightweight BEAM process (not OS thread)."
+    },
+    {
+      "term": "Pattern matching",
+      "definition": "Bind variables by matching shapes of data."
+    }
+  ],
+  "tips": [
+    {
+      "title": "Pipes",
+      "note": "Use the |> operator to chain transformations."
+    },
+    {
+      "title": "Mix",
+      "note": "Use mix new to start apps; mix run for scripts."
+    }
   ],
   "stdlib": [
-    {"name": "Enum", "description": "Enumerable utils"},
-    {"name": "File", "description": "Filesystem"}
+    {
+      "name": "Enum",
+      "description": "Enumerable utils"
+    },
+    {
+      "name": "File",
+      "description": "Filesystem"
+    }
   ],
   "tools": [
-    {"name": "mix", "description": "Build & deps"}
+    {
+      "name": "mix",
+      "description": "Build & deps"
+    }
   ],
   "links": [
-    {"title": "Elixir Docs", "url": "https://hexdocs.pm/elixir/"},
-    {"title": "Hex", "url": "https://hex.pm/"}
+    {
+      "title": "Elixir Docs",
+      "url": "https://hexdocs.pm/elixir/"
+    },
+    {
+      "title": "Hex",
+      "url": "https://hex.pm/"
+    }
   ],
   "builtins": [
-    {"name": "IO.puts", "kind": "function", "signature": "IO.puts(term)", "description": "Print line."},
-    {"name": "Enum.map", "kind": "function", "signature": "Enum.map(enum, fun)", "description": "Map over enumerable."},
-    {"name": "String.upcase", "kind": "function", "signature": "String.upcase(binary)", "description": "Uppercase a string."},
-    {"name": "String", "kind": "module", "signature": "String", "description": "String functions."},
-    {"name": "Phoenix", "kind": "library", "signature": "phoenix", "description": "Elixir web framework."}
-  ]
+    {
+      "name": "IO.puts",
+      "kind": "function",
+      "signature": "IO.puts(term)",
+      "description": "Print line."
+    },
+    {
+      "name": "Enum.map",
+      "kind": "function",
+      "signature": "Enum.map(enum, fun)",
+      "description": "Map over enumerable."
+    },
+    {
+      "name": "String.upcase",
+      "kind": "function",
+      "signature": "String.upcase(binary)",
+      "description": "Uppercase a string."
+    },
+    {
+      "name": "String",
+      "kind": "module",
+      "signature": "String",
+      "description": "String functions."
+    },
+    {
+      "name": "Phoenix",
+      "kind": "library",
+      "signature": "phoenix",
+      "description": "Elixir web framework."
+    }
+  ],
+  "concepts": []
 }

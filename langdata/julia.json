@@ -3,32 +3,162 @@
   "slug": "julia",
   "version": "1.x",
   "quick_start": [
-    {"title": "Install Julia", "description": "Download from julialang.org.", "code": "julia --version"},
-    {"title": "Hello, World", "description": "Run a script.", "code": "println(\"Hello, world!\")"}
+    {
+      "title": "Install Julia",
+      "description": "Download from julialang.org.",
+      "code": "julia --version"
+    },
+    {
+      "title": "Hello, World",
+      "description": "Run a script.",
+      "code": "println(\"Hello, world!\")"
+    }
   ],
   "common_tasks": [
-    {"group": "I/O", "tasks": [
-      {"title": "Read text", "description": "read with String", "code": "s = String(read(\"README.md\")); println(first(s, 200))"}
-    ]},
-    {"group": "HTTP + APIs", "tasks": [
-      {"title": "GET JSON", "description": "HTTP.jl", "code": "import Pkg; Pkg.add(\"HTTP\")\nres = HTTP.get(\"https://httpbin.org/json\"); println(String(res.body))"}
-    ]}
+    {
+      "group": "Files & Data",
+      "tasks": [
+        {
+          "title": "Read text",
+          "description": "read file",
+          "code": "s = String(read(\"README.md\")); println(first(s, 200))"
+        },
+        {
+          "title": "Write JSON (string)",
+          "description": "No deps version",
+          "code": "write(\"data.json\", \"{\\\"ok\\\":true}\")"
+        }
+      ]
+    },
+    {
+      "group": "HTTP + APIs",
+      "tasks": [
+        {
+          "title": "GET JSON",
+          "description": "HTTP.jl",
+          "code": "import Pkg; Pkg.add(\"HTTP\")\nusing HTTP\nres = HTTP.get(\"https://httpbin.org/json\"); println(String(res.body))"
+        },
+        {
+          "title": "POST JSON",
+          "description": "HTTP.jl POST",
+          "code": "using HTTP\nres = HTTP.post(\"https://httpbin.org/post\", [\"Content-Type\"=>\"application/json\"], \"{\\\"ok\\\":true}\"); println(res.status)"
+        }
+      ]
+    },
+    {
+      "group": "Env & Config",
+      "tasks": [
+        {
+          "title": "Read environment",
+          "description": "ENV default",
+          "code": "port = get(ENV, \"PORT\", \"8000\"); println(port)"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "CSV Summarizer",
+      "summary": "Count rows and average age.",
+      "description": "Reads a CSV via basic splitting (no deps).",
+      "steps": [
+        {
+          "title": "script.jl",
+          "code": "txt = read(\"data.csv\", String)\nlines = split(chomp(txt), '\n')\ncols = split(first(lines), ',')\nai = findfirst(==(\"age\"), cols)\nrows = [split(l, ',') for l in lines[2:end]]\nages = [parse(Int, r[ai]) for r in rows if ai !== nothing && length(r) >= ai && all(isdigit, r[ai])]\nprintln(\"rows: \", length(rows)); if !isempty(ages) println(\"avg age: \", round(sum(ages)/length(ages), digits=1)) end"
+        }
+      ]
+    },
+    {
+      "title": "Web Fetcher",
+      "summary": "Download JSON to disk.",
+      "description": "HTTP.jl + write",
+      "steps": [
+        {
+          "title": "script.jl",
+          "code": "using HTTP\nres = HTTP.get(\"https://httpbin.org/json\"); mkpath(\"out\"); write(\"out/data.json\", String(res.body)); println(\"saved to out/data.json\")"
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Vector",
+      "definition": "1‑D array (e.g., Vector{Int})."
+    },
+    {
+      "term": "Tuple",
+      "definition": "Fixed-size ordered collection of possibly mixed types."
+    },
+    {
+      "term": "Module",
+      "definition": "Namespace for code; use using/import."
+    }
+  ],
+  "tips": [
+    {
+      "title": "Pkg mode",
+      "note": "Enter Pkg REPL with ] to add/remove packages."
+    },
+    {
+      "title": "Broadcast",
+      "note": "Use . for element-wise ops: sin.(arr)."
+    }
   ],
   "stdlib": [
-    {"name": "Base", "description": "Core language"}
+    {
+      "name": "Base",
+      "description": "Core language"
+    }
   ],
   "tools": [
-    {"name": "Pkg", "description": "Package manager"}
+    {
+      "name": "Pkg",
+      "description": "Package manager"
+    }
   ],
   "links": [
-    {"title": "Julia Docs", "url": "https://docs.julialang.org/"}
+    {
+      "title": "Julia Docs",
+      "url": "https://docs.julialang.org/"
+    }
   ],
   "builtins": [
-    {"name": "+", "kind": "function", "signature": "+(x,y)", "description": "Addition."},
-    {"name": "println", "kind": "function", "signature": "println(x)", "description": "Print with newline."},
-    {"name": "uppercase", "kind": "function", "signature": "uppercase(s::AbstractString)", "description": "Uppercase a string."},
-    {"name": "map", "kind": "function", "signature": "map(f, collection)", "description": "Apply a function to all elements."},
-    {"name": "Base", "kind": "module", "signature": "module Base", "description": "Core language definitions."},
-    {"name": "LinearAlgebra", "kind": "library", "signature": "using LinearAlgebra", "description": "Standard library for linear algebra."}
-  ]
+    {
+      "name": "+",
+      "kind": "function",
+      "signature": "+(x,y)",
+      "description": "Addition."
+    },
+    {
+      "name": "println",
+      "kind": "function",
+      "signature": "println(x)",
+      "description": "Print with newline."
+    },
+    {
+      "name": "uppercase",
+      "kind": "function",
+      "signature": "uppercase(s::AbstractString)",
+      "description": "Uppercase a string."
+    },
+    {
+      "name": "map",
+      "kind": "function",
+      "signature": "map(f, collection)",
+      "description": "Apply a function to all elements."
+    },
+    {
+      "name": "Base",
+      "kind": "module",
+      "signature": "module Base",
+      "description": "Core language definitions."
+    },
+    {
+      "name": "LinearAlgebra",
+      "kind": "library",
+      "signature": "using LinearAlgebra",
+      "description": "Standard library for linear algebra."
+    }
+  ],
+  "concepts": []
 }

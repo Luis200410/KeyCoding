@@ -3,28 +3,175 @@
   "slug": "sql",
   "version": "ANSI",
   "quick_start": [
-    {"title": "SQLite", "description": "Use sqlite3 CLI.", "code": "sqlite3 --version"}
+    {
+      "title": "SQLite",
+      "description": "Use sqlite3 CLI.",
+      "code": "sqlite3 --version"
+    }
   ],
   "common_tasks": [
-    {"group": "CRUD", "tasks": [
-      {"title": "Create table", "description": "Basic DDL", "code": "CREATE TABLE users(id INTEGER PRIMARY KEY, name TEXT);"},
-      {"title": "Insert row", "description": "INSERT", "code": "INSERT INTO users(name) VALUES ('Ada');"},
-      {"title": "Select rows", "description": "SELECT", "code": "SELECT * FROM users;"}
-    ]}
+    {
+      "group": "CRUD",
+      "tasks": [
+        {
+          "title": "Create table",
+          "description": "DDL",
+          "code": "CREATE TABLE users(id INTEGER PRIMARY KEY, name TEXT, age INTEGER);"
+        },
+        {
+          "title": "Insert rows",
+          "description": "INSERT",
+          "code": "INSERT INTO users(name, age) VALUES ('Ada',36),('Linus',54);"
+        },
+        {
+          "title": "Select rows",
+          "description": "SELECT",
+          "code": "SELECT id, name, age FROM users ORDER BY age DESC;"
+        },
+        {
+          "title": "Update rows",
+          "description": "UPDATE",
+          "code": "UPDATE users SET age = age + 1 WHERE name = 'Ada';"
+        },
+        {
+          "title": "Delete rows",
+          "description": "DELETE",
+          "code": "DELETE FROM users WHERE age < 18;"
+        }
+      ]
+    },
+    {
+      "group": "Joins & Aggregates",
+      "tasks": [
+        {
+          "title": "Inner join",
+          "description": "JOIN",
+          "code": "SELECT u.name, o.total FROM users u JOIN orders o ON o.user_id = u.id;"
+        },
+        {
+          "title": "Group & aggregate",
+          "description": "GROUP BY",
+          "code": "SELECT user_id, COUNT(*) AS cnt, SUM(total) AS sum_total FROM orders GROUP BY user_id;"
+        }
+      ]
+    },
+    {
+      "group": "Indexes & Explain",
+      "tasks": [
+        {
+          "title": "Create index",
+          "description": "INDEX",
+          "code": "CREATE INDEX idx_users_name ON users(name);"
+        },
+        {
+          "title": "Explain query",
+          "description": "EXPLAIN (SQLite)",
+          "code": "EXPLAIN QUERY PLAN SELECT * FROM users WHERE name = 'Ada';"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "Sample schema",
+      "summary": "Users and Orders.",
+      "description": "Create tables and insert sample data.",
+      "steps": [
+        {
+          "title": "DDL + seed",
+          "code": "CREATE TABLE users(id INTEGER PRIMARY KEY, name TEXT, age INTEGER);\nCREATE TABLE orders(id INTEGER PRIMARY KEY, user_id INTEGER, total REAL, created_at TEXT);\nINSERT INTO users(name, age) VALUES ('Ada',36),('Linus',54);\nINSERT INTO orders(user_id,total,created_at) VALUES (1, 19.99, '2024-01-01'), (1, 5.50, '2024-01-02'), (2, 42.00, '2024-01-03');"
+        }
+      ]
+    },
+    {
+      "title": "Reports",
+      "summary": "Totals by user.",
+      "description": "Aggregate and sort.",
+      "steps": [
+        {
+          "title": "Queries",
+          "code": "SELECT u.name, COUNT(o.id) AS orders, ROUND(SUM(o.total),2) AS revenue\nFROM users u LEFT JOIN orders o ON o.user_id = u.id\nGROUP BY u.id\nORDER BY revenue DESC;"
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "DDL",
+      "definition": "Data Definition Language (CREATE, ALTER, DROP)."
+    },
+    {
+      "term": "DML",
+      "definition": "Data Manipulation Language (INSERT, UPDATE, DELETE)."
+    },
+    {
+      "term": "DQL",
+      "definition": "Data Query Language (SELECT)."
+    },
+    {
+      "term": "Primary key",
+      "definition": "Column(s) that uniquely identify a row."
+    },
+    {
+      "term": "Foreign key",
+      "definition": "Column(s) referencing a primary key in another table."
+    },
+    {
+      "term": "Index",
+      "definition": "Structure to speed up data retrieval."
+    }
+  ],
+  "tips": [
+    {
+      "title": "NULLs",
+      "note": "Use IS NULL / IS NOT NULL; equality comparisons with NULL return unknown."
+    },
+    {
+      "title": "Transactions",
+      "note": "Wrap multiple writes with BEGIN and COMMIT for atomicity."
+    },
+    {
+      "title": "Parameters",
+      "note": "Prefer parameterized queries over string concatenation."
+    }
   ],
   "stdlib": [
-    {"name": "Functions", "description": "COUNT, SUM, AVG, MIN, MAX"}
+    {
+      "name": "Functions",
+      "description": "COUNT, SUM, AVG, MIN, MAX"
+    }
   ],
   "tools": [
-    {"name": "sqlite3", "description": "SQLite CLI"}
+    {
+      "name": "sqlite3",
+      "description": "SQLite CLI"
+    }
   ],
   "links": [
-    {"title": "SQLite Docs", "url": "https://sqlite.org/docs.html"}
+    {
+      "title": "SQLite Docs",
+      "url": "https://sqlite.org/docs.html"
+    }
   ],
   "builtins": [
-    {"name": "COUNT", "kind": "aggregate", "signature": "COUNT(expr)", "description": "Count rows."},
-    {"name": "SUM", "kind": "aggregate", "signature": "SUM(expr)", "description": "Sum values."},
-    {"name": "NOW", "kind": "scalar", "signature": "NOW()", "description": "Current timestamp (dialect-specific)."}
-  ]
+    {
+      "name": "COUNT",
+      "kind": "aggregate",
+      "signature": "COUNT(expr)",
+      "description": "Count rows."
+    },
+    {
+      "name": "SUM",
+      "kind": "aggregate",
+      "signature": "SUM(expr)",
+      "description": "Sum values."
+    },
+    {
+      "name": "NOW",
+      "kind": "scalar",
+      "signature": "NOW()",
+      "description": "Current timestamp (dialect-specific)."
+    }
+  ],
+  "concepts": []
 }
-

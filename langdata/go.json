@@ -3,56 +3,327 @@
   "slug": "go",
   "version": "1.x",
   "quick_start": [
-    {"title": "Install Go", "description": "Download from go.dev or install via your OS.", "code": "# macOS\nbrew install go\n\n# Ubuntu\nsudo apt-get update && sudo apt-get install -y golang\n\n# Verify\ngo version"},
-    {"title": "Hello, World", "description": "Create a module and a main.", "code": "mkdir hello && cd hello\ngo mod init example.com/hello\ncat > main.go <<'EOF'\npackage main\nimport \"fmt\"\nfunc main(){ fmt.Println(\"Hello, world!\") }\nEOF\n\ngo run ."},
-    {"title": "Add a dependency", "description": "Go modules manage deps.", "code": "go get github.com/google/uuid@latest\ncat > main.go <<'EOF'\npackage main\nimport (\n  \t\"fmt\"\n  \t\"github.com/google/uuid\"\n)\nfunc main(){ fmt.Println(uuid.NewString()) }\nEOF\n\ngo run ."}
+    {
+      "title": "Install Go",
+      "description": "Download from go.dev or install via your OS.",
+      "code": "# macOS\nbrew install go\n\n# Ubuntu\nsudo apt-get update && sudo apt-get install -y golang\n\n# Verify\ngo version"
+    },
+    {
+      "title": "Hello, World",
+      "description": "Create a module and a main.",
+      "code": "mkdir hello && cd hello\ngo mod init example.com/hello\ncat > main.go <<'EOF'\npackage main\nimport \"fmt\"\nfunc main(){ fmt.Println(\"Hello, world!\") }\nEOF\n\ngo run ."
+    },
+    {
+      "title": "Add a dependency",
+      "description": "Go modules manage deps.",
+      "code": "go get github.com/google/uuid@latest\ncat > main.go <<'EOF'\npackage main\nimport (\n  \t\"fmt\"\n  \t\"github.com/google/uuid\"\n)\nfunc main(){ fmt.Println(uuid.NewString()) }\nEOF\n\ngo run ."
+    }
   ],
   "common_tasks": [
-    {"group": "I/O", "tasks": [
-      {"title": "Read a file", "description": "Read all bytes into memory.", "code": "package main\nimport (\n  \t\"fmt\"; \"os\"\n)\nfunc main(){ b, err := os.ReadFile(\"README.md\"); if err!=nil { panic(err) }\n  fmt.Println(string(b)[:200]) }"},
-      {"title": "Write JSON", "description": "Marshal struct to JSON file.", "code": "package main\nimport (\n  \t\"encoding/json\"; \"os\"\n)\nfunc main(){ v := map[string]any{\"ok\":true,\"items\":[]int{1,2,3}}\n  f,_ := os.Create(\"data.json\"); defer f.Close()\n  enc := json.NewEncoder(f); enc.SetIndent(\"\", \"  \")\n  _ = enc.Encode(v) }"}
-    ]},
-    {"group": "HTTP + APIs", "tasks": [
-      {"title": "GET JSON", "description": "Fetch and decode JSON.", "code": "package main\nimport (\n  \t\"encoding/json\"; \"net/http\"; \"log\"\n)\nfunc main(){ resp, err := http.Get(\"https://httpbin.org/json\"); if err!=nil { log.Fatal(err) }\n  defer resp.Body.Close(); var v map[string]any; _ = json.NewDecoder(resp.Body).Decode(&v) }"}
-    ]},
-    {"group": "CLI", "tasks": [
-      {"title": "Flags", "description": "Parse command-line flags.", "code": "package main\nimport (\n  \t\"flag\"; \"fmt\"\n)\nfunc main(){ name := flag.String(\"name\", \"world\", \"name\"); flag.Parse(); fmt.Printf(\"Hello %s!\\n\", *name) }"}
-    ]}
+    {
+      "group": "Files & Data",
+      "tasks": [
+        {
+          "title": "Read a file",
+          "description": "Read all bytes into memory.",
+          "code": "package main\nimport (\n  \t\"fmt\"; \"os\"\n)\nfunc main(){ b, err := os.ReadFile(\"README.md\"); if err!=nil { panic(err) }\n  fmt.Println(string(b)[:200]) }"
+        },
+        {
+          "title": "Write JSON",
+          "description": "Marshal struct to JSON file.",
+          "code": "package main\nimport (\n  \t\"encoding/json\"; \"os\"\n)\nfunc main(){ v := map[string]any{\"ok\":true,\"items\":[]int{1,2,3}}\n  f,_ := os.Create(\"data.json\"); defer f.Close()\n  enc := json.NewEncoder(f); enc.SetIndent(\"\", \"  \")\n  _ = enc.Encode(v) }"
+        },
+        {
+          "title": "Read CSV",
+          "description": "Read CSV into records.",
+          "code": "package main\nimport (\n  \t\"encoding/csv\"; \"fmt\"; \"os\"\n)\nfunc main(){ f, _ := os.Open(\"people.csv\"); defer f.Close()\n  r := csv.NewReader(f); rows, _ := r.ReadAll(); for _, row := range rows { fmt.Println(row) } }"
+        },
+        {
+          "title": "ZIP files",
+          "description": "Create a zip archive.",
+          "code": "package main\nimport (\n  \t\"archive/zip\"; \"io\"; \"os\"\n)\nfunc main(){ f,_ := os.Create(\"out.zip\"); defer f.Close()\n  z := zip.NewWriter(f); defer z.Close()\n  w,_ := z.Create(\"hello.txt\"); io.WriteString(w, \"Hello!\") }"
+        }
+      ]
+    },
+    {
+      "group": "HTTP + APIs",
+      "tasks": [
+        {
+          "title": "GET JSON",
+          "description": "Fetch and decode JSON.",
+          "code": "package main\nimport (\n  \t\"encoding/json\"; \"net/http\"; \"log\"\n)\nfunc main(){ resp, err := http.Get(\"https://httpbin.org/json\"); if err!=nil { log.Fatal(err) }\n  defer resp.Body.Close(); var v map[string]any; _ = json.NewDecoder(resp.Body).Decode(&v); log.Println(v!=nil) }"
+        },
+        {
+          "title": "POST JSON",
+          "description": "Send JSON with http.Client.",
+          "code": "package main\nimport (\n  \t\"bytes\"; \"encoding/json\"; \"log\"; \"net/http\"\n)\nfunc main(){ body,_ := json.Marshal(map[string]any{\"ok\":true});\n  resp, err := http.Post(\"https://httpbin.org/post\", \"application/json\", bytes.NewReader(body)); if err!=nil { log.Fatal(err) }\n  defer resp.Body.Close(); log.Println(resp.StatusCode) }"
+        }
+      ]
+    },
+    {
+      "group": "Env & Config",
+      "tasks": [
+        {
+          "title": "Read environment variables",
+          "description": "Use defaults when not set.",
+          "code": "package main\nimport (\n  \t\"fmt\"; \"os\"\n)\nfunc main(){ port := os.Getenv(\"PORT\"); if port==\"\" { port = \"8000\" }; fmt.Println(port) }"
+        }
+      ]
+    },
+    {
+      "group": "Logging",
+      "tasks": [
+        {
+          "title": "Basic logging",
+          "description": "Log messages.",
+          "code": "package main\nimport \"log\"\nfunc main(){ log.Println(\"Starting...\"); log.Printf(\"value=%d\", 42); log.Println(\"Done\") }"
+        }
+      ]
+    },
+    {
+      "group": "CLI",
+      "tasks": [
+        {
+          "title": "Flags",
+          "description": "Parse command-line flags.",
+          "code": "package main\nimport (\n  \t\"flag\"; \"fmt\"\n)\nfunc main(){ name := flag.String(\"name\", \"world\", \"name\"); flag.Parse(); fmt.Printf(\"Hello %s!\\n\", *name) }"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "To-Do CLI",
+      "summary": "Add/list tasks saved to a JSON file.",
+      "description": "A simple CLI app storing tasks in todo.json.",
+      "steps": [
+        {
+          "title": "Script",
+          "code": "package main\nimport (\n  \t\"encoding/json\"; \"flag\"; \"fmt\"; \"os\"\n)\nvar path = \"todo.json\"\nfunc load() []map[string]any { b,err := os.ReadFile(path); if err!=nil { return []map[string]any{} }; var v []map[string]any; _ = json.Unmarshal(b,&v); return v }\nfunc save(v any) { b,_ := json.MarshalIndent(v, \"\", \"  \" ); _ = os.WriteFile(path, b, 0644) }\nfunc main(){ cmd := flag.String(\"cmd\", \"list\", \"add or list\"); text := flag.String(\"text\", \"\", \"task text\"); flag.Parse(); items := load(); if *cmd==\"add\" && *text!=\"\" { items = append(items, map[string]any{\"text\":*text,\"done\":false}); save(items) } else if *cmd==\"list\" { for i,it := range items { fmt.Printf(\"%d. %s\\n\", i+1, it[\"text\"]) } } }"
+        }
+      ]
+    },
+    {
+      "title": "CSV Summarizer",
+      "summary": "Compute quick stats from CSV.",
+      "description": "Reads a CSV and prints counts.",
+      "steps": [
+        {
+          "title": "Script",
+          "code": "package main\nimport (\n  \t\"encoding/csv\"; \"fmt\"; \"os\"; \"strconv\"\n)\nfunc main(){ f,_ := os.Open(\"data.csv\"); defer f.Close(); r := csv.NewReader(f); rows,_ := r.ReadAll(); hdr := rows[0]; ai := -1; for i,h := range hdr { if h==\"age\" { ai = i } }; var ages []int; for _,row := range rows[1:] { if ai>=0 { if n,err := strconv.Atoi(row[ai]); err==nil { ages = append(ages,n) } } }\nfmt.Println(\"rows:\", len(rows)-1); s:=0; for _,n := range ages { s+=n }; if len(ages)>0 { fmt.Println(\"avg age:\", s/len(ages)) } }"
+        }
+      ]
+    },
+    {
+      "title": "Web Fetcher",
+      "summary": "Download JSON to disk.",
+      "description": "Fetch an API and save the response.",
+      "steps": [
+        {
+          "title": "Script",
+          "code": "package main\nimport (\n  \t\"encoding/json\"; \"net/http\"; \"os\"\n)\nfunc main(){ resp,_ := http.Get(\"https://httpbin.org/json\"); defer resp.Body.Close(); var v any; json.NewDecoder(resp.Body).Decode(&v); b,_ := json.MarshalIndent(v, \"\", \"  \" ); os.MkdirAll(\"out\", 0755); os.WriteFile(\"out/data.json\", b, 0644); println(\"saved to out/data.json\") }"
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Package",
+      "definition": "A collection of Go source files in the same directory."
+    },
+    {
+      "term": "Module",
+      "definition": "A collection of packages versioned together (go.mod)."
+    },
+    {
+      "term": "Goroutine",
+      "definition": "A lightweight thread managed by the Go runtime."
+    },
+    {
+      "term": "Channel",
+      "definition": "A typed conduit for sending and receiving values between goroutines."
+    },
+    {
+      "term": "Interface",
+      "definition": "A set of method signatures (duck typing)."
+    }
+  ],
+  "tips": [
+    {
+      "title": "Formatting",
+      "note": "Run `go fmt` to format code consistently."
+    },
+    {
+      "title": "Errors",
+      "note": "Check `err` and return early; avoid panic for expected errors."
+    },
+    {
+      "title": "Modules",
+      "note": "Use `go mod init` and `go get` to manage dependencies."
+    },
+    {
+      "title": "Concurrency",
+      "note": "Use goroutines + channels; avoid shared memory when possible."
+    }
   ],
   "stdlib": [
-    {"name": "fmt", "description": "Formatting I/O."},
-    {"name": "os", "description": "Operating system primitives."},
-    {"name": "io", "description": "I/O primitives."},
-    {"name": "net/http", "description": "HTTP client and server."},
-    {"name": "encoding/json", "description": "JSON encoding/decoding."},
-    {"name": "time", "description": "Timekeeping and durations."}
+    {
+      "name": "fmt",
+      "description": "Formatting I/O."
+    },
+    {
+      "name": "os",
+      "description": "Operating system primitives."
+    },
+    {
+      "name": "io",
+      "description": "I/O primitives."
+    },
+    {
+      "name": "net/http",
+      "description": "HTTP client and server."
+    },
+    {
+      "name": "encoding/json",
+      "description": "JSON encoding/decoding."
+    },
+    {
+      "name": "time",
+      "description": "Timekeeping and durations."
+    }
   ],
   "tools": [
-    {"name": "go", "description": "Build/run/test toolchain"},
-    {"name": "go fmt", "description": "Code formatter"},
-    {"name": "go test", "description": "Testing framework"}
+    {
+      "name": "go",
+      "description": "Build/run/test toolchain"
+    },
+    {
+      "name": "go fmt",
+      "description": "Code formatter"
+    },
+    {
+      "name": "go test",
+      "description": "Testing framework"
+    }
   ],
   "links": [
-    {"title": "Go Docs", "url": "https://go.dev/doc/"},
-    {"title": "pkg.go.dev", "url": "https://pkg.go.dev/"}
+    {
+      "title": "Go Docs",
+      "url": "https://go.dev/doc/"
+    },
+    {
+      "title": "pkg.go.dev",
+      "url": "https://pkg.go.dev/"
+    }
   ],
   "builtins": [
-    {"name": "make", "kind": "function", "signature": "make(t, size...)", "description": "Allocate and initialize slices, maps, channels."},
-    {"name": "new", "kind": "function", "signature": "new(T)", "description": "Allocate zeroed storage and return *T."},
-    {"name": "len", "kind": "function", "signature": "len(v)", "description": "Length of string, array, slice, map, channel."},
-    {"name": "cap", "kind": "function", "signature": "cap(v)", "description": "Capacity of array, slice, or channel."},
-    {"name": "append", "kind": "function", "signature": "append(slice, elems...)", "description": "Append to slice."},
-    {"name": "copy", "kind": "function", "signature": "copy(dst, src)", "description": "Copy slices."},
-    {"name": "delete", "kind": "function", "signature": "delete(map, key)", "description": "Delete from map."},
-    {"name": "close", "kind": "function", "signature": "close(ch)", "description": "Close channel."},
-    {"name": "panic", "kind": "function", "signature": "panic(v)", "description": "Stop ordinary flow of control."},
-    {"name": "recover", "kind": "function", "signature": "recover()", "description": "Resume from panic."},
-    {"name": "print", "kind": "function", "signature": "print(args...)", "description": "Low-level printing."},
-    {"name": "println", "kind": "function", "signature": "println(args...)", "description": "Low-level printing with newline."},
-    {"name": "fmt", "kind": "module", "signature": "import \"fmt\"", "description": "Formatting I/O.", "category": "Stdlib"},
-    {"name": "io", "kind": "module", "signature": "import \"io\"", "description": "I/O primitives.", "category": "Stdlib"},
-    {"name": "os", "kind": "module", "signature": "import \"os\"", "description": "Operating system primitives.", "category": "Stdlib"},
-    {"name": "net/http", "kind": "module", "signature": "import \"net/http\"", "description": "HTTP client and server.", "category": "Stdlib"},
-    {"name": "encoding/json", "kind": "module", "signature": "import \"encoding/json\"", "description": "JSON encoding/decoding.", "category": "Stdlib"}
-  ]
+    {
+      "name": "make",
+      "kind": "function",
+      "signature": "make(t, size...)",
+      "description": "Allocate and initialize slices, maps, channels."
+    },
+    {
+      "name": "new",
+      "kind": "function",
+      "signature": "new(T)",
+      "description": "Allocate zeroed storage and return *T."
+    },
+    {
+      "name": "len",
+      "kind": "function",
+      "signature": "len(v)",
+      "description": "Length of string, array, slice, map, channel."
+    },
+    {
+      "name": "cap",
+      "kind": "function",
+      "signature": "cap(v)",
+      "description": "Capacity of array, slice, or channel."
+    },
+    {
+      "name": "append",
+      "kind": "function",
+      "signature": "append(slice, elems...)",
+      "description": "Append to slice."
+    },
+    {
+      "name": "copy",
+      "kind": "function",
+      "signature": "copy(dst, src)",
+      "description": "Copy slices."
+    },
+    {
+      "name": "delete",
+      "kind": "function",
+      "signature": "delete(map, key)",
+      "description": "Delete from map."
+    },
+    {
+      "name": "close",
+      "kind": "function",
+      "signature": "close(ch)",
+      "description": "Close channel."
+    },
+    {
+      "name": "panic",
+      "kind": "function",
+      "signature": "panic(v)",
+      "description": "Stop ordinary flow of control."
+    },
+    {
+      "name": "recover",
+      "kind": "function",
+      "signature": "recover()",
+      "description": "Resume from panic."
+    },
+    {
+      "name": "print",
+      "kind": "function",
+      "signature": "print(args...)",
+      "description": "Low-level printing."
+    },
+    {
+      "name": "println",
+      "kind": "function",
+      "signature": "println(args...)",
+      "description": "Low-level printing with newline."
+    },
+    {
+      "name": "fmt",
+      "kind": "module",
+      "signature": "import \"fmt\"",
+      "description": "Formatting I/O.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "io",
+      "kind": "module",
+      "signature": "import \"io\"",
+      "description": "I/O primitives.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "os",
+      "kind": "module",
+      "signature": "import \"os\"",
+      "description": "Operating system primitives.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "net/http",
+      "kind": "module",
+      "signature": "import \"net/http\"",
+      "description": "HTTP client and server.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "encoding/json",
+      "kind": "module",
+      "signature": "import \"encoding/json\"",
+      "description": "JSON encoding/decoding.",
+      "category": "Stdlib"
+    }
+  ],
+  "concepts": []
 }

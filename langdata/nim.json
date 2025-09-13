@@ -3,30 +3,82 @@
   "slug": "nim",
   "version": "2.x",
   "quick_start": [
-    {"title": "Install Nim", "description": "Use choosenim or your OS packages.", "code": "nim --version"},
-    {"title": "Hello, World", "description": "Compile and run.", "code": "echo \"Hello, world!\"\n# Save as hello.nim then:\n# nim c -r hello.nim"}
+    {
+      "title": "Install Nim",
+      "description": "Use choosenim or your OS packages.",
+      "code": "nim --version"
+    },
+    {
+      "title": "Hello, World",
+      "description": "Compile and run.",
+      "code": "echo \"Hello, world!\"\n# Save as hello.nim then:\n# nim c -r hello.nim"
+    }
   ],
   "common_tasks": [
-    {"group": "I/O", "tasks": [
-      {"title": "Read a file", "description": "Read entire file to string.", "code": "import os\nlet s = readFile(\"README.md\")\necho s[0..min(200, s.len-1)]"}
-    ]},
-    {"group": "HTTP + APIs", "tasks": [
-      {"title": "GET JSON", "description": "Use httpclient.", "code": "import httpclient\nlet c = newHttpClient()\nlet body = c.getContent(\"https://httpbin.org/json\")\necho body"}
-    ]}
+    {
+      "group": "Files & Data",
+      "tasks": [
+        {
+          "title": "Read a file",
+          "description": "Read entire file to string.",
+          "code": "import os\nlet s = readFile(\"README.md\")\necho s[0..min(200, s.len-1)]"
+        },
+        {
+          "title": "Write JSON",
+          "description": "writeFile",
+          "code": "writeFile(\"data.json\", \"{\\\"ok\\\":true}\")"
+        }
+      ]
+    },
+    {
+      "group": "HTTP + APIs",
+      "tasks": [
+        {
+          "title": "GET JSON",
+          "description": "Use httpclient.",
+          "code": "import httpclient\nlet c = newHttpClient()\nlet body = c.getContent(\"https://httpbin.org/json\")\necho body"
+        }
+      ]
+    }
   ],
   "stdlib": [
-    {"name": "os", "description": "OS and filesystem"},
-    {"name": "httpclient", "description": "HTTP client"}
+    {
+      "name": "os",
+      "description": "OS and filesystem"
+    },
+    {
+      "name": "httpclient",
+      "description": "HTTP client"
+    }
   ],
   "tools": [
-    {"name": "nim", "description": "Compiler and toolchain"}
+    {
+      "name": "nim",
+      "description": "Compiler and toolchain"
+    }
   ],
   "links": [
-    {"title": "Nim Manual", "url": "https://nim-lang.org/docs/manual.html"}
+    {
+      "title": "Nim Manual",
+      "url": "https://nim-lang.org/docs/manual.html"
+    }
   ],
   "builtins": [
-    {"name": "echo", "kind": "proc", "signature": "echo x", "description": "Print values."},
-    {"name": "len", "kind": "proc", "signature": "len(s)", "description": "Length of sequence or string."}
-  ]
+    {
+      "name": "echo",
+      "kind": "proc",
+      "signature": "echo x",
+      "description": "Print values."
+    },
+    {
+      "name": "len",
+      "kind": "proc",
+      "signature": "len(s)",
+      "description": "Length of sequence or string."
+    }
+  ],
+  "concepts": [],
+  "projects": [],
+  "glossary": [],
+  "tips": []
 }
-

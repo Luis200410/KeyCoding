@@ -3,26 +3,107 @@
   "slug": "solidity",
   "version": "0.8+",
   "quick_start": [
-    {"title": "Install solc or use Remix", "description": "Use solc or remix.ethereum.org.", "code": "solc --version"},
-    {"title": "Hello contract", "description": "Minimal contract.", "code": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\ncontract Hello { function hi() public pure returns (string memory){ return \"Hello\"; } }"}
+    {
+      "title": "Install solc or use Remix",
+      "description": "Use solc or remix.ethereum.org.",
+      "code": "solc --version"
+    },
+    {
+      "title": "Hello contract",
+      "description": "Minimal contract.",
+      "code": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\ncontract Hello { function hi() public pure returns (string memory){ return \"Hello\"; } }"
+    }
   ],
   "common_tasks": [
-    {"group": "Basics", "tasks": [
-      {"title": "State + view", "description": "Read-only function.", "code": "contract C { uint public x; function get() public view returns(uint){ return x; } }"}
-    ]}
+    {
+      "group": "Basics",
+      "tasks": [
+        {
+          "title": "State + view",
+          "description": "Read-only function.",
+          "code": "contract C { uint public x; function get() public view returns(uint){ return x; } }"
+        },
+        {
+          "title": "Require",
+          "description": "Input validation.",
+          "code": "contract R { function set(uint v) public pure returns(uint){ require(v>0, \"must be > 0\"); return v; } }"
+        }
+      ]
+    },
+    {
+      "group": "Events & Mappings",
+      "tasks": [
+        {
+          "title": "Event",
+          "description": "Emit an event.",
+          "code": "contract E { event Ping(address indexed from); function ping() public { emit Ping(msg.sender); } }"
+        },
+        {
+          "title": "Mapping",
+          "description": "Key-value store.",
+          "code": "contract M { mapping(address=>uint) public balances; function set(uint v) public { balances[msg.sender]=v; } }"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "Counter",
+      "summary": "Increment/decrement with events.",
+      "description": "Simple state and events.",
+      "steps": [
+        {
+          "title": "Contract",
+          "code": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0; contract Counter{ int public n; event Changed(int n); function inc() public { n+=1; emit Changed(n);} function dec() public { n-=1; emit Changed(n);} }"
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "View/Pure",
+      "definition": "Functions that don't modify state (view) or read state (pure)."
+    },
+    {
+      "term": "Event",
+      "definition": "Logging mechanism accessible to clients."
+    }
+  ],
+  "tips": [
+    {
+      "title": "Testing",
+      "note": "Use Hardhat/Foundry with local networks; write unit tests for functions."
+    }
   ],
   "stdlib": [
-    {"name": "OpenZeppelin", "description": "Common contracts"}
+    {
+      "name": "OpenZeppelin",
+      "description": "Common contracts"
+    }
   ],
   "tools": [
-    {"name": "solc", "description": "Compiler"},
-    {"name": "hardhat", "description": "Dev environment"}
+    {
+      "name": "solc",
+      "description": "Compiler"
+    },
+    {
+      "name": "hardhat",
+      "description": "Dev environment"
+    }
   ],
   "links": [
-    {"title": "Solidity Docs", "url": "https://docs.soliditylang.org/"}
+    {
+      "title": "Solidity Docs",
+      "url": "https://docs.soliditylang.org/"
+    }
   ],
   "builtins": [
-    {"name": "require", "kind": "function", "signature": "require(cond, message)", "description": "Error if condition is false."}
-  ]
+    {
+      "name": "require",
+      "kind": "function",
+      "signature": "require(cond, message)",
+      "description": "Error if condition is false."
+    }
+  ],
+  "concepts": []
 }
-

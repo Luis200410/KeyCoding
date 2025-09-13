@@ -3,30 +3,164 @@
   "slug": "bash",
   "version": "5.x",
   "quick_start": [
-    {"title": "Shebang", "description": "Start scripts with shebang.", "code": "#!/usr/bin/env bash\necho \"Hello, world!\""}
+    {
+      "title": "Shebang",
+      "description": "Start scripts with shebang.",
+      "code": "#!/usr/bin/env bash\necho \"Hello, world!\""
+    }
   ],
   "common_tasks": [
-    {"group": "I/O", "tasks": [
-      {"title": "Read file", "description": "cat and head", "code": "head -n 20 README.md"}
-    ]},
-    {"group": "HTTP + APIs", "tasks": [
-      {"title": "GET JSON", "description": "curl", "code": "curl -s https://httpbin.org/json"}
-    ]}
+    {
+      "group": "Files & Data",
+      "tasks": [
+        {
+          "title": "Read file",
+          "description": "head",
+          "code": "head -n 20 README.md"
+        },
+        {
+          "title": "Write JSON",
+          "description": "here-doc",
+          "code": "cat > data.json <<'EOF'\n{\n  \"ok\": true,\n  \"items\": [1,2,3]\n}\nEOF"
+        },
+        {
+          "title": "List files (glob)",
+          "description": "find by pattern",
+          "code": "printf '%s\n' **/*.sh"
+        }
+      ]
+    },
+    {
+      "group": "HTTP + APIs",
+      "tasks": [
+        {
+          "title": "GET JSON",
+          "description": "curl",
+          "code": "curl -s https://httpbin.org/json"
+        },
+        {
+          "title": "POST JSON",
+          "description": "curl -X POST",
+          "code": "curl -s -X POST -H 'content-type: application/json' -d '{\"ok\":true}' https://httpbin.org/post"
+        }
+      ]
+    },
+    {
+      "group": "Env & Config",
+      "tasks": [
+        {
+          "title": "Read env var",
+          "description": "Default fallback",
+          "code": "PORT=${PORT:-8000}; echo $PORT"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "To-Do CLI",
+      "summary": "Append/list tasks in todo.txt.",
+      "description": "Simple file-based CLI.",
+      "steps": [
+        {
+          "title": "Script",
+          "code": "#!/usr/bin/env bash\nset -euo pipefail\nPATH_FILE=${1:-todo.txt}\ncmd=${2:-list}\ntext=${3:-}\ncase $cmd in\n  add) [ -n \"$text\" ] && printf '%s\n' \"$text\" >> \"$PATH_FILE\";;\n  list) [ -f \"$PATH_FILE\" ] && cat \"$PATH_FILE\" || true;;\n  *) echo 'usage: todo.sh <file> add <text> | list';;\nesac"
+        }
+      ]
+    },
+    {
+      "title": "Web Fetcher",
+      "summary": "Download JSON to disk.",
+      "description": "curl + mkdir",
+      "steps": [
+        {
+          "title": "Script",
+          "code": "#!/usr/bin/env bash\nset -euo pipefail\nmkdir -p out\ncurl -s https://httpbin.org/json > out/data.json\necho 'saved to out/data.json'"
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Variable",
+      "definition": "Name to a value (VAR=value; use $VAR)."
+    },
+    {
+      "term": "Array",
+      "definition": "Indexed list: arr=(a b); echo ${arr[0]}."
+    },
+    {
+      "term": "Exit code",
+      "definition": "Status of last command (0 success)."
+    },
+    {
+      "term": "Pipeline",
+      "definition": "A | B passes output of A to input of B."
+    }
+  ],
+  "tips": [
+    {
+      "title": "Safety",
+      "note": "Use set -euo pipefail in scripts."
+    },
+    {
+      "title": "Quoting",
+      "note": "Double-quote variables (\"$var\") to avoid word splitting."
+    },
+    {
+      "title": "Shebang",
+      "note": "Start scripts with #!/usr/bin/env bash."
+    }
   ],
   "stdlib": [
-    {"name": "coreutils", "description": "Common CLI tools"}
+    {
+      "name": "coreutils",
+      "description": "Common CLI tools"
+    }
   ],
   "tools": [
-    {"name": "bash", "description": "Shell"}
+    {
+      "name": "bash",
+      "description": "Shell"
+    }
   ],
   "links": [
-    {"title": "Bash Guide", "url": "https://www.gnu.org/software/bash/manual/"}
+    {
+      "title": "Bash Guide",
+      "url": "https://www.gnu.org/software/bash/manual/"
+    }
   ],
   "builtins": [
-    {"name": "echo", "kind": "function", "signature": "echo args", "description": "Print arguments."},
-    {"name": "read", "kind": "function", "signature": "read var", "description": "Read a line from stdin."},
-    {"name": "printf", "kind": "function", "signature": "printf format [args]", "description": "Format and print data."},
-    {"name": "declare", "kind": "function", "signature": "declare [options] name=value", "description": "Declare variables."},
-    {"name": "coreutils", "kind": "library", "signature": "GNU coreutils", "description": "Common CLI tools (ls, cat, cp, mv)."}
-  ]
+    {
+      "name": "echo",
+      "kind": "function",
+      "signature": "echo args",
+      "description": "Print arguments."
+    },
+    {
+      "name": "read",
+      "kind": "function",
+      "signature": "read var",
+      "description": "Read a line from stdin."
+    },
+    {
+      "name": "printf",
+      "kind": "function",
+      "signature": "printf format [args]",
+      "description": "Format and print data."
+    },
+    {
+      "name": "declare",
+      "kind": "function",
+      "signature": "declare [options] name=value",
+      "description": "Declare variables."
+    },
+    {
+      "name": "coreutils",
+      "kind": "library",
+      "signature": "GNU coreutils",
+      "description": "Common CLI tools (ls, cat, cp, mv)."
+    }
+  ],
+  "concepts": []
 }

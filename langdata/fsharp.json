@@ -3,28 +3,72 @@
   "slug": "fsharp",
   "version": ".NET 7+",
   "quick_start": [
-    {"title": "Install .NET SDK", "description": "Install from dotnet.microsoft.com.", "code": "dotnet --version"},
-    {"title": "New console app", "description": "Create and run.", "code": "dotnet new console -lang F# -n Hello && cd Hello\ndotnet run"}
+    {
+      "title": "Install .NET SDK",
+      "description": "Install from dotnet.microsoft.com.",
+      "code": "dotnet --version"
+    },
+    {
+      "title": "New console app",
+      "description": "Create and run.",
+      "code": "dotnet new console -lang F# -n Hello && cd Hello\ndotnet run"
+    }
   ],
   "common_tasks": [
-    {"group": "I/O", "tasks": [
-      {"title": "Read file", "description": "File.ReadAllText", "code": "open System.IO\n[<EntryPoint>] let main _ = let s = File.ReadAllText(\"README.md\"); printfn \"%s\" (s.Substring(0, min 200 s.Length)); 0"}
-    ]},
-    {"group": "HTTP + APIs", "tasks": [
-      {"title": "GET JSON", "description": "HttpClient", "code": "open System; open System.Net.Http; open System.Threading.Tasks\n[<EntryPoint>] let main _ = task { use c = new HttpClient(); let! s = c.GetStringAsync(\"https://httpbin.org/json\"); printfn \"%s\" s }.GetAwaiter().GetResult(); 0"}
-    ]}
+    {
+      "group": "Files & Data",
+      "tasks": [
+        {
+          "title": "Read file",
+          "description": "File.ReadAllText",
+          "code": "open System.IO\n[<EntryPoint>] let main _ = let s = File.ReadAllText(\"README.md\"); printfn \"%s\" (s.Substring(0, min 200 s.Length)); 0"
+        },
+        {
+          "title": "Write JSON",
+          "description": "File.WriteAllText",
+          "code": "open System.IO\n[<EntryPoint>] let main _ = File.WriteAllText(\"data.json\", \"{\\\"ok\\\":true}\"); 0"
+        }
+      ]
+    },
+    {
+      "group": "HTTP + APIs",
+      "tasks": [
+        {
+          "title": "GET JSON",
+          "description": "HttpClient",
+          "code": "open System; open System.Net.Http; open System.Threading.Tasks\n[<EntryPoint>] let main _ = task { use c = new HttpClient(); let! s = c.GetStringAsync(\"https://httpbin.org/json\"); printfn \"%s\" s }.GetAwaiter().GetResult(); 0"
+        }
+      ]
+    }
   ],
   "stdlib": [
-    {"name": "FSharp.Core", "description": "Core library"}
+    {
+      "name": "FSharp.Core",
+      "description": "Core library"
+    }
   ],
   "tools": [
-    {"name": "dotnet", "description": ".NET CLI"}
+    {
+      "name": "dotnet",
+      "description": ".NET CLI"
+    }
   ],
   "links": [
-    {"title": "F# Guide", "url": "https://learn.microsoft.com/dotnet/fsharp/"}
+    {
+      "title": "F# Guide",
+      "url": "https://learn.microsoft.com/dotnet/fsharp/"
+    }
   ],
   "builtins": [
-    {"name": "printfn", "kind": "function", "signature": "printfn format args", "description": "Formatted print with newline."}
-  ]
+    {
+      "name": "printfn",
+      "kind": "function",
+      "signature": "printfn format args",
+      "description": "Formatted print with newline."
+    }
+  ],
+  "concepts": [],
+  "projects": [],
+  "glossary": [],
+  "tips": []
 }
-

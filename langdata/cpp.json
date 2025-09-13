@@ -3,29 +3,131 @@
   "slug": "cpp",
   "version": "C++20",
   "quick_start": [
-    {"title": "Install compiler", "description": "Use clang++ or g++.", "code": "clang++ --version\n# or\ng++ --version"},
-    {"title": "Hello, World", "description": "Compile and run.", "code": "#include <iostream>\nint main(){ std::cout << \"Hello, world!\\n\"; }\n// Save as hello.cpp then:\n// c++ hello.cpp -std=c++20 -O2 -o hello && ./hello"}
+    {
+      "title": "Install compiler",
+      "description": "Use clang++ or g++.",
+      "code": "clang++ --version\n# or\ng++ --version"
+    },
+    {
+      "title": "Hello, World",
+      "description": "Compile and run.",
+      "code": "#include <iostream>\nint main(){ std::cout << \"Hello, world!\\n\"; }\n// Save as hello.cpp then:\n// c++ hello.cpp -std=c++20 -O2 -o hello && ./hello"
+    }
   ],
   "common_tasks": [
-    {"group": "I/O", "tasks": [
-      {"title": "Read file", "description": "ifstream", "code": "#include <fstream>\n#include <iostream>\n#include <string>\nint main(){ std::ifstream f(\"README.md\"); std::string s((std::istreambuf_iterator<char>(f)),{}); std::cout << s.substr(0,200); }"}
-    ]}
+    {
+      "group": "Files & Data",
+      "tasks": [
+        {
+          "title": "Read file",
+          "description": "ifstream",
+          "code": "#include <fstream>\n#include <iostream>\n#include <string>\nint main(){ std::ifstream f(\"README.md\"); std::string s((std::istreambuf_iterator<char>(f)),{}); std::cout << s.substr(0,200); }"
+        },
+        {
+          "title": "Write JSON (string)",
+          "description": "ofstream",
+          "code": "#include <fstream>\nint main(){ std::ofstream o(\"data.json\"); o << \"{\\\"ok\\\":true}\"; }"
+        }
+      ]
+    },
+    {
+      "group": "HTTP + APIs",
+      "tasks": [
+        {
+          "title": "HTTP (curl CLI)",
+          "description": "system() to curl",
+          "code": "#include <cstdlib>\nint main(){ return system(\"curl -s https://httpbin.org/json\"); }"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "To-Do CLI",
+      "summary": "Append/list tasks in a text file.",
+      "description": "Simple std::fstream.",
+      "steps": [
+        {
+          "title": "main.cpp",
+          "code": "#include <fstream>\n#include <iostream>\n#include <string>\nint main(int argc, char**argv){ std::string cmd = argc>1? argv[1]: \"list\"; if(cmd==\"add\" && argc>2){ std::ofstream(\"todo.txt\", std::ios::app) << argv[2] << '\n'; } else if(cmd==\"list\"){ std::ifstream f(\"todo.txt\"); if(f){ std::cout << f.rdbuf(); } } else { std::cout << \"usage: add <text> | list\n\"; } }"
+        }
+      ]
+    },
+    {
+      "title": "Web Fetcher",
+      "summary": "Download JSON to disk.",
+      "description": "curl via system.",
+      "steps": [
+        {
+          "title": "main.cpp",
+          "code": "#include <cstdlib>\nint main(){ return system(\"mkdir -p out && curl -s https://httpbin.org/json > out/data.json\"); }"
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "RAII",
+      "definition": "Resource Acquisition Is Initialization (manage resources via objects)."
+    },
+    {
+      "term": "Template",
+      "definition": "Generic code using types as parameters."
+    }
+  ],
+  "tips": [
+    {
+      "title": "Flags",
+      "note": "Use -std=c++20 -Wall -Wextra -O2 for development."
+    },
+    {
+      "title": "String I/O",
+      "note": "Prefer std::string and streams for text work."
+    }
   ],
   "stdlib": [
-    {"name": "<vector>", "description": "Dynamic arrays"},
-    {"name": "<string>", "description": "Strings"},
-    {"name": "<filesystem>", "description": "Filesystem"}
+    {
+      "name": "<vector>",
+      "description": "Dynamic arrays"
+    },
+    {
+      "name": "<string>",
+      "description": "Strings"
+    },
+    {
+      "name": "<filesystem>",
+      "description": "Filesystem"
+    }
   ],
   "tools": [
-    {"name": "clang++", "description": "LLVM C++ compiler"},
-    {"name": "g++", "description": "GNU C++ compiler"}
+    {
+      "name": "clang++",
+      "description": "LLVM C++ compiler"
+    },
+    {
+      "name": "g++",
+      "description": "GNU C++ compiler"
+    }
   ],
   "links": [
-    {"title": "cppreference", "url": "https://en.cppreference.com/w/"}
+    {
+      "title": "cppreference",
+      "url": "https://en.cppreference.com/w/"
+    }
   ],
   "builtins": [
-    {"name": "std::cout", "kind": "object", "signature": "std::ostream", "description": "Standard output stream."},
-    {"name": "std::vector", "kind": "class", "signature": "template<class T> class vector", "description": "Dynamic array."}
-  ]
+    {
+      "name": "std::cout",
+      "kind": "object",
+      "signature": "std::ostream",
+      "description": "Standard output stream."
+    },
+    {
+      "name": "std::vector",
+      "kind": "class",
+      "signature": "template<class T> class vector",
+      "description": "Dynamic array."
+    }
+  ],
+  "concepts": []
 }
-

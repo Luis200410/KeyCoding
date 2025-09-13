@@ -3,40 +3,211 @@
   "slug": "csharp",
   "version": ".NET 7+",
   "quick_start": [
-    {"title": "Install .NET SDK", "description": "Install from dotnet.microsoft.com.", "code": "dotnet --version"},
-    {"title": "New console app", "description": "Create and run.", "code": "dotnet new console -n Hello && cd Hello\ndotnet run"}
+    {
+      "title": "Install .NET SDK",
+      "description": "Install from dotnet.microsoft.com.",
+      "code": "dotnet --version"
+    },
+    {
+      "title": "New console app",
+      "description": "Create and run.",
+      "code": "dotnet new console -n Hello && cd Hello\ndotnet run"
+    }
   ],
   "common_tasks": [
-    {"group": "I/O", "tasks": [
-      {"title": "Read a file", "description": "Read all text.", "code": "using System; using System.IO;\nclass P{ static void Main(){ var s = File.ReadAllText(\"README.md\"); Console.WriteLine(s.Substring(0, Math.Min(200, s.Length))); }}"},
-      {"title": "Write JSON", "description": "Serialize and write JSON.", "code": "using System; using System.IO; using System.Text.Json;\nclass P{ static void Main(){ var obj = new { ok = true, items = new[]{1,2,3} }; var json = JsonSerializer.Serialize(obj, new JsonSerializerOptions{ WriteIndented = true }); File.WriteAllText(\"data.json\", json); }}"}
-    ]},
-    {"group": "HTTP + APIs", "tasks": [
-      {"title": "GET JSON", "description": "HttpClient usage.", "code": "using System; using System.Net.Http; using System.Threading.Tasks;\nclass P{ static async Task Main(){ using var c = new HttpClient(); var s = await c.GetStringAsync(\"https://httpbin.org/json\"); Console.WriteLine(s); }}"}
-    ]},
-    {"group": "CLI", "tasks": [
-      {"title": "Arguments", "description": "Process command-line args.", "code": "using System;\nclass P{ static void Main(string[] args){ Console.WriteLine(string.Join(\",\", args)); }}"}
-    ]}
+    {
+      "group": "Files & Data",
+      "tasks": [
+        {
+          "title": "Read a file",
+          "description": "Read all text.",
+          "code": "using System; using System.IO;\nclass P{ static void Main(){ var s = File.ReadAllText(\"README.md\"); Console.WriteLine(s.Substring(0, Math.Min(200, s.Length))); }}"
+        },
+        {
+          "title": "Write JSON",
+          "description": "Serialize and write JSON.",
+          "code": "using System; using System.IO; using System.Text.Json;\nclass P{ static void Main(){ var obj = new { ok = true, items = new[]{1,2,3} }; var json = JsonSerializer.Serialize(obj, new JsonSerializerOptions{ WriteIndented = true }); File.WriteAllText(\"data.json\", json); }}"
+        },
+        {
+          "title": "Read CSV",
+          "description": "Split lines and commas.",
+          "code": "using System; using System.IO;\nclass P{ static void Main(){ foreach (var line in File.ReadAllLines(\"data.csv\")) { var cols = line.Split(','); Console.WriteLine(string.Join(\" | \", cols)); } }}"
+        }
+      ]
+    },
+    {
+      "group": "HTTP + APIs",
+      "tasks": [
+        {
+          "title": "GET JSON",
+          "description": "HttpClient usage.",
+          "code": "using System; using System.Net.Http; using System.Threading.Tasks;\nclass P{ static async Task Main(){ using var c = new HttpClient(); var s = await c.GetStringAsync(\"https://httpbin.org/json\"); Console.WriteLine(s); }}"
+        },
+        {
+          "title": "POST JSON",
+          "description": "Send JSON.",
+          "code": "using System; using System.Net.Http; using System.Text; using System.Threading.Tasks;\nclass P{ static async Task Main(){ using var c = new HttpClient(); var content = new StringContent(\"{\\\"ok\\\":true}\", Encoding.UTF8, \"application/json\"); var r = await c.PostAsync(\"https://httpbin.org/post\", content); Console.WriteLine((int)r.StatusCode); }}"
+        }
+      ]
+    },
+    {
+      "group": "Env & Config",
+      "tasks": [
+        {
+          "title": "Environment variables",
+          "description": "Use defaults.",
+          "code": "using System;\nclass P{ static void Main(){ var port = Environment.GetEnvironmentVariable(\"PORT\") ?? \"8000\"; Console.WriteLine(port); }}"
+        }
+      ]
+    },
+    {
+      "group": "Logging",
+      "tasks": [
+        {
+          "title": "Console logging",
+          "description": "Write messages.",
+          "code": "using System;\nclass P{ static void Main(){ Console.WriteLine(\"INFO: start\"); Console.WriteLine(\"WARN: careful\"); Console.Error.WriteLine(\"ERROR: problem\"); }}"
+        }
+      ]
+    },
+    {
+      "group": "CLI",
+      "tasks": [
+        {
+          "title": "Arguments",
+          "description": "Process command-line args.",
+          "code": "using System;\nclass P{ static void Main(string[] args){ Console.WriteLine(string.Join(\",\", args)); }}"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "To-Do CLI",
+      "summary": "Add/list tasks saved to a JSON file.",
+      "description": "Uses System.Text.Json for storage.",
+      "steps": [
+        {
+          "title": "Program",
+          "code": "using System; using System.IO; using System.Text.Json; using System.Collections.Generic;\nclass Todo{ static string PathFile=\"todo.json\"; static List<Dictionary<string,object>> Load(){ if(!File.Exists(PathFile)) return new(); return JsonSerializer.Deserialize<List<Dictionary<string,object>>>(File.ReadAllText(PathFile)) ?? new(); } static void Save(object v){ File.WriteAllText(PathFile, JsonSerializer.Serialize(v, new JsonSerializerOptions{WriteIndented=true})); } static void Main(string[] a){ var items = Load(); if(a.Length>0 && a[0]==\"add\" && a.Length>1){ items.Add(new Dictionary<string,object>{{\"text\",a[1]},{\"done\",false}}); Save(items);} else { for(int i=0;i<items.Count;i++) Console.WriteLine($\"{i+1}. {(items[i][\\\"done\\\"].Equals(true)?\\\"[x]\\\":\\\"[ ]\\\")} {items[i][\\\"text\\\"]}\"); } }}"
+        }
+      ]
+    },
+    {
+      "title": "Web Fetcher",
+      "summary": "Download JSON to disk.",
+      "description": "Uses HttpClient + File APIs.",
+      "steps": [
+        {
+          "title": "Program",
+          "code": "using System; using System.Net.Http; using System.IO; using System.Threading.Tasks;\nclass Fetch{ static async Task Main(){ using var c=new HttpClient(); var s=await c.GetStringAsync(\"https://httpbin.org/json\"); Directory.CreateDirectory(\"out\"); File.WriteAllText(\"out/data.json\", s); Console.WriteLine(\"saved to out/data.json\"); }}"
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Class",
+      "definition": "Blueprint for objects containing fields and methods."
+    },
+    {
+      "term": "Interface",
+      "definition": "Contract that types can implement."
+    },
+    {
+      "term": "Namespace",
+      "definition": "Organizes types under a name (e.g., System.IO)."
+    }
+  ],
+  "tips": [
+    {
+      "title": "SDK",
+      "note": "Use recent LTS .NET SDK for tooling and APIs."
+    },
+    {
+      "title": "Json",
+      "note": "Prefer System.Text.Json for built-in JSON."
+    },
+    {
+      "title": "Async",
+      "note": "Use async/await for I/O and network calls."
+    }
   ],
   "stdlib": [
-    {"name": "System", "description": "Core types"},
-    {"name": "System.IO", "description": "File and stream I/O"},
-    {"name": "System.Net.Http", "description": "HTTP client"}
+    {
+      "name": "System",
+      "description": "Core types"
+    },
+    {
+      "name": "System.IO",
+      "description": "File and stream I/O"
+    },
+    {
+      "name": "System.Net.Http",
+      "description": "HTTP client"
+    }
   ],
   "tools": [
-    {"name": "dotnet CLI", "description": "Build/run/test"}
+    {
+      "name": "dotnet CLI",
+      "description": "Build/run/test"
+    }
   ],
   "links": [
-    {"title": ".NET Docs", "url": "https://learn.microsoft.com/dotnet/"}
+    {
+      "title": ".NET Docs",
+      "url": "https://learn.microsoft.com/dotnet/"
+    }
   ],
   "builtins": [
-    {"name": "Console", "kind": "class", "signature": "System.Console", "description": "Standard I/O."},
-    {"name": "Math", "kind": "class", "signature": "System.Math", "description": "Math utilities."},
-    {"name": "String", "kind": "class", "signature": "System.String", "description": "Unicode strings."},
-    {"name": "List", "kind": "class", "signature": "System.Collections.Generic.List", "description": "Dynamic array."},
-    {"name": "Dictionary", "kind": "class", "signature": "System.Collections.Generic.Dictionary", "description": "Hash map."},
-    {"name": "Console.WriteLine", "kind": "method", "signature": "Console.WriteLine(string value)", "description": "Write a line to stdout."},
-    {"name": "System.IO", "kind": "module", "signature": "namespace System.IO", "description": "File and stream I/O."},
-    {"name": "System.Net.Http", "kind": "module", "signature": "namespace System.Net.Http", "description": "HTTP client."}
-  ]
+    {
+      "name": "Console",
+      "kind": "class",
+      "signature": "System.Console",
+      "description": "Standard I/O."
+    },
+    {
+      "name": "Math",
+      "kind": "class",
+      "signature": "System.Math",
+      "description": "Math utilities."
+    },
+    {
+      "name": "String",
+      "kind": "class",
+      "signature": "System.String",
+      "description": "Unicode strings."
+    },
+    {
+      "name": "List",
+      "kind": "class",
+      "signature": "System.Collections.Generic.List",
+      "description": "Dynamic array."
+    },
+    {
+      "name": "Dictionary",
+      "kind": "class",
+      "signature": "System.Collections.Generic.Dictionary",
+      "description": "Hash map."
+    },
+    {
+      "name": "Console.WriteLine",
+      "kind": "method",
+      "signature": "Console.WriteLine(string value)",
+      "description": "Write a line to stdout."
+    },
+    {
+      "name": "System.IO",
+      "kind": "module",
+      "signature": "namespace System.IO",
+      "description": "File and stream I/O."
+    },
+    {
+      "name": "System.Net.Http",
+      "kind": "module",
+      "signature": "namespace System.Net.Http",
+      "description": "HTTP client."
+    }
+  ],
+  "concepts": []
 }

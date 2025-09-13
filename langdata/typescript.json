@@ -3,45 +3,240 @@
   "slug": "typescript",
   "version": "5.x",
   "quick_start": [
-    {"title": "Install TypeScript", "description": "Use npm to install the compiler.", "code": "npm install -g typescript\ntsc -v"},
-    {"title": "Init project", "description": "Initialize tsconfig and compile.", "code": "mkdir ts-demo && cd ts-demo\necho '{"compilerOptions":{"target":"ES2020","module":"ES2020"}}' > tsconfig.json\necho "const msg: string = 'Hello';\nconsole.log(msg);" > index.ts\n\n# Compile\ntsc\nnode index.js"}
+    {
+      "title": "Install TypeScript",
+      "description": "Use npm to install the compiler.",
+      "code": "npm install -g typescript\ntsc -v"
+    },
+    {
+      "title": "Init project",
+      "description": "Initialize tsconfig and compile.",
+      "code": "mkdir ts-demo && cd ts-demo\nnpm init -y\nnpx tsc --init --target ES2020 --module ES2020\necho \"const msg: string = 'Hello';\nconsole.log(msg);\" > index.ts\n\n# Compile\ntsc\nnode index.js"
+    }
   ],
   "common_tasks": [
-    {"group": "I/O (Node)", "tasks": [
-      {"title": "Read a file", "description": "fs/promises with types.", "code": "import { readFile } from 'node:fs/promises';\nconst s: string = await readFile('README.md', 'utf8');\nconsole.log(s.slice(0, 200));"}
-    ]},
-    {"group": "HTTP + APIs", "tasks": [
-      {"title": "Fetch JSON", "description": "Typed fetch in Node.", "code": "type T = { ok: boolean };\nconst res = await fetch('https://httpbin.org/json');\nconst data = (await res.json()) as unknown;\nconsole.log(data as T);"}
-    ]}
+    {
+      "group": "Files & Data (Node)",
+      "tasks": [
+        {
+          "title": "Read a file",
+          "description": "fs/promises with types.",
+          "code": "import { readFile, writeFile } from 'node:fs/promises';\nconst s: string = await readFile('README.md', 'utf8');\nconsole.log(s.slice(0, 200));\nawait writeFile('out.txt', 'Hello');"
+        },
+        {
+          "title": "Write JSON",
+          "description": "JSON stringify.",
+          "code": "import { writeFile } from 'node:fs/promises';\nconst data = { ok: true, items: [1,2,3] };\nawait writeFile('data.json', JSON.stringify(data, null, 2));"
+        }
+      ]
+    },
+    {
+      "group": "HTTP + APIs",
+      "tasks": [
+        {
+          "title": "Fetch JSON",
+          "description": "Typed fetch in Node.",
+          "code": "type Slideshow = { slideshow: { title: string } };\nconst res = await fetch('https://httpbin.org/json');\nconst data = (await res.json()) as Slideshow;\nconsole.log(data.slideshow.title);"
+        },
+        {
+          "title": "POST JSON",
+          "description": "Send JSON with fetch.",
+          "code": "const res = await fetch('https://httpbin.org/post', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ ok: true }) });\nconsole.log((await res.json()).json);"
+        }
+      ]
+    },
+    {
+      "group": "Env & Config",
+      "tasks": [
+        {
+          "title": "Read environment variables",
+          "description": "Use defaults.",
+          "code": "const port = Number(process.env.PORT || 8000);\nconsole.log(port);"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "To-Do CLI (Node)",
+      "summary": "Add/list tasks saved to a JSON file.",
+      "description": "A simple Node app using fs/promises.",
+      "steps": [
+        {
+          "title": "Script",
+          "code": "// todo.ts\nimport { readFile, writeFile } from 'node:fs/promises';\nconst PATH = 'todo.json';\nconst load = async (): Promise<Array<{text:string;done:boolean}>> => { try { return JSON.parse(await readFile(PATH, 'utf8')); } catch { return []; } };\nconst save = async (items: any) => writeFile(PATH, JSON.stringify(items, null, 2));\nconst [,, cmd, text] = process.argv;\nconst items = await load();\nif (cmd === 'add' && text) { items.push({ text, done:false }); await save(items); }\nif (cmd === 'list') { items.forEach((it,i)=> console.log(`${i+1}. ${it.done?'[x]':'[ ]'} ${it.text}`)); }"
+        }
+      ]
+    },
+    {
+      "title": "Web Fetcher (Node)",
+      "summary": "Download JSON to disk.",
+      "description": "Fetch an API and save the response.",
+      "steps": [
+        {
+          "title": "Script",
+          "code": "// fetch.ts\nimport { writeFile, mkdir } from 'node:fs/promises';\nconst url = 'https://httpbin.org/json';\nconst res = await fetch(url);\nconst data = await res.json();\nawait mkdir('out', { recursive: true });\nawait writeFile('out/data.json', JSON.stringify(data, null, 2));\nconsole.log('saved to out/data.json');"
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Type",
+      "definition": "A label for the shape of data (e.g., string, number)."
+    },
+    {
+      "term": "Interface",
+      "definition": "A contract describing the shape of an object."
+    },
+    {
+      "term": "Generic",
+      "definition": "Type that works over a set of types (e.g., Array<T>)."
+    }
+  ],
+  "tips": [
+    {
+      "title": "Strict",
+      "note": "Enable strict flags in tsconfig for better checks."
+    },
+    {
+      "title": "Node",
+      "note": "Use Node 18+ ESM and lib definitions for fetch."
+    },
+    {
+      "title": "Types",
+      "note": "Prefer interfaces for object shapes and type aliases for unions."
+    }
   ],
   "stdlib": [
-    {"name": "lib.dom.d.ts", "description": "DOM library types"},
-    {"name": "lib.es2020.d.ts", "description": "ES2020 standard library types"}
+    {
+      "name": "lib.dom.d.ts",
+      "description": "DOM library types"
+    },
+    {
+      "name": "lib.es2020.d.ts",
+      "description": "ES2020 standard library types"
+    }
   ],
   "tools": [
-    {"name": "tsc", "description": "TypeScript compiler"},
-    {"name": "ts-node", "description": "Run TS directly"}
+    {
+      "name": "tsc",
+      "description": "TypeScript compiler"
+    },
+    {
+      "name": "ts-node",
+      "description": "Run TS directly"
+    }
   ],
   "links": [
-    {"title": "TypeScript Handbook", "url": "https://www.typescriptlang.org/docs/"}
+    {
+      "title": "TypeScript Handbook",
+      "url": "https://www.typescriptlang.org/docs/"
+    }
   ],
   "builtins": [
-    {"name": "Partial<T>", "kind": "utility type", "signature": "Partial<T>", "description": "All properties optional."},
-    {"name": "Pick<T,K>", "kind": "utility type", "signature": "Pick<T, K>", "description": "Pick subset of properties."},
-    {"name": "Record<K,T>", "kind": "utility type", "signature": "Record<K, T>", "description": "Map of keys to values."},
-    {"name": "Readonly<T>", "kind": "utility type", "signature": "Readonly<T>", "description": "Make properties readonly."},
-    {"name": "Omit<T,K>", "kind": "utility type", "signature": "Omit<T, K>", "description": "Remove keys from T."},
-    {"name": "ReturnType<F>", "kind": "utility type", "signature": "ReturnType<F>", "description": "Function return type."},
-    {"name": "Parameters<F>", "kind": "utility type", "signature": "Parameters<F>", "description": "Tuple of parameter types."},
-    {"name": "Awaited<T>", "kind": "utility type", "signature": "Awaited<T>", "description": "Unwrap Promise/Thenable."},
-    {"name": "Array<T>", "kind": "interface", "signature": "interface Array<T>", "description": "Generic array type with map/filter/reduce."},
-    {"name": "Array.prototype.map", "kind": "method", "signature": "map<U>(callback: (value: T, index: number, array: T[]) => U, thisArg?: any): U[]", "description": "Transform array items."},
-    {"name": "Array.prototype.filter", "kind": "method", "signature": "filter<S extends T>(predicate: (value: T, index: number, array: T[]) => value is S, thisArg?: any): S[]", "description": "Filter array items."},
-    {"name": "Promise<T>", "kind": "class", "signature": "class Promise<T>", "description": "Asynchronous computation result."},
-    {"name": "Promise.prototype.then", "kind": "method", "signature": "then<TResult1 = T, TResult2 = never>(onfulfilled?: (value: T) => TResult1 | PromiseLike<TResult1>, onrejected?: (reason: any) => TResult2 | PromiseLike<TResult2>): Promise<TResult1 | TResult2>", "description": "Register fulfillment/rejection handlers."},
-    {"name": "setTimeout", "kind": "function", "signature": "setTimeout(handler: (...args: any[]) => void, timeout?: number, ...args: any[]): number", "description": "Schedule a callback."},
-    {"name": "clearTimeout", "kind": "function", "signature": "clearTimeout(handle: number): void", "description": "Cancel timeout."},
-    {"name": "fs", "kind": "module", "signature": "Node typings: @types/node -> fs", "description": "Filesystem module types in Node."},
-    {"name": "path", "kind": "module", "signature": "Node typings: @types/node -> path", "description": "Path utilities types in Node."}
-  ]
+    {
+      "name": "Partial<T>",
+      "kind": "utility type",
+      "signature": "Partial<T>",
+      "description": "All properties optional."
+    },
+    {
+      "name": "Pick<T,K>",
+      "kind": "utility type",
+      "signature": "Pick<T, K>",
+      "description": "Pick subset of properties."
+    },
+    {
+      "name": "Record<K,T>",
+      "kind": "utility type",
+      "signature": "Record<K, T>",
+      "description": "Map of keys to values."
+    },
+    {
+      "name": "Readonly<T>",
+      "kind": "utility type",
+      "signature": "Readonly<T>",
+      "description": "Make properties readonly."
+    },
+    {
+      "name": "Omit<T,K>",
+      "kind": "utility type",
+      "signature": "Omit<T, K>",
+      "description": "Remove keys from T."
+    },
+    {
+      "name": "ReturnType<F>",
+      "kind": "utility type",
+      "signature": "ReturnType<F>",
+      "description": "Function return type."
+    },
+    {
+      "name": "Parameters<F>",
+      "kind": "utility type",
+      "signature": "Parameters<F>",
+      "description": "Tuple of parameter types."
+    },
+    {
+      "name": "Awaited<T>",
+      "kind": "utility type",
+      "signature": "Awaited<T>",
+      "description": "Unwrap Promise/Thenable."
+    },
+    {
+      "name": "Array<T>",
+      "kind": "interface",
+      "signature": "interface Array<T>",
+      "description": "Generic array type with map/filter/reduce."
+    },
+    {
+      "name": "Array.prototype.map",
+      "kind": "method",
+      "signature": "map<U>(callback: (value: T, index: number, array: T[]) => U, thisArg?: any): U[]",
+      "description": "Transform array items."
+    },
+    {
+      "name": "Array.prototype.filter",
+      "kind": "method",
+      "signature": "filter<S extends T>(predicate: (value: T, index: number, array: T[]) => value is S, thisArg?: any): S[]",
+      "description": "Filter array items."
+    },
+    {
+      "name": "Promise<T>",
+      "kind": "class",
+      "signature": "class Promise<T>",
+      "description": "Asynchronous computation result."
+    },
+    {
+      "name": "Promise.prototype.then",
+      "kind": "method",
+      "signature": "then<TResult1 = T, TResult2 = never>(onfulfilled?: (value: T) => TResult1 | PromiseLike<TResult1>, onrejected?: (reason: any) => TResult2 | PromiseLike<TResult2>): Promise<TResult1 | TResult2>",
+      "description": "Register fulfillment/rejection handlers."
+    },
+    {
+      "name": "setTimeout",
+      "kind": "function",
+      "signature": "setTimeout(handler: (...args: any[]) => void, timeout?: number, ...args: any[]): number",
+      "description": "Schedule a callback."
+    },
+    {
+      "name": "clearTimeout",
+      "kind": "function",
+      "signature": "clearTimeout(handle: number): void",
+      "description": "Cancel timeout."
+    },
+    {
+      "name": "fs",
+      "kind": "module",
+      "signature": "Node typings: @types/node -> fs",
+      "description": "Filesystem module types in Node."
+    },
+    {
+      "name": "path",
+      "kind": "module",
+      "signature": "Node typings: @types/node -> path",
+      "description": "Path utilities types in Node."
+    }
+  ],
+  "concepts": []
 }

@@ -3,26 +3,106 @@
   "slug": "ada",
   "version": "Ada 2012",
   "quick_start": [
-    {"title": "Install GNAT", "description": "Use gnat/gnatmake from GCC or Alire.", "code": "gnat --version"},
-    {"title": "Hello, World", "description": "Compile and run.", "code": "with Ada.Text_IO; use Ada.Text_IO;\nprocedure Hello is\nbegin\n  Put_Line(\"Hello, world!\");\nend Hello;"}
+    {
+      "title": "Install GNAT",
+      "description": "Use gnat/gnatmake from GCC or Alire.",
+      "code": "gnat --version"
+    },
+    {
+      "title": "Hello, World",
+      "description": "Compile and run.",
+      "code": "with Ada.Text_IO; use Ada.Text_IO;\nprocedure Hello is\nbegin\n  Put_Line(\"Hello, world!\");\nend Hello;"
+    }
   ],
   "common_tasks": [
-    {"group": "I/O", "tasks": [
-      {"title": "Read a file", "description": "Text_IO get line.", "code": "with Ada.Text_IO; use Ada.Text_IO;\nprocedure Main is\n  F : File_Type;\n  Line : String (1..200);\n  Last : Natural;\nbegin\n  Open (F, In_File, \"README.md\");\n  Get_Line (F, Line, Last);\n  Put_Line (Line(1..Last));\n  Close (F);\nend Main;"}
-    ]}
+    {
+      "group": "Files & Data",
+      "tasks": [
+        {
+          "title": "Read a file",
+          "description": "Text_IO get line.",
+          "code": "with Ada.Text_IO; use Ada.Text_IO;\nprocedure Main is\n  F : File_Type;\n  Line : String (1..200);\n  Last : Natural;\nbegin\n  Open (F, In_File, \"README.md\");\n  Get_Line (F, Line, Last);\n  Put_Line (Line(1..Last));\n  Close (F);\nend Main;"
+        },
+        {
+          "title": "Write JSON",
+          "description": "Text_IO Put_Line.",
+          "code": "with Ada.Text_IO; use Ada.Text_IO;\nprocedure Main is\nbegin\n  declare F : File_Type; begin Create(F, Out_File, \"data.json\"); Put_Line(F, \"{\\\"ok\\\":true}\"); Close(F); end;\nend Main;"
+        }
+      ]
+    },
+    {
+      "group": "Env & Config",
+      "tasks": [
+        {
+          "title": "Read env",
+          "description": "GNAT.Environment",
+          "code": "with Ada.Text_IO; use Ada.Text_IO; with GNAT.Environment; use GNAT.Environment;\nprocedure Main is begin Put_Line(Value(\"PORT\", \"8000\")); end Main;"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "To-Do CLI",
+      "summary": "Append/list tasks in todo.txt.",
+      "description": "Simple Text_IO.",
+      "steps": [
+        {
+          "title": "main.adb",
+          "code": "with Ada.Text_IO; use Ada.Text_IO; with Ada.Command_Line; use Ada.Command_Line;\nprocedure Main is\n  Cmd  : constant String := (if Argument_Count>=1 then Argument(1) else \"list\");\nbegin\n  if Cmd = \"add\" and then Argument_Count >= 2 then\n    declare F : File_Type; begin Open (F, Append_File, \"todo.txt\"); Put_Line(F, Argument(2)); Close(F); end;\n  elsif Cmd = \"list\" then\n    declare F : File_Type; begin if Exists(\"todo.txt\") then Open(F, In_File, \"todo.txt\"); Put(Get(File => F)); Close(F); end if; end;\n  else Put_Line(\"usage: add <text> | list\"); end if;\nend Main;"
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Package",
+      "definition": "Unit containing declarations and bodies."
+    },
+    {
+      "term": "Procedure",
+      "definition": "Subprogram that performs an action (no return)."
+    }
+  ],
+  "tips": [
+    {
+      "title": "Build",
+      "note": "Use gnatmake or Alire to manage builds and deps."
+    },
+    {
+      "title": "Style",
+      "note": "Leverage strong typing; keep packages cohesive."
+    }
   ],
   "stdlib": [
-    {"name": "Ada.Text_IO", "description": "Text I/O"},
-    {"name": "Ada.Strings", "description": "String utilities"}
+    {
+      "name": "Ada.Text_IO",
+      "description": "Text I/O"
+    },
+    {
+      "name": "Ada.Strings",
+      "description": "String utilities"
+    }
   ],
   "tools": [
-    {"name": "gnatmake", "description": "Ada builder"}
+    {
+      "name": "gnatmake",
+      "description": "Ada builder"
+    }
   ],
   "links": [
-    {"title": "Ada Reference", "url": "https://learn.adacore.com/"}
+    {
+      "title": "Ada Reference",
+      "url": "https://learn.adacore.com/"
+    }
   ],
   "builtins": [
-    {"name": "Put_Line", "kind": "procedure", "signature": "Put_Line(Item)", "description": "Print a line to standard output."}
-  ]
+    {
+      "name": "Put_Line",
+      "kind": "procedure",
+      "signature": "Put_Line(Item)",
+      "description": "Print a line to standard output."
+    }
+  ],
+  "concepts": []
 }
-

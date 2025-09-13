@@ -3,24 +3,69 @@
   "slug": "delphi",
   "version": "Object Pascal",
   "quick_start": [
-    {"title": "Install Delphi or FreePascal", "description": "Use appropriate IDE/compiler.", "code": "fpc -iV"}
+    {
+      "title": "Install Delphi or FreePascal",
+      "description": "Use appropriate IDE/compiler.",
+      "code": "fpc -iV"
+    }
   ],
   "common_tasks": [
-    {"group": "Console", "tasks": [
-      {"title": "WriteLn", "description": "Print line.", "code": "program Hello; begin Writeln('Hello, world!'); end."}
-    ]}
+    {
+      "group": "Files & Data",
+      "tasks": [
+        {
+          "title": "WriteLn",
+          "description": "Print line.",
+          "code": "program Hello; begin Writeln('Hello, world!'); end."
+        },
+        {
+          "title": "Write JSON (string)",
+          "description": "AssignFile + Writeln",
+          "code": "program W; var f: Text; begin AssignFile(f, 'data.json'); Rewrite(f); Writeln(f, '{\"ok\":true}'); CloseFile(f); end."
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "To-Do CLI",
+      "summary": "Append/list tasks in todo.txt.",
+      "description": "Text-only console.",
+      "steps": [
+        {
+          "title": "main.pas",
+          "code": "program T; uses SysUtils; var cmd, text, path: string; f: Text; begin path:='todo.txt'; if ParamCount>0 then cmd:=ParamStr(1) else cmd:='list'; if (cmd='add') and (ParamCount>1) then begin AssignFile(f, path); Append(f); Writeln(f, ParamStr(2)); CloseFile(f); end else if cmd='list' then begin if FileExists(path) then begin AssignFile(f, path); Reset(f); while not Eof(f) do begin ReadLn(f, text); Writeln(text); end; CloseFile(f); end; end else Writeln('usage: add <text> | list'); end."
+        }
+      ]
+    }
   ],
   "stdlib": [
-    {"name": "SysUtils", "description": "Utilities"}
+    {
+      "name": "SysUtils",
+      "description": "Utilities"
+    }
   ],
   "tools": [
-    {"name": "fpc", "description": "FreePascal compiler"}
+    {
+      "name": "fpc",
+      "description": "FreePascal compiler"
+    }
   ],
   "links": [
-    {"title": "FreePascal Docs", "url": "https://www.freepascal.org/docs.html"}
+    {
+      "title": "FreePascal Docs",
+      "url": "https://www.freepascal.org/docs.html"
+    }
   ],
   "builtins": [
-    {"name": "Writeln", "kind": "procedure", "signature": "Writeln(args)", "description": "Write with newline."}
-  ]
+    {
+      "name": "Writeln",
+      "kind": "procedure",
+      "signature": "Writeln(args)",
+      "description": "Write with newline."
+    }
+  ],
+  "concepts": [],
+  "glossary": [],
+  "tips": []
 }
-

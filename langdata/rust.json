@@ -3,46 +3,248 @@
   "slug": "rust",
   "version": "1.x",
   "quick_start": [
-    {"title": "Install Rust", "description": "Install with rustup.", "code": "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh\nsource $HOME/.cargo/env\nrustc --version"},
-    {"title": "New project", "description": "Create and run a binary crate.", "code": "cargo new hello && cd hello\ncargo run"},
-    {"title": "Add a dependency", "description": "Use Cargo to manage crates.", "code": "# In Cargo.toml add under [dependencies]\nserde = \"1\"\nserde_json = \"1\"\n# Example main.rs using serde_json\nuse serde_json::json;\nfn main(){ let v = json!({\"ok\": true}); println!(\"{}\", v); }"}
+    {
+      "title": "Install Rust",
+      "description": "Install with rustup.",
+      "code": "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh\nsource $HOME/.cargo/env\nrustc --version"
+    },
+    {
+      "title": "New project",
+      "description": "Create and run a binary crate.",
+      "code": "cargo new hello && cd hello\ncargo run"
+    },
+    {
+      "title": "Add a dependency",
+      "description": "Use Cargo to manage crates.",
+      "code": "# In Cargo.toml add under [dependencies]\nserde = \"1\"\nserde_json = \"1\"\n# Example main.rs using serde_json\nuse serde_json::json;\nfn main(){ let v = json!({\"ok\": true}); println!(\"{}\", v); }"
+    }
   ],
   "common_tasks": [
-    {"group": "I/O", "tasks": [
-      {"title": "Read a file", "description": "Read text into String.", "code": "use std::fs;\nfn main(){ let s = fs::read_to_string(\"README.md\").unwrap(); println!(\"{}\", &s[..s.len().min(200)]); }"},
-      {"title": "Write JSON", "description": "Serialize with serde_json.", "code": "use serde_json::json; use std::fs;\nfn main(){ let v = json!({\"ok\": true, \"items\": [1,2,3]}); fs::write(\"data.json\", v.to_string()).unwrap(); }"}
-    ]},
-    {"group": "HTTP + APIs", "tasks": [
-      {"title": "GET JSON (reqwest)", "description": "Async fetch and parse JSON.", "code": "#[tokio::main]\nasync fn main(){ let v: serde_json::Value = reqwest::get(\"https://httpbin.org/json\").await.unwrap().json().await.unwrap(); println!(\"{}\", v); }"}
-    ]}
+    {
+      "group": "Files & Data",
+      "tasks": [
+        {
+          "title": "Read a file",
+          "description": "Read text into String.",
+          "code": "use std::fs;\nfn main(){ let s = fs::read_to_string(\"README.md\").unwrap(); println!(\"{}\", &s[..s.len().min(200)]); }"
+        },
+        {
+          "title": "Write JSON",
+          "description": "Serialize with serde_json.",
+          "code": "use serde_json::json; use std::fs;\nfn main(){ let v = json!({\"ok\": true, \"items\": [1,2,3]}); fs::write(\"data.json\", v.to_string()).unwrap(); }"
+        },
+        {
+          "title": "List files",
+          "description": "Walk directory (std).",
+          "code": "use std::fs;\nfn main(){ for e in fs::read_dir(\".\").unwrap(){ println!(\"{:?}\", e.unwrap().path()); } }"
+        }
+      ]
+    },
+    {
+      "group": "HTTP + APIs",
+      "tasks": [
+        {
+          "title": "GET JSON (reqwest)",
+          "description": "Async fetch and parse JSON.",
+          "code": "#[tokio::main]\nasync fn main(){ let v: serde_json::Value = reqwest::get(\"https://httpbin.org/json\").await.unwrap().json().await.unwrap(); println!(\"{}\", v); }"
+        },
+        {
+          "title": "GET (curl cmd)",
+          "description": "Use std::process to call curl.",
+          "code": "use std::process::Command;\nfn main(){ let out = Command::new(\"curl\").arg(\"-s\").arg(\"https://httpbin.org/json\").output().unwrap(); println!(\"{}\", String::from_utf8_lossy(&out.stdout)); }"
+        }
+      ]
+    },
+    {
+      "group": "Env & Config",
+      "tasks": [
+        {
+          "title": "Read env",
+          "description": "Use defaults when missing.",
+          "code": "use std::env;\nfn main(){ let port = env::var(\"PORT\").unwrap_or_else(|_| \"8000\".into()); println!(\"{}\", port); }"
+        }
+      ]
+    },
+    {
+      "group": "Logging",
+      "tasks": [
+        {
+          "title": "println!",
+          "description": "Simple logging.",
+          "code": "fn main(){ println!(\"INFO: start\"); eprintln!(\"ERROR: oops\"); }"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "To-Do CLI",
+      "summary": "Add/list tasks saved to a JSON file.",
+      "description": "Stores as lines (no deps).",
+      "steps": [
+        {
+          "title": "main.rs",
+          "code": "use std::fs::{self, OpenOptions}; use std::io::Write; use std::env;\nfn main(){ let args: Vec<String> = env::args().collect(); let cmd = args.get(1).map(String::as_str).unwrap_or(\"list\"); if cmd==\"add\" { if let Some(text) = args.get(2){ let mut f = OpenOptions::new().create(true).append(true).open(\"todo.txt\").unwrap(); writeln!(f, \"{}\", text).unwrap(); } } else { if let Ok(s)=fs::read_to_string(\"todo.txt\"){ print!(\"{}\", s); } } }"
+        }
+      ]
+    },
+    {
+      "title": "Web Fetcher",
+      "summary": "Download JSON to disk.",
+      "description": "Uses reqwest or curl.",
+      "steps": [
+        {
+          "title": "main.rs (reqwest)",
+          "code": "// Cargo.toml: reqwest as above\nuse reqwest::blocking::get; use std::fs;\nfn main(){ let body = get(\"https://httpbin.org/json\").unwrap().text().unwrap(); fs::create_dir_all(\"out\").unwrap(); fs::write(\"out/data.json\", body).unwrap(); println!(\"saved to out/data.json\"); }"
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Ownership",
+      "definition": "Rules that govern how Rust manages memory without GC."
+    },
+    {
+      "term": "Borrowing",
+      "definition": "Referencing data without taking ownership (&T / &mut T)."
+    },
+    {
+      "term": "Trait",
+      "definition": "A collection of methods types can implement (like interfaces)."
+    }
+  ],
+  "tips": [
+    {
+      "title": "Clippy",
+      "note": "Run `cargo clippy` for lints and suggestions."
+    },
+    {
+      "title": "Fmt",
+      "note": "Run `cargo fmt` to format code."
+    },
+    {
+      "title": "Errors",
+      "note": "Use `Result` and `?` operator to propagate errors."
+    }
   ],
   "stdlib": [
-    {"name": "std::fs", "description": "Filesystem."},
-    {"name": "std::io", "description": "I/O traits and types."},
-    {"name": "std::time", "description": "Time and durations."},
-    {"name": "std::thread", "description": "Threads."}
+    {
+      "name": "std::fs",
+      "description": "Filesystem."
+    },
+    {
+      "name": "std::io",
+      "description": "I/O traits and types."
+    },
+    {
+      "name": "std::time",
+      "description": "Time and durations."
+    },
+    {
+      "name": "std::thread",
+      "description": "Threads."
+    }
   ],
   "tools": [
-    {"name": "rustup", "description": "Toolchain manager"},
-    {"name": "cargo", "description": "Build/test/package manager"},
-    {"name": "rustfmt", "description": "Formatter"}
+    {
+      "name": "rustup",
+      "description": "Toolchain manager"
+    },
+    {
+      "name": "cargo",
+      "description": "Build/test/package manager"
+    },
+    {
+      "name": "rustfmt",
+      "description": "Formatter"
+    }
   ],
   "links": [
-    {"title": "The Rust Book", "url": "https://doc.rust-lang.org/book/"},
-    {"title": "std docs", "url": "https://doc.rust-lang.org/std/"},
-    {"title": "crates.io", "url": "https://crates.io/"}
+    {
+      "title": "The Rust Book",
+      "url": "https://doc.rust-lang.org/book/"
+    },
+    {
+      "title": "std docs",
+      "url": "https://doc.rust-lang.org/std/"
+    },
+    {
+      "title": "crates.io",
+      "url": "https://crates.io/"
+    }
   ],
   "builtins": [
-    {"name": "println!", "kind": "macro", "signature": "println!(format...)", "description": "Print with newline."},
-    {"name": "print!", "kind": "macro", "signature": "print!(format...)", "description": "Print without newline."},
-    {"name": "format!", "kind": "macro", "signature": "format!(format, args...)", "description": "Create a formatted String."},
-    {"name": "dbg!", "kind": "macro", "signature": "dbg!(expr)", "description": "Print debug representation and pass through value."},
-    {"name": "vec!", "kind": "macro", "signature": "vec![elems]", "description": "Create a Vec."},
-    {"name": "Option", "kind": "enum", "signature": "Option<T>", "description": "Optional values (Some/None)."},
-    {"name": "Result", "kind": "enum", "signature": "Result<T,E>", "description": "Error handling (Ok/Err)."},
-    {"name": "std::fs", "kind": "module", "signature": "use std::fs;", "description": "Filesystem operations.", "category": "Stdlib"},
-    {"name": "std::io", "kind": "module", "signature": "use std::io;", "description": "I/O primitives.", "category": "Stdlib"},
-    {"name": "serde", "kind": "library", "signature": "serde", "description": "Serialization/deserialization framework.", "category": "Crate"},
-    {"name": "reqwest", "kind": "library", "signature": "reqwest", "description": "HTTP client.", "category": "Crate"}
-  ]
+    {
+      "name": "println!",
+      "kind": "macro",
+      "signature": "println!(format...)",
+      "description": "Print with newline."
+    },
+    {
+      "name": "print!",
+      "kind": "macro",
+      "signature": "print!(format...)",
+      "description": "Print without newline."
+    },
+    {
+      "name": "format!",
+      "kind": "macro",
+      "signature": "format!(format, args...)",
+      "description": "Create a formatted String."
+    },
+    {
+      "name": "dbg!",
+      "kind": "macro",
+      "signature": "dbg!(expr)",
+      "description": "Print debug representation and pass through value."
+    },
+    {
+      "name": "vec!",
+      "kind": "macro",
+      "signature": "vec![elems]",
+      "description": "Create a Vec."
+    },
+    {
+      "name": "Option",
+      "kind": "enum",
+      "signature": "Option<T>",
+      "description": "Optional values (Some/None)."
+    },
+    {
+      "name": "Result",
+      "kind": "enum",
+      "signature": "Result<T,E>",
+      "description": "Error handling (Ok/Err)."
+    },
+    {
+      "name": "std::fs",
+      "kind": "module",
+      "signature": "use std::fs;",
+      "description": "Filesystem operations.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "std::io",
+      "kind": "module",
+      "signature": "use std::io;",
+      "description": "I/O primitives.",
+      "category": "Stdlib"
+    },
+    {
+      "name": "serde",
+      "kind": "library",
+      "signature": "serde",
+      "description": "Serialization/deserialization framework.",
+      "category": "Crate"
+    },
+    {
+      "name": "reqwest",
+      "kind": "library",
+      "signature": "reqwest",
+      "description": "HTTP client.",
+      "category": "Crate"
+    }
+  ],
+  "concepts": []
 }

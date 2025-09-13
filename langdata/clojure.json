@@ -3,29 +3,119 @@
   "slug": "clojure",
   "version": "1.11+",
   "quick_start": [
-    {"title": "Install Clojure CLI", "description": "Use brew or official script.", "code": "clj -Sdescribe"},
-    {"title": "Hello, World", "description": "Run with clj.", "code": "(println \"Hello, world!\")"}
+    {
+      "title": "Install Clojure CLI",
+      "description": "Use brew or official script.",
+      "code": "clj -Sdescribe"
+    },
+    {
+      "title": "Hello, World",
+      "description": "Run with clj.",
+      "code": "(println \"Hello, world!\")"
+    }
   ],
   "common_tasks": [
-    {"group": "I/O", "tasks": [
-      {"title": "Read file", "description": "slurp", "code": "(println (subs (slurp \"README.md\") 0 200))"}
-    ]},
-    {"group": "HTTP + APIs", "tasks": [
-      {"title": "GET JSON", "description": "clj-http", "code": ";; deps.edn: { :deps { clj-http/clj-http {:mvn/version \"3.12.3\"} }}\n(require '[clj-http.client :as http])\n(println (:body (http/get \"https://httpbin.org/json\")))"}
-    ]}
+    {
+      "group": "Files & Data",
+      "tasks": [
+        {
+          "title": "Read file",
+          "description": "slurp",
+          "code": "(println (subs (slurp \"README.md\") 0 200))"
+        },
+        {
+          "title": "Write JSON",
+          "description": "Spit a JSON string.",
+          "code": "(spit \"data.json\" \"{\\\"ok\\\":true}\")"
+        }
+      ]
+    },
+    {
+      "group": "HTTP + APIs",
+      "tasks": [
+        {
+          "title": "GET JSON",
+          "description": "clj-http",
+          "code": ";; deps.edn: { :deps { clj-http/clj-http {:mvn/version \"3.12.3\"} }}\n(require '[clj-http.client :as http])\n(println (:body (http/get \"https://httpbin.org/json\")))"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "To-Do CLI",
+      "summary": "Append/list tasks in a text file.",
+      "description": "One task per line.",
+      "steps": [
+        {
+          "title": "todo.clj",
+          "code": "(def p \"todo.txt\")\n(let [[cmd arg] *command-line-args*]\n  (cond\n    (= cmd \"add\") (spit p (str arg \"\\n\") :append true)\n    (= cmd \"list\") (when (.exists (java.io.File. p)) (print (slurp p)))\n    :else (println \"usage: clj -M todo.clj add <text> | list\")))"
+        }
+      ]
+    },
+    {
+      "title": "Web Fetcher",
+      "summary": "Download JSON to disk.",
+      "description": "clj-http + spit.",
+      "steps": [
+        {
+          "title": "fetch.clj",
+          "code": "(require '[clj-http.client :as http])\n(def body (:body (http/get \"https://httpbin.org/json\")))\n(.mkdirs (java.io.File. \"out\"))\n(spit \"out/data.json\" body)\n(println \"saved to out/data.json\")"
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "REPL",
+      "definition": "Interactive read‑eval‑print loop for live coding."
+    },
+    {
+      "term": "Immutable data",
+      "definition": "Persistent vectors, maps, sets are immutable by default."
+    }
+  ],
+  "tips": [
+    {
+      "title": "Threading macros",
+      "note": "Use -> and ->> to make pipelines readable."
+    },
+    {
+      "title": "Docs",
+      "note": "Use (doc name) in the REPL and clojuredocs.org."
+    }
   ],
   "stdlib": [
-    {"name": "clojure.core", "description": "Core functions"}
+    {
+      "name": "clojure.core",
+      "description": "Core functions"
+    }
   ],
   "tools": [
-    {"name": "clj", "description": "Clojure CLI"}
+    {
+      "name": "clj",
+      "description": "Clojure CLI"
+    }
   ],
   "links": [
-    {"title": "Clojure Docs", "url": "https://clojure.org/reference"}
+    {
+      "title": "Clojure Docs",
+      "url": "https://clojure.org/reference"
+    }
   ],
   "builtins": [
-    {"name": "+", "kind": "function", "signature": "(+ x y)", "description": "Addition."},
-    {"name": "map", "kind": "function", "signature": "(map f coll)", "description": "Map over collection."}
-  ]
+    {
+      "name": "+",
+      "kind": "function",
+      "signature": "(+ x y)",
+      "description": "Addition."
+    },
+    {
+      "name": "map",
+      "kind": "function",
+      "signature": "(map f coll)",
+      "description": "Map over collection."
+    }
+  ],
+  "concepts": []
 }
-

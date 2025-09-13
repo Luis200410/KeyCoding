@@ -3,25 +3,92 @@
   "slug": "cobol",
   "version": "COBOL 2002",
   "quick_start": [
-    {"title": "Install GnuCOBOL", "description": "cobc compiler.", "code": "cobc -v"},
-    {"title": "Hello, World", "description": "Compile and run.", "code": "IDENTIFICATION DIVISION. PROGRAM-ID. HELLO. PROCEDURE DIVISION. DISPLAY 'Hello, world!'. STOP RUN."}
+    {
+      "title": "Install GnuCOBOL",
+      "description": "cobc compiler.",
+      "code": "cobc -v"
+    },
+    {
+      "title": "Hello, World",
+      "description": "Compile and run.",
+      "code": "IDENTIFICATION DIVISION. PROGRAM-ID. HELLO. PROCEDURE DIVISION. DISPLAY 'Hello, world!'. STOP RUN."
+    }
   ],
   "common_tasks": [
-    {"group": "I/O", "tasks": [
-      {"title": "Display", "description": "DISPLAY statement.", "code": "DISPLAY 'Message'."}
-    ]}
+    {
+      "group": "Console & Files",
+      "tasks": [
+        {
+          "title": "Display",
+          "description": "DISPLAY statement.",
+          "code": "DISPLAY 'Message'."
+        },
+        {
+          "title": "Write text file",
+          "description": "Sequential file",
+          "code": "IDENTIFICATION DIVISION. PROGRAM-ID. W. ENVIRONMENT DIVISION. INPUT-OUTPUT SECTION. FILE-CONTROL. SELECT F ASSIGN TO 'out.txt' ORGANIZATION IS LINE SEQUENTIAL. DATA DIVISION. FILE SECTION. FD F. 01 REC PIC X(80). WORKING-STORAGE SECTION. PROCEDURE DIVISION. OPEN OUTPUT F. MOVE 'Hello' TO REC. WRITE REC. CLOSE F. STOP RUN."
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "To-Do (sequential file)",
+      "summary": "Append/list tasks in a text file.",
+      "description": "Uses LINE SEQUENTIAL file.",
+      "steps": [
+        {
+          "title": "ADD",
+          "code": "... (similar to Write text file, writing argv text)"
+        },
+        {
+          "title": "LIST",
+          "code": "... READ file and DISPLAY lines"
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Division",
+      "definition": "Top-level sections (IDENTIFICATION, ENVIRONMENT, DATA, PROCEDURE)."
+    },
+    {
+      "term": "FD",
+      "definition": "File description for sequential files."
+    }
+  ],
+  "tips": [
+    {
+      "title": "Compile",
+      "note": "Use cobc -x program.cob to build an executable."
+    }
   ],
   "stdlib": [
-    {"name": "INTRINSIC", "description": "Intrinsic functions"}
+    {
+      "name": "INTRINSIC",
+      "description": "Intrinsic functions"
+    }
   ],
   "tools": [
-    {"name": "cobc", "description": "COBOL compiler"}
+    {
+      "name": "cobc",
+      "description": "COBOL compiler"
+    }
   ],
   "links": [
-    {"title": "GnuCOBOL Manual", "url": "https://open-cobol.sourceforge.io/guide/"}
+    {
+      "title": "GnuCOBOL Manual",
+      "url": "https://open-cobol.sourceforge.io/guide/"
+    }
   ],
   "builtins": [
-    {"name": "DISPLAY", "kind": "statement", "signature": "DISPLAY literal", "description": "Output text."}
-  ]
+    {
+      "name": "DISPLAY",
+      "kind": "statement",
+      "signature": "DISPLAY literal",
+      "description": "Output text."
+    }
+  ],
+  "concepts": []
 }
-

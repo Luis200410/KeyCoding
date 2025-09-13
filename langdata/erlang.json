@@ -3,25 +3,128 @@
   "slug": "erlang",
   "version": "24+",
   "quick_start": [
-    {"title": "Install Erlang/OTP", "description": "Use asdf or OS package.", "code": "erl -version"},
-    {"title": "Hello, World", "description": "Run in shell.", "code": "io:format(\"Hello, world!~n\")."}
+    {
+      "title": "Install Erlang/OTP",
+      "description": "Use asdf or OS package.",
+      "code": "erl -version"
+    },
+    {
+      "title": "Hello, World",
+      "description": "Run in shell.",
+      "code": "io:format(\"Hello, world!~n\")."
+    }
   ],
   "common_tasks": [
-    {"group": "I/O", "tasks": [
-      {"title": "Read file", "description": "file:read_file", "code": "{ok,B} = file:read_file(\"README.md\"), io:format(\"~s\", [binary:part(B,0,200)])."}
-    ]}
+    {
+      "group": "Files & Data",
+      "tasks": [
+        {
+          "title": "Read file",
+          "description": "file:read_file",
+          "code": "{ok,B} = file:read_file(\"README.md\"), io:format(\"~s\", [binary:part(B,0,200)])."
+        },
+        {
+          "title": "Write JSON (string)",
+          "description": "file:write_file",
+          "code": "ok = file:write_file(\"data.json\", <<\"{\\\"ok\\\":true}\">>)."
+        }
+      ]
+    },
+    {
+      "group": "HTTP + APIs",
+      "tasks": [
+        {
+          "title": "GET JSON (httpc)",
+          "description": ":inets http client",
+          "code": ":inets.start(), :ssl.start(), {ok, {{_,200,_}, _H, Body}} = httpc:request(get, {\"https://httpbin.org/json\", []}, [], []), io:format(\"~s\", [Body])."
+        },
+        {
+          "title": "POST JSON (httpc)",
+          "description": "Send JSON",
+          "code": ":inets.start(), :ssl.start(), {ok, {{_,S,_}, _H, _}} = httpc:request(post, {\"https://httpbin.org/post\", [], \"application/json\", <<\"{\\\"ok\\\":true}\">>}, [], []), io:format(\"~p\", [S])."
+        }
+      ]
+    },
+    {
+      "group": "Env & Config",
+      "tasks": [
+        {
+          "title": "Read env",
+          "description": "os:getenv",
+          "code": "case os:getenv(\"PORT\") of false -> io:format(\"8000\"); V -> io:format(\"~s\", [V]) end."
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "To-Do CLI (escript)",
+      "summary": "Append/list tasks in todo.txt.",
+      "description": "Run as escript.",
+      "steps": [
+        {
+          "title": "todo.erl",
+          "code": "#!/usr/bin/env escript\nmain([\"add\", Text]) -> file:write_file(\"todo.txt\", <<Text/binary, 92,10>>, [append]);\nmain([\"list\"]) -> case file:read_file(\"todo.txt\") of {ok,B} -> io:format(\"~s\", [B]); _ -> ok end;\nmain(_) -> io:format(\"usage: escript todo.erl add <text> | list\")."
+        }
+      ]
+    },
+    {
+      "title": "Web Fetcher (escript)",
+      "summary": "Download JSON to disk.",
+      "description": ":inets httpc.",
+      "steps": [
+        {
+          "title": "fetch.erl",
+          "code": "#!/usr/bin/env escript\nmain(_) -> application:start(inets), application:start(ssl), {ok, {{_,200,_}, _H, Body}} = httpc:request(get, {\"https://httpbin.org/json\", []}, [], []), file:make_dir(\"out\"), file:write_file(\"out/data.json\", Body), io:format(\"saved to out/data.json\")."
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Process",
+      "definition": "Lightweight Erlang process for concurrency."
+    },
+    {
+      "term": "Message passing",
+      "definition": "send/receive between processes."
+    }
+  ],
+  "tips": [
+    {
+      "title": "Start httpc",
+      "note": "Call application:start(inets) (and ssl) before httpc."
+    },
+    {
+      "title": "REPL",
+      "note": "Use erl shell for quick experimentation."
+    }
   ],
   "stdlib": [
-    {"name": "lists", "description": "List utils"}
+    {
+      "name": "lists",
+      "description": "List utils"
+    }
   ],
   "tools": [
-    {"name": "erl", "description": "Erlang shell"}
+    {
+      "name": "erl",
+      "description": "Erlang shell"
+    }
   ],
   "links": [
-    {"title": "Erlang Docs", "url": "https://www.erlang.org/doc"}
+    {
+      "title": "Erlang Docs",
+      "url": "https://www.erlang.org/doc"
+    }
   ],
   "builtins": [
-    {"name": "io:format", "kind": "function", "signature": "io:format(Format, Data)", "description": "Formatted output."}
-  ]
+    {
+      "name": "io:format",
+      "kind": "function",
+      "signature": "io:format(Format, Data)",
+      "description": "Formatted output."
+    }
+  ],
+  "concepts": []
 }
-

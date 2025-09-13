@@ -3,24 +3,69 @@
   "slug": "smalltalk",
   "version": "Pharo/Squeak",
   "quick_start": [
-    {"title": "Open image", "description": "Use Pharo or Squeak.", "code": "Transcript show: 'Hello, world!'; cr."}
+    {
+      "title": "Open image",
+      "description": "Use Pharo or Squeak.",
+      "code": "Transcript show: 'Hello, world!'; cr."
+    }
   ],
   "common_tasks": [
-    {"group": "Console", "tasks": [
-      {"title": "Print", "description": "Transcript", "code": "Transcript show: 'Message'; cr."}
-    ]}
+    {
+      "group": "Console & Collections",
+      "tasks": [
+        {
+          "title": "Print",
+          "description": "Transcript",
+          "code": "Transcript show: 'Message'; cr."
+        },
+        {
+          "title": "Write JSON (string)",
+          "description": "Simple write",
+          "code": "| f | f := FileStream newFileNamed: 'data.json'. f nextPutAll: '{\"ok\":true'. f close."
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "To-Do",
+      "summary": "Append/list in a text file.",
+      "description": "Pharo/Squeak workspace snippet.",
+      "steps": [
+        {
+          "title": "Snippet",
+          "code": "| path cmd text | path := 'todo.txt'. cmd := 'list'. \\ "
+        }
+      ]
+    }
   ],
   "stdlib": [
-    {"name": "Collections", "description": "Core collections"}
+    {
+      "name": "Collections",
+      "description": "Core collections"
+    }
   ],
   "tools": [
-    {"name": "Pharo", "description": "IDE"}
+    {
+      "name": "Pharo",
+      "description": "IDE"
+    }
   ],
   "links": [
-    {"title": "Pharo Docs", "url": "https://pharo.org/documentation"}
+    {
+      "title": "Pharo Docs",
+      "url": "https://pharo.org/documentation"
+    }
   ],
   "builtins": [
-    {"name": "Transcript", "kind": "object", "signature": "Transcript show: x", "description": "Console output."}
-  ]
+    {
+      "name": "Transcript",
+      "kind": "object",
+      "signature": "Transcript show: x",
+      "description": "Console output."
+    }
+  ],
+  "concepts": [],
+  "glossary": [],
+  "tips": []
 }
-

@@ -3,38 +3,195 @@
   "slug": "r",
   "version": "4.x",
   "quick_start": [
-    {"title": "Install R", "description": "Install from CRAN or your OS.", "code": "R --version"},
-    {"title": "Hello, World", "description": "Run a script.", "code": "print('Hello, world!')"}
+    {
+      "title": "Install R",
+      "description": "Install from CRAN or your OS.",
+      "code": "R --version"
+    },
+    {
+      "title": "Hello, World",
+      "description": "Run a script.",
+      "code": "print('Hello, world!')"
+    }
   ],
   "common_tasks": [
-    {"group": "I/O", "tasks": [
-      {"title": "Read CSV", "description": "Base R read.csv", "code": "df <- read.csv('data.csv'); print(head(df))"},
-      {"title": "Write JSON", "description": "jsonlite::toJSON", "code": "install.packages('jsonlite'); library(jsonlite); write(toJSON(list(ok=TRUE, items=c(1,2,3)), pretty=TRUE), 'data.json')"}
-    ]},
-    {"group": "HTTP + APIs", "tasks": [
-      {"title": "GET JSON", "description": "httr::GET", "code": "install.packages('httr'); library(httr); r <- GET('https://httpbin.org/json'); content(r, as='text')"}
-    ]}
+    {
+      "group": "Files & Data",
+      "tasks": [
+        {
+          "title": "Read CSV",
+          "description": "Base R read.csv",
+          "code": "df <- read.csv('data.csv'); print(head(df))"
+        },
+        {
+          "title": "Write CSV",
+          "description": "Base R write.csv",
+          "code": "df <- data.frame(name=c('Ada','Linus'), age=c(36,54)); write.csv(df, 'out.csv', row.names=FALSE)"
+        },
+        {
+          "title": "Write JSON (jsonlite)",
+          "description": "Serialize to JSON",
+          "code": "# install.packages('jsonlite')\nlibrary(jsonlite)\nwrite(toJSON(list(ok=TRUE, items=c(1,2,3)), pretty=TRUE), 'data.json')"
+        }
+      ]
+    },
+    {
+      "group": "HTTP + APIs",
+      "tasks": [
+        {
+          "title": "GET JSON (httr)",
+          "description": "Fetch JSON",
+          "code": "# install.packages('httr')\nlibrary(httr)\nr <- GET('https://httpbin.org/json'); content(r, as='text')"
+        },
+        {
+          "title": "POST JSON (httr)",
+          "description": "Send JSON",
+          "code": "# install.packages('httr')\nlibrary(httr)\nr <- POST('https://httpbin.org/post', body=list(ok=TRUE), encode='json'); content(r, as='text')"
+        }
+      ]
+    },
+    {
+      "group": "Env & Config",
+      "tasks": [
+        {
+          "title": "Read environment variable",
+          "description": "Use default when missing",
+          "code": "port <- Sys.getenv('PORT', '8000'); print(port)"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "CSV Summarizer",
+      "summary": "Compute quick stats from CSV.",
+      "description": "Reads a CSV and prints count and averages.",
+      "steps": [
+        {
+          "title": "Script",
+          "code": "df <- read.csv('data.csv');\nprint(nrow(df));\nif ('age' %in% names(df)) { print(mean(df$age, na.rm=TRUE)) }"
+        }
+      ]
+    },
+    {
+      "title": "Web Fetcher",
+      "summary": "Download JSON to disk.",
+      "description": "httr + write",
+      "steps": [
+        {
+          "title": "Script",
+          "code": "library(httr)\nres <- GET('https://httpbin.org/json'); dir.create('out', showWarnings=FALSE); write(content(res, as='text'), file='out/data.json'); cat('saved to out/data.json')"
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "data.frame",
+      "definition": "Tabular data structure (columns can be different types)."
+    },
+    {
+      "term": "vector",
+      "definition": "One-dimensional sequence of elements of the same type."
+    },
+    {
+      "term": "list",
+      "definition": "Heterogeneous collection (can contain mixed types)."
+    },
+    {
+      "term": "factor",
+      "definition": "Categorical data with levels."
+    }
+  ],
+  "tips": [
+    {
+      "title": "Packages",
+      "note": "Use install.packages('name') once, then library(name) in scripts."
+    },
+    {
+      "title": "CSV",
+      "note": "Use stringsAsFactors=FALSE when needed on older R; modern R keeps strings as characters by default."
+    }
   ],
   "stdlib": [
-    {"name": "base", "description": "Base R functions"},
-    {"name": "stats", "description": "Statistical functions"},
-    {"name": "utils", "description": "Utilities"}
+    {
+      "name": "base",
+      "description": "Base R functions"
+    },
+    {
+      "name": "stats",
+      "description": "Statistical functions"
+    },
+    {
+      "name": "utils",
+      "description": "Utilities"
+    }
   ],
   "tools": [
-    {"name": "Rscript", "description": "Run R scripts"}
+    {
+      "name": "Rscript",
+      "description": "Run R scripts"
+    }
   ],
   "links": [
-    {"title": "CRAN", "url": "https://cran.r-project.org/"},
-    {"title": "R Manuals", "url": "https://cran.r-project.org/manuals.html"}
+    {
+      "title": "CRAN",
+      "url": "https://cran.r-project.org/"
+    },
+    {
+      "title": "R Manuals",
+      "url": "https://cran.r-project.org/manuals.html"
+    }
   ],
   "builtins": [
-    {"name": "sum", "kind": "function", "signature": "sum(x, na.rm=FALSE)", "description": "Sum elements."},
-    {"name": "mean", "kind": "function", "signature": "mean(x, ...)", "description": "Mean of values."},
-    {"name": "length", "kind": "function", "signature": "length(x)", "description": "Length of object."},
-    {"name": "toupper", "kind": "function", "signature": "toupper(x)", "description": "Uppercase strings."},
-    {"name": "lapply", "kind": "function", "signature": "lapply(X, FUN, ...)", "description": "Apply over list."},
-    {"name": "base", "kind": "module", "signature": "base", "description": "Base package functions."},
-    {"name": "stats", "kind": "module", "signature": "stats", "description": "Statistical functions."},
-    {"name": "tidyverse", "kind": "library", "signature": "library(tidyverse)", "description": "Collection of R packages for data science."}
-  ]
+    {
+      "name": "sum",
+      "kind": "function",
+      "signature": "sum(x, na.rm=FALSE)",
+      "description": "Sum elements."
+    },
+    {
+      "name": "mean",
+      "kind": "function",
+      "signature": "mean(x, ...)",
+      "description": "Mean of values."
+    },
+    {
+      "name": "length",
+      "kind": "function",
+      "signature": "length(x)",
+      "description": "Length of object."
+    },
+    {
+      "name": "toupper",
+      "kind": "function",
+      "signature": "toupper(x)",
+      "description": "Uppercase strings."
+    },
+    {
+      "name": "lapply",
+      "kind": "function",
+      "signature": "lapply(X, FUN, ...)",
+      "description": "Apply over list."
+    },
+    {
+      "name": "base",
+      "kind": "module",
+      "signature": "base",
+      "description": "Base package functions."
+    },
+    {
+      "name": "stats",
+      "kind": "module",
+      "signature": "stats",
+      "description": "Statistical functions."
+    },
+    {
+      "name": "tidyverse",
+      "kind": "library",
+      "signature": "library(tidyverse)",
+      "description": "Collection of R packages for data science."
+    }
+  ],
+  "concepts": []
 }

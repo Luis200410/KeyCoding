@@ -3,24 +3,83 @@
   "slug": "verilog",
   "version": "2005",
   "quick_start": [
-    {"title": "Toolchain", "description": "Use Icarus Verilog.", "code": "iverilog -V"}
+    {
+      "title": "Toolchain",
+      "description": "Use Icarus Verilog.",
+      "code": "iverilog -V"
+    }
   ],
   "common_tasks": [
-    {"group": "Hello", "tasks": [
-      {"title": "Module", "description": "Minimal module.", "code": "module hello; initial $display(\"Hello\"); endmodule"}
-    ]}
+    {
+      "group": "Design & Sim",
+      "tasks": [
+        {
+          "title": "Module",
+          "description": "Minimal module.",
+          "code": "module hello; initial $display(\"Hello\"); endmodule"
+        },
+        {
+          "title": "Testbench",
+          "description": "initial block",
+          "code": "module tb; initial begin $display(\"Hello TB\"); #10 $finish; end endmodule"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "Counter",
+      "summary": "Simple up‑counter.",
+      "description": "Registers and always @ (posedge clk).",
+      "steps": [
+        {
+          "title": "Design",
+          "code": "module counter(input clk, output reg [7:0] q); always @(posedge clk) q <= q + 1; endmodule"
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "initial",
+      "definition": "Block executed at time 0 in simulation."
+    },
+    {
+      "term": "always",
+      "definition": "Procedural block executed on sensitivity list."
+    }
+  ],
+  "tips": [
+    {
+      "title": "Compile/Run",
+      "note": "With Icarus: iverilog -o a.out tb.v design.v && vvp a.out."
+    }
   ],
   "stdlib": [
-    {"name": "$display", "description": "Print display task"}
+    {
+      "name": "$display",
+      "description": "Print display task"
+    }
   ],
   "tools": [
-    {"name": "iverilog", "description": "Verilog simulator"}
+    {
+      "name": "iverilog",
+      "description": "Verilog simulator"
+    }
   ],
   "links": [
-    {"title": "Icarus Verilog", "url": "http://iverilog.icarus.com/"}
+    {
+      "title": "Icarus Verilog",
+      "url": "http://iverilog.icarus.com/"
+    }
   ],
   "builtins": [
-    {"name": "$display", "kind": "task", "signature": "$display(fmt, args)", "description": "Print to console."}
-  ]
+    {
+      "name": "$display",
+      "kind": "task",
+      "signature": "$display(fmt, args)",
+      "description": "Print to console."
+    }
+  ],
+  "concepts": []
 }
-

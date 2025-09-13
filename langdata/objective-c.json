@@ -3,26 +3,68 @@
   "slug": "objective-c",
   "version": "ObjC2",
   "quick_start": [
-    {"title": "Install clang", "description": "Xcode or Command Line Tools.", "code": "clang --version"},
-    {"title": "Hello, World", "description": "Compile and run.", "code": "#import <Foundation/Foundation.h>\nint main(){ @autoreleasepool { NSLog(@\"Hello, world!\"); } return 0; }\n// Save as hello.m then:\n// clang -framework Foundation hello.m -o hello && ./hello"}
+    {
+      "title": "Install clang",
+      "description": "Xcode or Command Line Tools.",
+      "code": "clang --version"
+    },
+    {
+      "title": "Hello, World",
+      "description": "Compile and run.",
+      "code": "#import <Foundation/Foundation.h>\nint main(){ @autoreleasepool { NSLog(@\"Hello, world!\"); } return 0; }\n// Save as hello.m then:\n// clang -framework Foundation hello.m -o hello && ./hello"
+    }
   ],
   "common_tasks": [
-    {"group": "I/O", "tasks": [
-      {"title": "Read file", "description": "NSString stringWithContentsOfFile", "code": "#import <Foundation/Foundation.h>\nint main(){ @autoreleasepool { NSString *s = [NSString stringWithContentsOfFile:@\"README.md\" encoding:NSUTF8StringEncoding error:nil]; NSLog(@\"%@\", [s substringToIndex:200]); } }"}
-    ]}
+    {
+      "group": "Files & Data",
+      "tasks": [
+        {
+          "title": "Read file",
+          "description": "NSString stringWithContentsOfFile",
+          "code": "#import <Foundation/Foundation.h>\nint main(){ @autoreleasepool { NSString *s = [NSString stringWithContentsOfFile:@\"README.md\" encoding:NSUTF8StringEncoding error:nil]; NSLog(@\"%@\", [s substringToIndex:200]); } }"
+        },
+        {
+          "title": "Write JSON",
+          "description": "NSData writeToFile",
+          "code": "#import <Foundation/Foundation.h>\nint main(){ @autoreleasepool { NSData *d = [@\"{\\\"ok\\\":true}\" dataUsingEncoding:NSUTF8StringEncoding]; [d writeToFile:@\"data.json\" atomically:YES]; } }"
+        }
+      ]
+    }
   ],
   "stdlib": [
-    {"name": "Foundation", "description": "Base framework"}
+    {
+      "name": "Foundation",
+      "description": "Base framework"
+    }
   ],
   "tools": [
-    {"name": "clang", "description": "Objective-C compiler"}
+    {
+      "name": "clang",
+      "description": "Objective-C compiler"
+    }
   ],
   "links": [
-    {"title": "Apple Developer Docs", "url": "https://developer.apple.com/documentation/foundation"}
+    {
+      "title": "Apple Developer Docs",
+      "url": "https://developer.apple.com/documentation/foundation"
+    }
   ],
   "builtins": [
-    {"name": "NSLog", "kind": "function", "signature": "void NSLog(NSString *format, ...)", "description": "Log output."},
-    {"name": "NSString", "kind": "class", "signature": "@interface NSString", "description": "String class."}
-  ]
+    {
+      "name": "NSLog",
+      "kind": "function",
+      "signature": "void NSLog(NSString *format, ...)",
+      "description": "Log output."
+    },
+    {
+      "name": "NSString",
+      "kind": "class",
+      "signature": "@interface NSString",
+      "description": "String class."
+    }
+  ],
+  "concepts": [],
+  "projects": [],
+  "glossary": [],
+  "tips": []
 }
-

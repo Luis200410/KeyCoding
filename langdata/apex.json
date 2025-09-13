@@ -3,24 +3,69 @@
   "slug": "apex",
   "version": "Salesforce",
   "quick_start": [
-    {"title": "Salesforce org", "description": "Execute in Developer Console.", "code": "System.debug('Hello, world!');"}
+    {
+      "title": "Salesforce org",
+      "description": "Execute in Developer Console.",
+      "code": "System.debug('Hello, world!');"
+    }
   ],
   "common_tasks": [
-    {"group": "Console", "tasks": [
-      {"title": "Debug", "description": "Log output.", "code": "System.debug('Message');"}
-    ]}
+    {
+      "group": "Console & Data",
+      "tasks": [
+        {
+          "title": "Debug",
+          "description": "Log output.",
+          "code": "System.debug('Message');"
+        },
+        {
+          "title": "Serialize JSON",
+          "description": "JSON.serialize",
+          "code": "Map<String,Object> m = new Map<String,Object>{ 'ok' => true, 'items' => new List<Integer>{1,2,3} }; System.debug(JSON.serializePretty(m));"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "Apex Class: Web Fetcher",
+      "summary": "HTTP callout and save to ContentVersion.",
+      "description": "Requires callout permissions and setup.",
+      "steps": [
+        {
+          "title": "Class",
+          "code": "public with sharing class Fetcher {\n  public static void run(){ HttpResponse r = new Http().send(new HttpRequest(Method.GET, 'https://httpbin.org/json')); System.debug(r.getBody()); }\n}"
+        }
+      ]
+    }
   ],
   "stdlib": [
-    {"name": "System", "description": "Core classes"}
+    {
+      "name": "System",
+      "description": "Core classes"
+    }
   ],
   "tools": [
-    {"name": "Developer Console", "description": "In-org tooling"}
+    {
+      "name": "Developer Console",
+      "description": "In-org tooling"
+    }
   ],
   "links": [
-    {"title": "Apex Guide", "url": "https://developer.salesforce.com/docs/"}
+    {
+      "title": "Apex Guide",
+      "url": "https://developer.salesforce.com/docs/"
+    }
   ],
   "builtins": [
-    {"name": "System.debug", "kind": "method", "signature": "System.debug(any)", "description": "Log output."}
-  ]
+    {
+      "name": "System.debug",
+      "kind": "method",
+      "signature": "System.debug(any)",
+      "description": "Log output."
+    }
+  ],
+  "concepts": [],
+  "glossary": [],
+  "tips": []
 }
-

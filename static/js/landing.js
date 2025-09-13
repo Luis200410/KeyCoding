@@ -1,26 +1,59 @@
 // Simple, lightweight interactions for the landing page
 (function() {
-  // Fade-in on view
-  const reveal = (els) => {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.style.transform = 'translateY(0)';
-          e.target.style.opacity = '1';
-          io.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.15 });
-    els.forEach(el => io.observe(el));
+  // Fade-in on view with safe fallbacks
+  const candidates = Array.from(document.querySelectorAll('[data-reveal]'));
+
+  // Initialize hidden state (only if not already revealed)
+  candidates.forEach(el => {
+    if (!el.__revealed) {
+      el.style.transform = 'translateY(12px)';
+      el.style.opacity = '0';
+      el.style.transition = 'opacity .6s ease, transform .6s ease';
+    }
+  });
+
+  const revealNow = (el) => {
+    el.style.transform = 'translateY(0)';
+    el.style.opacity = '1';
+    el.__revealed = true;
   };
 
-  const candidates = document.querySelectorAll('[data-reveal]');
-  candidates.forEach(el => {
-    el.style.transform = 'translateY(12px)';
-    el.style.opacity = '0';
-    el.style.transition = 'opacity .6s ease, transform .6s ease';
-  });
-  reveal(candidates);
+  const revealAll = () => candidates.forEach(revealNow);
+
+  const setupIO = () => {
+    try {
+      if (!('IntersectionObserver' in window)) return false;
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            revealNow(e.target);
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      candidates.forEach(el => io.observe(el));
+      return true;
+    } catch {
+      return false;
+    }
+  };
+
+  const ok = candidates.length ? setupIO() : true;
+  // Fallbacks: if IO unsupported or didn’t trigger, reveal after load and with a timer
+  if (!ok) {
+    // No IO support: reveal immediately
+    revealAll();
+  } else {
+    // Safety net: ensure visible after load in case IO misses
+    const safety = () => {
+      candidates.forEach(el => {
+        if (!el.__revealed) revealNow(el);
+      });
+    };
+    window.addEventListener('load', () => setTimeout(safety, 800));
+    // Also apply a late safety in case load already fired
+    setTimeout(safety, 1500);
+  }
 
   // Subtle parallax for hero card
   const card = document.querySelector('.hero .card');

@@ -3,25 +3,79 @@
   "slug": "vbnet",
   "version": ".NET 7+",
   "quick_start": [
-    {"title": "Install .NET SDK", "description": "dotnet CLI.", "code": "dotnet --version"},
-    {"title": "New console app", "description": "Create and run.", "code": "dotnet new console -lang VB -n Hello && cd Hello\ndotnet run"}
+    {
+      "title": "Install .NET SDK",
+      "description": "dotnet CLI.",
+      "code": "dotnet --version"
+    },
+    {
+      "title": "New console app",
+      "description": "Create and run.",
+      "code": "dotnet new console -lang VB -n Hello && cd Hello\ndotnet run"
+    }
   ],
   "common_tasks": [
-    {"group": "Console", "tasks": [
-      {"title": "WriteLine", "description": "Print line.", "code": "Imports System\nModule P\n  Sub Main()\n    Console.WriteLine(\"Hello, world!\")\n  End Sub\nEnd Module"}
-    ]}
+    {
+      "group": "Files & Data",
+      "tasks": [
+        {
+          "title": "Write JSON",
+          "description": "System.Text.Json",
+          "code": "Imports System.Text.Json\nModule P\n  Sub Main()\n    Dim obj = New With {.ok=True, .items=New Integer(){1,2,3}}\n    Dim json = JsonSerializer.Serialize(obj, New JsonSerializerOptions With {.WriteIndented=True})\n    My.Computer.FileSystem.WriteAllText(\"data.json\", json, False)\n  End Sub\nEnd Module"
+        }
+      ]
+    },
+    {
+      "group": "HTTP + APIs",
+      "tasks": [
+        {
+          "title": "GET",
+          "description": "HttpClient",
+          "code": "Imports System.Net.Http\nImports System.Threading.Tasks\nModule P\n  Async Function Main() As Task\n    Using c As New HttpClient()\n      Dim s = Await c.GetStringAsync(\"https://httpbin.org/json\")\n      Console.WriteLine(s)\n    End Using\n  End Function\nEnd Module"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "To-Do CLI",
+      "summary": "Add/list tasks saved to a JSON file.",
+      "description": "System.Text.Json + files.",
+      "steps": [
+        {
+          "title": "Module1.vb",
+          "code": "Imports System, System.Text.Json, System.IO\nModule M\n  Sub Main(args As String())\n    Dim path=\"todo.json\"\n    Dim cmd=If(args.Length>0, args(0), \"list\")\n    Dim items As List(Of Dictionary(Of String,Object))\n    If File.Exists(path) Then\n      items = JsonSerializer.Deserialize(Of List(Of Dictionary(Of String,Object)))(File.ReadAllText(path))\n    Else\n      items = New List(Of Dictionary(Of String,Object))()\n    End If\n    If cmd=\"add\" AndAlso args.Length>1 Then\n      items.Add(New Dictionary(Of String,Object) From {{\"text\", args(1)}, {\"done\", False}})\n      File.WriteAllText(path, JsonSerializer.Serialize(items))\n    ElseIf cmd=\"list\" Then\n      Dim i=1\n      For Each it In items\n        Dim mark = If(CBool(it(\"done\")), \"[x]\", \"[ ]\")\n        Console.WriteLine(i.ToString() & \". \" & mark & \" \" & CStr(it(\"text\")))\n        i+=1\n      Next\n    Else\n      Console.WriteLine(\"usage: add <text> | list\")\n    End If\n  End Sub\nEnd Module"
+        }
+      ]
+    }
   ],
   "stdlib": [
-    {"name": "System", "description": "Core library"}
+    {
+      "name": "System",
+      "description": "Core library"
+    }
   ],
   "tools": [
-    {"name": "dotnet", "description": ".NET CLI"}
+    {
+      "name": "dotnet",
+      "description": ".NET CLI"
+    }
   ],
   "links": [
-    {"title": "VB.NET Guide", "url": "https://learn.microsoft.com/dotnet/visual-basic/"}
+    {
+      "title": "VB.NET Guide",
+      "url": "https://learn.microsoft.com/dotnet/visual-basic/"
+    }
   ],
   "builtins": [
-    {"name": "Console.WriteLine", "kind": "method", "signature": "Console.WriteLine(x)", "description": "Print with newline."}
-  ]
+    {
+      "name": "Console.WriteLine",
+      "kind": "method",
+      "signature": "Console.WriteLine(x)",
+      "description": "Print with newline."
+    }
+  ],
+  "concepts": [],
+  "glossary": [],
+  "tips": []
 }
-

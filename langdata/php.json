@@ -3,41 +3,195 @@
   "slug": "php",
   "version": "8.x",
   "quick_start": [
-    {"title": "Install PHP", "description": "Install via your OS or Homebrew.", "code": "php -v"},
-    {"title": "Hello, World", "description": "Run a script.", "code": "<?php\necho \"Hello, world!\\n\";\n"}
+    {
+      "title": "Install PHP",
+      "description": "Install via your OS or Homebrew.",
+      "code": "php -v"
+    },
+    {
+      "title": "Hello, World",
+      "description": "Run a script.",
+      "code": "<?php\necho \"Hello, world!\\n\";\n"
+    }
   ],
   "common_tasks": [
-    {"group": "I/O", "tasks": [
-      {"title": "Read a file", "description": "Get contents as string.", "code": "<?php\n$s = file_get_contents('README.md');\necho substr($s, 0, 200);\n"},
-      {"title": "Write JSON", "description": "Encode and write.", "code": "<?php\n$data = ['ok' => true, 'items' => [1,2,3]];\nfile_put_contents('data.json', json_encode($data, JSON_PRETTY_PRINT));\n"}
-    ]},
-    {"group": "HTTP + APIs", "tasks": [
-      {"title": "GET JSON", "description": "Simple fetch with file_get_contents.", "code": "<?php\n$s = file_get_contents('https://httpbin.org/json');\necho $s;\n"}
-    ]},
-    {"group": "CLI", "tasks": [
-      {"title": "Arguments", "description": "Access $argv.", "code": "<?php\nprint_r($argv);\n"}
-    ]}
+    {
+      "group": "Files & Data",
+      "tasks": [
+        {
+          "title": "Read a file",
+          "description": "Get contents as string.",
+          "code": "<?php\n$s = file_get_contents('README.md');\necho substr($s, 0, 200);\n"
+        },
+        {
+          "title": "Write JSON",
+          "description": "Encode and write.",
+          "code": "<?php\n$data = ['ok' => true, 'items' => [1,2,3]];\nfile_put_contents('data.json', json_encode($data, JSON_PRETTY_PRINT));\n"
+        },
+        {
+          "title": "Read CSV",
+          "description": "fgetcsv loop.",
+          "code": "<?php\nif (($h = fopen('data.csv', 'r')) !== false) {\n  while (($row = fgetcsv($h)) !== false) {\n    echo implode(' | ', $row) . \"\\n\";\n  }\n  fclose($h);\n}\n"
+        }
+      ]
+    },
+    {
+      "group": "HTTP + APIs",
+      "tasks": [
+        {
+          "title": "GET JSON",
+          "description": "Simple fetch with file_get_contents.",
+          "code": "<?php\n$s = file_get_contents('https://httpbin.org/json');\necho $s;\n"
+        },
+        {
+          "title": "POST JSON (cURL)",
+          "description": "Send JSON using cURL.",
+          "code": "<?php\n$ch = curl_init('https://httpbin.org/post');\n$data = json_encode(['ok' => true]);\ncurl_setopt_array($ch, [CURLOPT_POST => true, CURLOPT_HTTPHEADER => ['Content-Type: application/json'], CURLOPT_POSTFIELDS => $data, CURLOPT_RETURNTRANSFER => true]);\n$res = curl_exec($ch);\necho $res;\ncurl_close($ch);\n"
+        }
+      ]
+    },
+    {
+      "group": "CLI",
+      "tasks": [
+        {
+          "title": "Arguments",
+          "description": "Access $argv.",
+          "code": "<?php\nprint_r($argv);\n"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "To-Do CLI",
+      "summary": "Add/list tasks saved to a JSON file.",
+      "description": "Uses json_encode/json_decode for storage.",
+      "steps": [
+        {
+          "title": "Script",
+          "code": "<?php\n$path = 'todo.json';\n$cmd = $argv[1] ?? 'list';\n$txt = $argv[2] ?? null;\n$items = file_exists($path) ? json_decode(file_get_contents($path), true) : [];\nif ($cmd === 'add' && $txt) {\n  $items[] = ['text'=>$txt,'done'=>false];\n  file_put_contents($path, json_encode($items, JSON_PRETTY_PRINT));\n}\nif ($cmd === 'list') {\n  foreach ($items as $i=>$it) {\n    printf(\"%d. %s %s\\n\", $i+1, $it['done']?'[x]':'[ ]', $it['text']);\n  }\n}\n"
+        }
+      ]
+    },
+    {
+      "title": "Web Fetcher",
+      "summary": "Download JSON to disk.",
+      "description": "file_get_contents + file_put_contents.",
+      "steps": [
+        {
+          "title": "Script",
+          "code": "<?php\n$data = file_get_contents('https://httpbin.org/json');\nif (!is_dir('out')) mkdir('out', 0777, true);\nfile_put_contents('out/data.json', $data);\necho 'saved to out/data.json';\n"
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Array",
+      "definition": "PHP arrays are ordered maps (keys -> values)."
+    },
+    {
+      "term": "Associative array",
+      "definition": "Array with string keys (like a dict)."
+    },
+    {
+      "term": "Superglobal",
+      "definition": "Built-in variables like $_GET, $_POST, $_SERVER."
+    }
+  ],
+  "tips": [
+    {
+      "title": "Errors",
+      "note": "Enable error reporting during development."
+    },
+    {
+      "title": "JSON",
+      "note": "Use JSON_PRETTY_PRINT for readable files."
+    },
+    {
+      "title": "Env",
+      "note": "Read env via getenv('NAME') with defaults."
+    }
   ],
   "stdlib": [
-    {"name": "json", "description": "JSON encode/decode"},
-    {"name": "curl", "description": "HTTP client"},
-    {"name": "spl", "description": "Standard PHP Library"}
+    {
+      "name": "json",
+      "description": "JSON encode/decode"
+    },
+    {
+      "name": "curl",
+      "description": "HTTP client"
+    },
+    {
+      "name": "spl",
+      "description": "Standard PHP Library"
+    }
   ],
   "tools": [
-    {"name": "composer", "description": "Dependency manager"}
+    {
+      "name": "composer",
+      "description": "Dependency manager"
+    }
   ],
   "links": [
-    {"title": "PHP Manual", "url": "https://www.php.net/manual/"},
-    {"title": "Packagist", "url": "https://packagist.org/"}
+    {
+      "title": "PHP Manual",
+      "url": "https://www.php.net/manual/"
+    },
+    {
+      "title": "Packagist",
+      "url": "https://packagist.org/"
+    }
   ],
   "builtins": [
-    {"name": "echo", "kind": "construct", "signature": "echo expr", "description": "Output one or more strings."},
-    {"name": "print_r", "kind": "function", "signature": "print_r(value)", "description": "Print human-readable information."},
-    {"name": "count", "kind": "function", "signature": "count(array)", "description": "Count elements."},
-    {"name": "strlen", "kind": "function", "signature": "strlen(string)", "description": "Get string length."},
-    {"name": "array", "kind": "language", "signature": "[ ... ]", "description": "Array literal."},
-    {"name": "DateTime::format", "kind": "method", "signature": "DateTime::format(string $format)", "description": "Format a date/time."},
-    {"name": "json_encode", "kind": "function", "signature": "json_encode(mixed $value, int $flags = 0)", "description": "Returns a JSON encoded string."},
-    {"name": "json", "kind": "library", "signature": "ext-json", "description": "Core JSON extension."}
-  ]
+    {
+      "name": "echo",
+      "kind": "construct",
+      "signature": "echo expr",
+      "description": "Output one or more strings."
+    },
+    {
+      "name": "print_r",
+      "kind": "function",
+      "signature": "print_r(value)",
+      "description": "Print human-readable information."
+    },
+    {
+      "name": "count",
+      "kind": "function",
+      "signature": "count(array)",
+      "description": "Count elements."
+    },
+    {
+      "name": "strlen",
+      "kind": "function",
+      "signature": "strlen(string)",
+      "description": "Get string length."
+    },
+    {
+      "name": "array",
+      "kind": "language",
+      "signature": "[ ... ]",
+      "description": "Array literal."
+    },
+    {
+      "name": "DateTime::format",
+      "kind": "method",
+      "signature": "DateTime::format(string $format)",
+      "description": "Format a date/time."
+    },
+    {
+      "name": "json_encode",
+      "kind": "function",
+      "signature": "json_encode(mixed $value, int $flags = 0)",
+      "description": "Returns a JSON encoded string."
+    },
+    {
+      "name": "json",
+      "kind": "library",
+      "signature": "ext-json",
+      "description": "Core JSON extension."
+    }
+  ],
+  "concepts": []
 }
