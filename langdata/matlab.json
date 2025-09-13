@@ -1,0 +1,27 @@
+{
+  "name": "MATLAB",
+  "slug": "matlab",
+  "version": "R2024",
+  "quick_start": [
+    {"title": "Run", "description": "Start interactive session or run .m file.", "code": "% hello.m\ndisp('Hello, world!')"}
+  ],
+  "common_tasks": [
+    {"group": "I/O", "tasks": [
+      {"title": "Read CSV", "description": "readtable", "code": "T = readtable('data.csv'); head(T)"}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "matlab", "description": "Base functions"}
+  ],
+  "tools": [
+    {"name": "matlab", "description": "MATLAB environment"}
+  ],
+  "links": [
+    {"title": "MATLAB Docs", "url": "https://www.mathworks.com/help/matlab/"}
+  ],
+  "builtins": [
+    {"name": "disp", "kind": "function", "signature": "disp(X)", "description": "Display value."},
+    {"name": "sum", "kind": "function", "signature": "sum(X)", "description": "Sum elements."}
+  ]
+}
+

@@ -1,0 +1,31 @@
+{
+  "name": "Crystal",
+  "slug": "crystal",
+  "version": "1.x",
+  "quick_start": [
+    {"title": "Install Crystal", "description": "Install from crystal-lang.org.", "code": "crystal --version"},
+    {"title": "Hello, World", "description": "Run a script.", "code": "puts \"Hello, world!\"\n# crystal run hello.cr"}
+  ],
+  "common_tasks": [
+    {"group": "I/O", "tasks": [
+      {"title": "Read a file", "description": "File.read", "code": "s = File.read(\"README.md\")\nputs s[0,200]"}
+    ]},
+    {"group": "HTTP + APIs", "tasks": [
+      {"title": "GET JSON", "description": "HTTP::Client", "code": "require \"http/client\"\nresp = HTTP::Client.get(\"https://httpbin.org/json\")\nputs resp.body"}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "File", "description": "File I/O"},
+    {"name": "HTTP::Client", "description": "HTTP client"}
+  ],
+  "tools": [
+    {"name": "crystal", "description": "Compiler and runner"}
+  ],
+  "links": [
+    {"title": "Crystal Docs", "url": "https://crystal-lang.org/reference/"}
+  ],
+  "builtins": [
+    {"name": "puts", "kind": "method", "signature": "puts(obj)", "description": "Print with newline."}
+  ]
+}
+

@@ -1,0 +1,28 @@
+{
+  "name": "Ada",
+  "slug": "ada",
+  "version": "Ada 2012",
+  "quick_start": [
+    {"title": "Install GNAT", "description": "Use gnat/gnatmake from GCC or Alire.", "code": "gnat --version"},
+    {"title": "Hello, World", "description": "Compile and run.", "code": "with Ada.Text_IO; use Ada.Text_IO;\nprocedure Hello is\nbegin\n  Put_Line(\"Hello, world!\");\nend Hello;"}
+  ],
+  "common_tasks": [
+    {"group": "I/O", "tasks": [
+      {"title": "Read a file", "description": "Text_IO get line.", "code": "with Ada.Text_IO; use Ada.Text_IO;\nprocedure Main is\n  F : File_Type;\n  Line : String (1..200);\n  Last : Natural;\nbegin\n  Open (F, In_File, \"README.md\");\n  Get_Line (F, Line, Last);\n  Put_Line (Line(1..Last));\n  Close (F);\nend Main;"}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "Ada.Text_IO", "description": "Text I/O"},
+    {"name": "Ada.Strings", "description": "String utilities"}
+  ],
+  "tools": [
+    {"name": "gnatmake", "description": "Ada builder"}
+  ],
+  "links": [
+    {"title": "Ada Reference", "url": "https://learn.adacore.com/"}
+  ],
+  "builtins": [
+    {"name": "Put_Line", "kind": "procedure", "signature": "Put_Line(Item)", "description": "Print a line to standard output."}
+  ]
+}
+

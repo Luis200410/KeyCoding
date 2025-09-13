@@ -1,0 +1,26 @@
+{
+  "name": "Smalltalk",
+  "slug": "smalltalk",
+  "version": "Pharo/Squeak",
+  "quick_start": [
+    {"title": "Open image", "description": "Use Pharo or Squeak.", "code": "Transcript show: 'Hello, world!'; cr."}
+  ],
+  "common_tasks": [
+    {"group": "Console", "tasks": [
+      {"title": "Print", "description": "Transcript", "code": "Transcript show: 'Message'; cr."}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "Collections", "description": "Core collections"}
+  ],
+  "tools": [
+    {"name": "Pharo", "description": "IDE"}
+  ],
+  "links": [
+    {"title": "Pharo Docs", "url": "https://pharo.org/documentation"}
+  ],
+  "builtins": [
+    {"name": "Transcript", "kind": "object", "signature": "Transcript show: x", "description": "Console output."}
+  ]
+}
+

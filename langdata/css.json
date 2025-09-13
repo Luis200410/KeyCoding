@@ -1,0 +1,26 @@
+{
+  "name": "CSS",
+  "slug": "css",
+  "version": "3",
+  "quick_start": [
+    {"title": "Basic style", "description": "Link a stylesheet.", "code": "<link rel=\"stylesheet\" href=\"styles.css\">\n/* styles.css */\nbody { font-family: system-ui; }"}
+  ],
+  "common_tasks": [
+    {"group": "Selectors", "tasks": [
+      {"title": "Class selector", "description": ".class", "code": ".btn { padding: .5rem 1rem; }"}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "Properties", "description": "color, margin, padding, ..."}
+  ],
+  "tools": [
+    {"name": "Browser devtools", "description": "Inspect styles"}
+  ],
+  "links": [
+    {"title": "MDN CSS", "url": "https://developer.mozilla.org/docs/Web/CSS"}
+  ],
+  "builtins": [
+    {"name": "var()", "kind": "function", "signature": "var(--name)", "description": "Use CSS custom property."}
+  ]
+}
+

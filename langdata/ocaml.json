@@ -1,0 +1,28 @@
+{
+  "name": "OCaml",
+  "slug": "ocaml",
+  "version": "5.x",
+  "quick_start": [
+    {"title": "Install opam", "description": "OCaml package manager.", "code": "opam --version"},
+    {"title": "Hello, World", "description": "Compile and run.", "code": "print_endline \"Hello, world!\"\n(* Save as hello.ml then: ocamlc hello.ml -o hello && ./hello *)"}
+  ],
+  "common_tasks": [
+    {"group": "I/O", "tasks": [
+      {"title": "Read file", "description": "open_in + really_input_string", "code": "let ch = open_in \"README.md\" in let s = really_input_string ch 200 in print_endline s"}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "Stdlib", "description": "Core library"}
+  ],
+  "tools": [
+    {"name": "ocamlc", "description": "Compiler"},
+    {"name": "dune", "description": "Build system"}
+  ],
+  "links": [
+    {"title": "OCaml Manual", "url": "https://v2.ocaml.org/docs/"}
+  ],
+  "builtins": [
+    {"name": "print_endline", "kind": "function", "signature": "string -> unit", "description": "Print with newline."}
+  ]
+}
+

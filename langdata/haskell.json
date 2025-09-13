@@ -1,0 +1,29 @@
+{
+  "name": "Haskell",
+  "slug": "haskell",
+  "version": "GHC 9+",
+  "quick_start": [
+    {"title": "Install GHCup", "description": "Installer for GHC and cabal.", "code": "ghcup --version"},
+    {"title": "Hello, World", "description": "Compile and run.", "code": "main = putStrLn \"Hello, world!\"\n-- Save as Main.hs then:\n-- ghc Main.hs && ./Main"}
+  ],
+  "common_tasks": [
+    {"group": "I/O", "tasks": [
+      {"title": "Read file", "description": "readFile", "code": "main = readFile \"README.md\" >>= putStrLn . take 200"}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "base", "description": "Core Prelude and types"}
+  ],
+  "tools": [
+    {"name": "ghc", "description": "Compiler"},
+    {"name": "cabal", "description": "Build tool"}
+  ],
+  "links": [
+    {"title": "Haskell Docs", "url": "https://www.haskell.org/documentation/"}
+  ],
+  "builtins": [
+    {"name": "print", "kind": "function", "signature": "print :: Show a => a -> IO ()", "description": "Print value."},
+    {"name": "map", "kind": "function", "signature": "map :: (a->b) -> [a] -> [b]", "description": "Map over list."}
+  ]
+}
+

@@ -41,6 +41,42 @@
         </div>
         {% endif %}
 
+        {% if lang.concepts %}
+        <div class="card" data-reveal>
+          <div class="card-inner">
+            <h2>Core Concepts</h2>
+            <div style="margin:.4rem 0 1rem;">
+              <div class="grid-squares">
+                {% for c in lang.concepts %}
+                  <a class="tile card tile-sm" href="#concept-{{ c.id }}" style="text-decoration:none;">
+                    <div class="tile-inner">
+                      <div class="title">{{ c.title }}</div>
+                      {% if c.tag %}<div class="meta">{{ c.tag }}</div>{% endif %}
+                    </div>
+                  </a>
+                {% endfor %}
+              </div>
+            </div>
+
+            {% for c in lang.concepts %}
+              <div class="card anchor-target" id="concept-{{ c.id }}" style="margin-top:.8rem;">
+                <div class="card-inner">
+                  <h3 style="margin:0 0 .4rem;">{{ c.title }}</h3>
+                  {% if c.description %}<p class="muted" style="margin:0 0 .6rem;">{{ c.description }}</p>{% endif %}
+                  {% if c.code %}
+                  <div style="display:flex; justify-content:space-between; align-items:center; gap:.6rem; flex-wrap:wrap;">
+                    <span class="muted">Example</span>
+                    <button class="code-btn" type="button" data-code-copy>Copy</button>
+                  </div>
+                  <pre class="code"><code>{{ c.code }}</code></pre>
+                  {% endif %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
         {# Tasks navigator moved into Common Tasks card below #}
 
         {% if lang.common_tasks %}
@@ -83,13 +119,21 @@
         </div>
         {% endif %}
 
-        <div class="card" data-reveal>
+        <div class="card">
           <div class="card-inner">
             <h2>Built-ins</h2>
             <p class="lead">Core primitives and functions available without imports.</p>
-            <div style="display:flex; gap:.6rem; align-items:center; flex-wrap:wrap; margin:.6rem 0 1rem;">
+            <div style="display:flex; gap:.6rem; align-items:center; flex-wrap:wrap; margin:.6rem 0 .6rem;">
               <input id="bi-filter" type="search" placeholder="Filter built-ins (e.g. map, Array, range)" style="max-width:380px;">
               <span class="muted" id="bi-count"></span>
+            </div>
+            <div class="bi-tabs" style="display:flex; gap:.4rem; flex-wrap:wrap; margin: 0 0 1rem;">
+              <button class="code-btn" type="button" data-bi-tab="all">All</button>
+              <button class="code-btn" type="button" data-bi-tab="functions">Functions</button>
+              <button class="code-btn" type="button" data-bi-tab="methods">Methods</button>
+              <button class="code-btn" type="button" data-bi-tab="classes">Classes/Types</button>
+              <button class="code-btn" type="button" data-bi-tab="modules">Modules</button>
+              <button class="code-btn" type="button" data-bi-tab="libraries">Libraries</button>
             </div>
             <div class="card" style="overflow:auto;">
               <div class="card-inner" style="padding:0;">
@@ -104,7 +148,14 @@
                   </thead>
                   <tbody id="bi-body">
                     {% for bi in lang.builtins %}
-                    <tr data-row>
+                    <tr data-row
+                      {% if 'method' in bi.kind|lower %}data-group="methods"
+                      {% elif 'class' in bi.kind|lower or 'type' in bi.kind|lower or 'enum' in bi.kind|lower or 'object' in bi.kind|lower or 'struct' in bi.kind|lower or 'interface' in bi.kind|lower %}data-group="classes"
+                      {% elif 'module' in bi.kind|lower or 'package' in bi.kind|lower or 'namespace' in bi.kind|lower %}data-group="modules"
+                      {% elif 'library' in bi.kind|lower %}data-group="libraries"
+                      {% else %}data-group="functions"
+                      {% endif %}
+                    >
                       <td style="padding:.6rem .9rem; border-bottom:1px solid var(--border); white-space:nowrap;">{{ bi.name }}</td>
                       <td style="padding:.6rem .9rem; border-bottom:1px solid var(--border);">{{ bi.kind }}</td>
                       <td style="padding:.6rem .9rem; border-bottom:1px solid var(--border); font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;">{{ bi.signature }}</td>

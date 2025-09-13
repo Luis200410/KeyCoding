@@ -33,7 +33,15 @@
     {"name": "Omit<T,K>", "kind": "utility type", "signature": "Omit<T, K>", "description": "Remove keys from T."},
     {"name": "ReturnType<F>", "kind": "utility type", "signature": "ReturnType<F>", "description": "Function return type."},
     {"name": "Parameters<F>", "kind": "utility type", "signature": "Parameters<F>", "description": "Tuple of parameter types."},
-    {"name": "Awaited<T>", "kind": "utility type", "signature": "Awaited<T>", "description": "Unwrap Promise/Thenable."}
+    {"name": "Awaited<T>", "kind": "utility type", "signature": "Awaited<T>", "description": "Unwrap Promise/Thenable."},
+    {"name": "Array<T>", "kind": "interface", "signature": "interface Array<T>", "description": "Generic array type with map/filter/reduce."},
+    {"name": "Array.prototype.map", "kind": "method", "signature": "map<U>(callback: (value: T, index: number, array: T[]) => U, thisArg?: any): U[]", "description": "Transform array items."},
+    {"name": "Array.prototype.filter", "kind": "method", "signature": "filter<S extends T>(predicate: (value: T, index: number, array: T[]) => value is S, thisArg?: any): S[]", "description": "Filter array items."},
+    {"name": "Promise<T>", "kind": "class", "signature": "class Promise<T>", "description": "Asynchronous computation result."},
+    {"name": "Promise.prototype.then", "kind": "method", "signature": "then<TResult1 = T, TResult2 = never>(onfulfilled?: (value: T) => TResult1 | PromiseLike<TResult1>, onrejected?: (reason: any) => TResult2 | PromiseLike<TResult2>): Promise<TResult1 | TResult2>", "description": "Register fulfillment/rejection handlers."},
+    {"name": "setTimeout", "kind": "function", "signature": "setTimeout(handler: (...args: any[]) => void, timeout?: number, ...args: any[]): number", "description": "Schedule a callback."},
+    {"name": "clearTimeout", "kind": "function", "signature": "clearTimeout(handle: number): void", "description": "Cancel timeout."},
+    {"name": "fs", "kind": "module", "signature": "Node typings: @types/node -> fs", "description": "Filesystem module types in Node."},
+    {"name": "path", "kind": "module", "signature": "Node typings: @types/node -> path", "description": "Path utilities types in Node."}
   ]
 }
-

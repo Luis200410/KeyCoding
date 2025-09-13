@@ -1,0 +1,27 @@
+{
+  "name": "Scheme",
+  "slug": "scheme",
+  "version": "R7RS",
+  "quick_start": [
+    {"title": "Install a Scheme", "description": "Use Guile, Racket, or Chicken.", "code": "guile --version"},
+    {"title": "Hello, World", "description": "Run code.", "code": "(display \"Hello, world!\") (newline)"}
+  ],
+  "common_tasks": [
+    {"group": "I/O", "tasks": [
+      {"title": "Read file", "description": "call-with-input-file", "code": "(call-with-input-file \"README.md\" (lambda (p) (display (read-line p))))"}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "(scheme base)", "description": "R7RS base"}
+  ],
+  "tools": [
+    {"name": "guile", "description": "GNU Guile"}
+  ],
+  "links": [
+    {"title": "R7RS", "url": "https://small.r7rs.org/"}
+  ],
+  "builtins": [
+    {"name": "+", "kind": "procedure", "signature": "(+ x y ...)", "description": "Addition."}
+  ]
+}
+

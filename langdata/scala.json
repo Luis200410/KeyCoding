@@ -1,0 +1,30 @@
+{
+  "name": "Scala",
+  "slug": "scala",
+  "version": "3.x",
+  "quick_start": [
+    {"title": "Install Scala", "description": "Use cs (Coursier) or SDKMAN.", "code": "scala -version"},
+    {"title": "Hello, World", "description": "Run a script.", "code": "@main def run() = println(\\"Hello, world!\\")"}
+  ],
+  "common_tasks": [
+    {"group": "I/O", "tasks": [
+      {"title": "Read a file", "description": "Read text.", "code": "import java.nio.file.*\n@main def run() = { val s = Files.readString(Path.of(\\"README.md\\")); println(s.take(200)) }"}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "scala.collection", "description": "Collections"}
+  ],
+  "tools": [
+    {"name": "scala-cli", "description": "Run and package"}
+  ],
+  "links": [
+    {"title": "Scala Docs", "url": "https://docs.scala-lang.org/"}
+  ],
+  "builtins": [
+    {"name": "println", "kind": "function", "signature": "println(x)", "description": "Print line."},
+    {"name": "StringOps.toUpperCase", "kind": "method", "signature": "StringOps#toUpperCase: String", "description": "Uppercase a string (via enrichment)."},
+    {"name": "List.map", "kind": "method", "signature": "def map[B](f: A => B): List[B]", "description": "Transform list elements."},
+    {"name": "scala.collection", "kind": "module", "signature": "package scala.collection", "description": "Collections library."},
+    {"name": "Cats", "kind": "library", "signature": "org.typelevel:cats-core", "description": "Functional programming abstractions."}
+  ]
+}

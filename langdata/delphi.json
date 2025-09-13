@@ -1,0 +1,26 @@
+{
+  "name": "Delphi",
+  "slug": "delphi",
+  "version": "Object Pascal",
+  "quick_start": [
+    {"title": "Install Delphi or FreePascal", "description": "Use appropriate IDE/compiler.", "code": "fpc -iV"}
+  ],
+  "common_tasks": [
+    {"group": "Console", "tasks": [
+      {"title": "WriteLn", "description": "Print line.", "code": "program Hello; begin Writeln('Hello, world!'); end."}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "SysUtils", "description": "Utilities"}
+  ],
+  "tools": [
+    {"name": "fpc", "description": "FreePascal compiler"}
+  ],
+  "links": [
+    {"title": "FreePascal Docs", "url": "https://www.freepascal.org/docs.html"}
+  ],
+  "builtins": [
+    {"name": "Writeln", "kind": "procedure", "signature": "Writeln(args)", "description": "Write with newline."}
+  ]
+}
+

@@ -1,0 +1,34 @@
+{
+  "name": "C",
+  "slug": "c",
+  "version": "C17",
+  "quick_start": [
+    {"title": "Install compiler", "description": "Use clang or gcc.", "code": "clang --version\n# or\ngcc --version"},
+    {"title": "Hello, World", "description": "Compile and run.", "code": "#include <stdio.h>\nint main(){ printf(\"Hello, world!\\n\"); return 0; }\n\n// Save as hello.c then:\n// cc hello.c -o hello && ./hello"}
+  ],
+  "common_tasks": [
+    {"group": "I/O", "tasks": [
+      {"title": "Read file", "description": "fopen/fread", "code": "#include <stdio.h>\nint main(){ FILE *f=fopen(\"README.md\", \"rb\"); if(!f) return 1; char buf[201]={0}; fread(buf,1,200,f); fclose(f); puts(buf); }"}
+    ]},
+    {"group": "HTTP + APIs", "tasks": [
+      {"title": "HTTP (curl CLI)", "description": "Call out to curl.", "code": "system(\"curl -s https://httpbin.org/json\");"}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "stdio.h", "description": "I/O"},
+    {"name": "stdlib.h", "description": "Memory, conversions"},
+    {"name": "string.h", "description": "Strings"}
+  ],
+  "tools": [
+    {"name": "clang", "description": "LLVM C compiler"},
+    {"name": "gcc", "description": "GNU C compiler"}
+  ],
+  "links": [
+    {"title": "C Reference", "url": "https://en.cppreference.com/w/c"}
+  ],
+  "builtins": [
+    {"name": "printf", "kind": "function", "signature": "int printf(const char *fmt, ...)", "description": "Formatted output."},
+    {"name": "malloc", "kind": "function", "signature": "void *malloc(size_t size)", "description": "Allocate memory."}
+  ]
+}
+

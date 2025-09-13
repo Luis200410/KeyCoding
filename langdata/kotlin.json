@@ -1,0 +1,37 @@
+{
+  "name": "Kotlin",
+  "slug": "kotlin",
+  "version": "1.9+",
+  "quick_start": [
+    {"title": "Install Kotlin", "description": "Install Kotlin/Native or use the JVM via SDKMAN.", "code": "kotlinc -version"},
+    {"title": "Hello, World", "description": "Compile and run.", "code": "fun main(){ println(\"Hello, world!\") }\n// Save as Hello.kt then:\n// kotlinc Hello.kt -include-runtime -d hello.jar\n// java -jar hello.jar"}
+  ],
+  "common_tasks": [
+    {"group": "I/O", "tasks": [
+      {"title": "Read a file", "description": "Read text.", "code": "import java.io.File\nfun main(){ val s = File(\"README.md\").readText(); println(s.take(200)) }"}
+    ]},
+    {"group": "HTTP + APIs", "tasks": [
+      {"title": "GET JSON (Java 11)", "description": "Use java.net.http.", "code": "import java.net.http.*; import java.net.URI\nfun main(){ val c = HttpClient.newHttpClient(); val r = c.send(HttpRequest.newBuilder(URI(\"https://httpbin.org/json\")).build(), HttpResponse.BodyHandlers.ofString()); println(r.body()); }"}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "kotlin.collections", "description": "Collections"},
+    {"name": "kotlin.io", "description": "I/O helpers"}
+  ],
+  "tools": [
+    {"name": "kotlinc", "description": "Kotlin compiler"},
+    {"name": "gradle", "description": "Build tool"}
+  ],
+  "links": [
+    {"title": "Kotlin Docs", "url": "https://kotlinlang.org/docs/home.html"}
+  ],
+  "builtins": [
+    {"name": "println", "kind": "function", "signature": "println(any)", "description": "Print line."},
+    {"name": "listOf", "kind": "function", "signature": "listOf(elements)", "description": "Immutable list."},
+    {"name": "mutableListOf", "kind": "function", "signature": "mutableListOf(elements)", "description": "Mutable list."},
+    {"name": "String.uppercase()", "kind": "method", "signature": "fun String.uppercase(): String", "description": "Uppercase a string."},
+    {"name": "List.map", "kind": "method", "signature": "fun <T, R> List<T>.map(transform: (T) -> R): List<R>", "description": "Transform list elements."},
+    {"name": "kotlin.collections", "kind": "module", "signature": "package kotlin.collections", "description": "Collections utilities."},
+    {"name": "kotlinx.coroutines", "kind": "library", "signature": "org.jetbrains.kotlinx:kotlinx-coroutines-core", "description": "Coroutines library."}
+  ]
+}

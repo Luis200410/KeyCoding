@@ -1,0 +1,30 @@
+{
+  "name": "SQL",
+  "slug": "sql",
+  "version": "ANSI",
+  "quick_start": [
+    {"title": "SQLite", "description": "Use sqlite3 CLI.", "code": "sqlite3 --version"}
+  ],
+  "common_tasks": [
+    {"group": "CRUD", "tasks": [
+      {"title": "Create table", "description": "Basic DDL", "code": "CREATE TABLE users(id INTEGER PRIMARY KEY, name TEXT);"},
+      {"title": "Insert row", "description": "INSERT", "code": "INSERT INTO users(name) VALUES ('Ada');"},
+      {"title": "Select rows", "description": "SELECT", "code": "SELECT * FROM users;"}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "Functions", "description": "COUNT, SUM, AVG, MIN, MAX"}
+  ],
+  "tools": [
+    {"name": "sqlite3", "description": "SQLite CLI"}
+  ],
+  "links": [
+    {"title": "SQLite Docs", "url": "https://sqlite.org/docs.html"}
+  ],
+  "builtins": [
+    {"name": "COUNT", "kind": "aggregate", "signature": "COUNT(expr)", "description": "Count rows."},
+    {"name": "SUM", "kind": "aggregate", "signature": "SUM(expr)", "description": "Sum values."},
+    {"name": "NOW", "kind": "scalar", "signature": "NOW()", "description": "Current timestamp (dialect-specific)."}
+  ]
+}
+

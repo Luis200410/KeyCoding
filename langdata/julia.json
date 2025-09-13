@@ -1,0 +1,34 @@
+{
+  "name": "Julia",
+  "slug": "julia",
+  "version": "1.x",
+  "quick_start": [
+    {"title": "Install Julia", "description": "Download from julialang.org.", "code": "julia --version"},
+    {"title": "Hello, World", "description": "Run a script.", "code": "println(\"Hello, world!\")"}
+  ],
+  "common_tasks": [
+    {"group": "I/O", "tasks": [
+      {"title": "Read text", "description": "read with String", "code": "s = String(read(\"README.md\")); println(first(s, 200))"}
+    ]},
+    {"group": "HTTP + APIs", "tasks": [
+      {"title": "GET JSON", "description": "HTTP.jl", "code": "import Pkg; Pkg.add(\"HTTP\")\nres = HTTP.get(\"https://httpbin.org/json\"); println(String(res.body))"}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "Base", "description": "Core language"}
+  ],
+  "tools": [
+    {"name": "Pkg", "description": "Package manager"}
+  ],
+  "links": [
+    {"title": "Julia Docs", "url": "https://docs.julialang.org/"}
+  ],
+  "builtins": [
+    {"name": "+", "kind": "function", "signature": "+(x,y)", "description": "Addition."},
+    {"name": "println", "kind": "function", "signature": "println(x)", "description": "Print with newline."},
+    {"name": "uppercase", "kind": "function", "signature": "uppercase(s::AbstractString)", "description": "Uppercase a string."},
+    {"name": "map", "kind": "function", "signature": "map(f, collection)", "description": "Apply a function to all elements."},
+    {"name": "Base", "kind": "module", "signature": "module Base", "description": "Core language definitions."},
+    {"name": "LinearAlgebra", "kind": "library", "signature": "using LinearAlgebra", "description": "Standard library for linear algebra."}
+  ]
+}

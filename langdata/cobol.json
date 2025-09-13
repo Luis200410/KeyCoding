@@ -1,0 +1,27 @@
+{
+  "name": "COBOL",
+  "slug": "cobol",
+  "version": "COBOL 2002",
+  "quick_start": [
+    {"title": "Install GnuCOBOL", "description": "cobc compiler.", "code": "cobc -v"},
+    {"title": "Hello, World", "description": "Compile and run.", "code": "IDENTIFICATION DIVISION. PROGRAM-ID. HELLO. PROCEDURE DIVISION. DISPLAY 'Hello, world!'. STOP RUN."}
+  ],
+  "common_tasks": [
+    {"group": "I/O", "tasks": [
+      {"title": "Display", "description": "DISPLAY statement.", "code": "DISPLAY 'Message'."}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "INTRINSIC", "description": "Intrinsic functions"}
+  ],
+  "tools": [
+    {"name": "cobc", "description": "COBOL compiler"}
+  ],
+  "links": [
+    {"title": "GnuCOBOL Manual", "url": "https://open-cobol.sourceforge.io/guide/"}
+  ],
+  "builtins": [
+    {"name": "DISPLAY", "kind": "statement", "signature": "DISPLAY literal", "description": "Output text."}
+  ]
+}
+

@@ -1,0 +1,35 @@
+{
+  "name": "Dart",
+  "slug": "dart",
+  "version": "3.x",
+  "quick_start": [
+    {"title": "Install Dart SDK", "description": "Install via dart.dev.", "code": "dart --version"},
+    {"title": "Hello, World", "description": "Run a script.", "code": "void main(){ print('Hello, world!'); }"}
+  ],
+  "common_tasks": [
+    {"group": "I/O", "tasks": [
+      {"title": "Read a file", "description": "dart:io readAsString", "code": "import 'dart:io';\nvoid main() async { final s = await File('README.md').readAsString(); print(s.substring(0, 200)); }"}
+    ]},
+    {"group": "HTTP + APIs", "tasks": [
+      {"title": "GET JSON", "description": "http package", "code": "// pubspec: dependencies: http: ^1.0.0\nimport 'package:http/http.dart' as http;\nvoid main() async { final r = await http.get(Uri.parse('https://httpbin.org/json')); print(r.body); }"}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "dart:core", "description": "Core types"},
+    {"name": "dart:io", "description": "File, socket, HTTP (server)"}
+  ],
+  "tools": [
+    {"name": "dart", "description": "Dart VM and tools"}
+  ],
+  "links": [
+    {"title": "Dart Docs", "url": "https://dart.dev/guides"}
+  ],
+  "builtins": [
+    {"name": "print", "kind": "function", "signature": "print(object)", "description": "Print a string representation."},
+    {"name": "List", "kind": "class", "signature": "List<T>", "description": "Growable list."},
+    {"name": "String.toUpperCase", "kind": "method", "signature": "String toUpperCase()", "description": "Uppercase a string."},
+    {"name": "Iterable.map", "kind": "method", "signature": "Iterable<E2> map<E2>(E2 f(E element))", "description": "Transform items."},
+    {"name": "dart:convert", "kind": "module", "signature": "import 'dart:convert'", "description": "JSON encoding/decoding."},
+    {"name": "http", "kind": "library", "signature": "package:http/http.dart", "description": "HTTP client package."}
+  ]
+}

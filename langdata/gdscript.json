@@ -1,0 +1,26 @@
+{
+  "name": "GDScript",
+  "slug": "gdscript",
+  "version": "4.x",
+  "quick_start": [
+    {"title": "Godot", "description": "Create a script on a Node.", "code": "func _ready():\n    print(\"Hello, world!\")"}
+  ],
+  "common_tasks": [
+    {"group": "Signals", "tasks": [
+      {"title": "Connect signal", "description": "Connect to a button.", "code": "func _ready():\n    $Button.pressed.connect(_on_button_pressed)\n\nfunc _on_button_pressed():\n    print(\"Clicked\")"}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "Godot API", "description": "Nodes, Signals, Resources"}
+  ],
+  "tools": [
+    {"name": "Godot", "description": "Game engine"}
+  ],
+  "links": [
+    {"title": "Godot Docs", "url": "https://docs.godotengine.org/"}
+  ],
+  "builtins": [
+    {"name": "print", "kind": "function", "signature": "print(x)", "description": "Print to console."}
+  ]
+}
+

@@ -1,0 +1,40 @@
+{
+  "name": "R",
+  "slug": "r",
+  "version": "4.x",
+  "quick_start": [
+    {"title": "Install R", "description": "Install from CRAN or your OS.", "code": "R --version"},
+    {"title": "Hello, World", "description": "Run a script.", "code": "print('Hello, world!')"}
+  ],
+  "common_tasks": [
+    {"group": "I/O", "tasks": [
+      {"title": "Read CSV", "description": "Base R read.csv", "code": "df <- read.csv('data.csv'); print(head(df))"},
+      {"title": "Write JSON", "description": "jsonlite::toJSON", "code": "install.packages('jsonlite'); library(jsonlite); write(toJSON(list(ok=TRUE, items=c(1,2,3)), pretty=TRUE), 'data.json')"}
+    ]},
+    {"group": "HTTP + APIs", "tasks": [
+      {"title": "GET JSON", "description": "httr::GET", "code": "install.packages('httr'); library(httr); r <- GET('https://httpbin.org/json'); content(r, as='text')"}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "base", "description": "Base R functions"},
+    {"name": "stats", "description": "Statistical functions"},
+    {"name": "utils", "description": "Utilities"}
+  ],
+  "tools": [
+    {"name": "Rscript", "description": "Run R scripts"}
+  ],
+  "links": [
+    {"title": "CRAN", "url": "https://cran.r-project.org/"},
+    {"title": "R Manuals", "url": "https://cran.r-project.org/manuals.html"}
+  ],
+  "builtins": [
+    {"name": "sum", "kind": "function", "signature": "sum(x, na.rm=FALSE)", "description": "Sum elements."},
+    {"name": "mean", "kind": "function", "signature": "mean(x, ...)", "description": "Mean of values."},
+    {"name": "length", "kind": "function", "signature": "length(x)", "description": "Length of object."},
+    {"name": "toupper", "kind": "function", "signature": "toupper(x)", "description": "Uppercase strings."},
+    {"name": "lapply", "kind": "function", "signature": "lapply(X, FUN, ...)", "description": "Apply over list."},
+    {"name": "base", "kind": "module", "signature": "base", "description": "Base package functions."},
+    {"name": "stats", "kind": "module", "signature": "stats", "description": "Statistical functions."},
+    {"name": "tidyverse", "kind": "library", "signature": "library(tidyverse)", "description": "Collection of R packages for data science."}
+  ]
+}

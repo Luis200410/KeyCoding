@@ -1,0 +1,27 @@
+{
+  "name": "Visual Basic .NET",
+  "slug": "vbnet",
+  "version": ".NET 7+",
+  "quick_start": [
+    {"title": "Install .NET SDK", "description": "dotnet CLI.", "code": "dotnet --version"},
+    {"title": "New console app", "description": "Create and run.", "code": "dotnet new console -lang VB -n Hello && cd Hello\ndotnet run"}
+  ],
+  "common_tasks": [
+    {"group": "Console", "tasks": [
+      {"title": "WriteLine", "description": "Print line.", "code": "Imports System\nModule P\n  Sub Main()\n    Console.WriteLine(\"Hello, world!\")\n  End Sub\nEnd Module"}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "System", "description": "Core library"}
+  ],
+  "tools": [
+    {"name": "dotnet", "description": ".NET CLI"}
+  ],
+  "links": [
+    {"title": "VB.NET Guide", "url": "https://learn.microsoft.com/dotnet/visual-basic/"}
+  ],
+  "builtins": [
+    {"name": "Console.WriteLine", "kind": "method", "signature": "Console.WriteLine(x)", "description": "Print with newline."}
+  ]
+}
+

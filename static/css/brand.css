@@ -187,6 +187,7 @@ button { border: none; }
 .code-tab.active { color: var(--text-primary); border-color: var(--border); background: rgba(255,255,255,0.03); }
 .code-actions { display:flex; gap:.4rem; }
 .code-btn { padding:.35rem .6rem; border:1px solid var(--border); border-radius:8px; background: rgba(255,255,255,0.02); color: var(--text-primary); cursor:pointer; }
+.code-btn.active { border-color: color-mix(in oklab, var(--brand-primary) 40%, var(--border)); background: rgba(255,255,255,0.04); }
 .code-content { position:relative; }
 .code-pane { display:none; }
 .code-pane.active { display:block; }

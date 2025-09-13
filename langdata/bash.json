@@ -1,0 +1,32 @@
+{
+  "name": "Bash",
+  "slug": "bash",
+  "version": "5.x",
+  "quick_start": [
+    {"title": "Shebang", "description": "Start scripts with shebang.", "code": "#!/usr/bin/env bash\necho \"Hello, world!\""}
+  ],
+  "common_tasks": [
+    {"group": "I/O", "tasks": [
+      {"title": "Read file", "description": "cat and head", "code": "head -n 20 README.md"}
+    ]},
+    {"group": "HTTP + APIs", "tasks": [
+      {"title": "GET JSON", "description": "curl", "code": "curl -s https://httpbin.org/json"}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "coreutils", "description": "Common CLI tools"}
+  ],
+  "tools": [
+    {"name": "bash", "description": "Shell"}
+  ],
+  "links": [
+    {"title": "Bash Guide", "url": "https://www.gnu.org/software/bash/manual/"}
+  ],
+  "builtins": [
+    {"name": "echo", "kind": "function", "signature": "echo args", "description": "Print arguments."},
+    {"name": "read", "kind": "function", "signature": "read var", "description": "Read a line from stdin."},
+    {"name": "printf", "kind": "function", "signature": "printf format [args]", "description": "Format and print data."},
+    {"name": "declare", "kind": "function", "signature": "declare [options] name=value", "description": "Declare variables."},
+    {"name": "coreutils", "kind": "library", "signature": "GNU coreutils", "description": "Common CLI tools (ls, cat, cp, mv)."}
+  ]
+}

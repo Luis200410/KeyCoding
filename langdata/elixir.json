@@ -1,0 +1,35 @@
+{
+  "name": "Elixir",
+  "slug": "elixir",
+  "version": "1.16+",
+  "quick_start": [
+    {"title": "Install Elixir", "description": "Use asdf or your OS packages.", "code": "elixir -v"},
+    {"title": "Hello, World", "description": "Run a script.", "code": "IO.puts(\"Hello, world!\")"}
+  ],
+  "common_tasks": [
+    {"group": "I/O", "tasks": [
+      {"title": "Read a file", "description": "File.read!", "code": "s = File.read!(\\"README.md\\"); IO.puts(String.slice(s, 0, 200))"}
+    ]},
+    {"group": "HTTP + APIs", "tasks": [
+      {"title": "GET JSON", "description": ":httpc simple request", "code": "{:ok, {{_, 200, _}, _headers, body}} = :httpc.request(:get, {'https://httpbin.org/json', []}, [], [])\nIO.puts(body)"}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "Enum", "description": "Enumerable utils"},
+    {"name": "File", "description": "Filesystem"}
+  ],
+  "tools": [
+    {"name": "mix", "description": "Build & deps"}
+  ],
+  "links": [
+    {"title": "Elixir Docs", "url": "https://hexdocs.pm/elixir/"},
+    {"title": "Hex", "url": "https://hex.pm/"}
+  ],
+  "builtins": [
+    {"name": "IO.puts", "kind": "function", "signature": "IO.puts(term)", "description": "Print line."},
+    {"name": "Enum.map", "kind": "function", "signature": "Enum.map(enum, fun)", "description": "Map over enumerable."},
+    {"name": "String.upcase", "kind": "function", "signature": "String.upcase(binary)", "description": "Uppercase a string."},
+    {"name": "String", "kind": "module", "signature": "String", "description": "String functions."},
+    {"name": "Phoenix", "kind": "library", "signature": "phoenix", "description": "Elixir web framework."}
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "name": "VHDL",
+  "slug": "vhdl",
+  "version": "2008",
+  "quick_start": [
+    {"title": "Toolchain", "description": "Use GHDL or vendor tools.", "code": "ghdl --version"}
+  ],
+  "common_tasks": [
+    {"group": "Hello", "tasks": [
+      {"title": "Entity", "description": "Minimal entity/arch.", "code": "entity hello is end;\narchitecture rtl of hello is begin end;"}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "ieee.std_logic_1164", "description": "Logic types"}
+  ],
+  "tools": [
+    {"name": "ghdl", "description": "VHDL analyzer/simulator"}
+  ],
+  "links": [
+    {"title": "GHDL Docs", "url": "https://ghdl.github.io/ghdl/"}
+  ],
+  "builtins": [
+    {"name": "std_logic", "kind": "type", "signature": "std_logic", "description": "Logic type."}
+  ]
+}
+

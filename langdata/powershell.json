@@ -1,0 +1,33 @@
+{
+  "name": "PowerShell",
+  "slug": "powershell",
+  "version": "7.x",
+  "quick_start": [
+    {"title": "Run script", "description": "Basic script example.", "code": "Write-Output 'Hello, world!'"}
+  ],
+  "common_tasks": [
+    {"group": "I/O", "tasks": [
+      {"title": "Read file", "description": "Get-Content", "code": "(Get-Content README.md -Raw).Substring(0,200)"}
+    ]},
+    {"group": "HTTP + APIs", "tasks": [
+      {"title": "GET JSON", "description": "Invoke-RestMethod", "code": "Invoke-RestMethod https://httpbin.org/json | ConvertTo-Json"}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "Core", "description": "Core cmdlets"}
+  ],
+  "tools": [
+    {"name": "pwsh", "description": "PowerShell"}
+  ],
+  "links": [
+    {"title": "Docs", "url": "https://learn.microsoft.com/powershell/"}
+  ],
+  "builtins": [
+    {"name": "Write-Output", "kind": "cmdlet", "signature": "Write-Output [-InputObject]", "description": "Outputs to the pipeline."},
+    {"name": "Get-Content", "kind": "cmdlet", "signature": "Get-Content -Path", "description": "Get content of files."},
+    {"name": "Get-ChildItem", "kind": "cmdlet", "signature": "Get-ChildItem [-Path]", "description": "List directory contents."},
+    {"name": "String.ToUpper", "kind": "method", "signature": "[String]::Copy('a').ToUpper()", "description": "Uppercase via .NET method."},
+    {"name": "Microsoft.PowerShell.Management", "kind": "module", "signature": "Import-Module Microsoft.PowerShell.Management", "description": "Core management cmdlets."},
+    {"name": "PSReadLine", "kind": "library", "signature": "PSReadLine", "description": "Enhanced command-line editing."}
+  ]
+}

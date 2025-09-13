@@ -100,6 +100,20 @@
     {"name": "tuple", "kind": "type", "signature": "tuple([iterable])", "description": "Immutable sequence.", "category": "Types"},
     {"name": "type", "kind": "type", "signature": "type(object) | type(name, bases, dict)", "description": "Return type or create a new type.", "category": "Introspection"},
     {"name": "vars", "kind": "function", "signature": "vars([object])", "description": "Return __dict__ of object.", "category": "Introspection"},
-    {"name": "zip", "kind": "function", "signature": "zip(*iterables, strict=False)", "description": "Aggregate elements from iterables.", "category": "Iteration & Functional"}
+    {"name": "zip", "kind": "function", "signature": "zip(*iterables, strict=False)", "description": "Aggregate elements from iterables.", "category": "Iteration & Functional"},
+    {"name": "list.append", "kind": "method", "signature": "list.append(x)", "description": "Append an item to the end of the list.", "category": "Containers"},
+    {"name": "dict.get", "kind": "method", "signature": "dict.get(key[, default])", "description": "Return the value for key if key is in the dictionary.", "category": "Containers"},
+    {"name": "str.upper", "kind": "method", "signature": "str.upper()", "description": "Return a copy of the string with all the cased characters converted to uppercase.", "category": "Text"},
+    {"name": "os", "kind": "module", "signature": "import os", "description": "Miscellaneous operating system interfaces.", "category": "Stdlib"},
+    {"name": "sys", "kind": "module", "signature": "import sys", "description": "System-specific parameters and functions.", "category": "Stdlib"},
+    {"name": "json", "kind": "module", "signature": "import json", "description": "JSON encoder and decoder.", "category": "Stdlib"},
+    {"name": "re", "kind": "module", "signature": "import re", "description": "Regular expression operations.", "category": "Stdlib"},
+    {"name": "math", "kind": "module", "signature": "import math", "description": "Mathematical functions.", "category": "Stdlib"},
+    {"name": "datetime", "kind": "module", "signature": "from datetime import datetime", "description": "Basic date and time types.", "category": "Stdlib"},
+    {"name": "pathlib", "kind": "module", "signature": "from pathlib import Path", "description": "Object-oriented filesystem paths.", "category": "Stdlib"},
+    {"name": "subprocess", "kind": "module", "signature": "import subprocess", "description": "Subprocess management.", "category": "Stdlib"},
+    {"name": "typing", "kind": "module", "signature": "from typing import List", "description": "Type hints support.", "category": "Stdlib"},
+    {"name": "functools", "kind": "module", "signature": "import functools", "description": "Higher-order functions and operations on callable objects.", "category": "Stdlib"},
+    {"name": "itertools", "kind": "module", "signature": "import itertools", "description": "Functions creating iterators for efficient looping.", "category": "Stdlib"}
   ]
 }

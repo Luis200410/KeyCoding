@@ -1,0 +1,27 @@
+{
+  "name": "Erlang",
+  "slug": "erlang",
+  "version": "24+",
+  "quick_start": [
+    {"title": "Install Erlang/OTP", "description": "Use asdf or OS package.", "code": "erl -version"},
+    {"title": "Hello, World", "description": "Run in shell.", "code": "io:format(\"Hello, world!~n\")."}
+  ],
+  "common_tasks": [
+    {"group": "I/O", "tasks": [
+      {"title": "Read file", "description": "file:read_file", "code": "{ok,B} = file:read_file(\"README.md\"), io:format(\"~s\", [binary:part(B,0,200)])."}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "lists", "description": "List utils"}
+  ],
+  "tools": [
+    {"name": "erl", "description": "Erlang shell"}
+  ],
+  "links": [
+    {"title": "Erlang Docs", "url": "https://www.erlang.org/doc"}
+  ],
+  "builtins": [
+    {"name": "io:format", "kind": "function", "signature": "io:format(Format, Data)", "description": "Formatted output."}
+  ]
+}
+

@@ -1,0 +1,36 @@
+{
+  "name": "Swift",
+  "slug": "swift",
+  "version": "5.x",
+  "quick_start": [
+    {"title": "Install Swift", "description": "Install Xcode (macOS) or Swift toolchains.", "code": "swift --version"},
+    {"title": "Hello, World", "description": "Run a script.", "code": "print(\"Hello, world!\")"}
+  ],
+  "common_tasks": [
+    {"group": "I/O", "tasks": [
+      {"title": "Read a file", "description": "Read text from file.", "code": "import Foundation\nlet s = try String(contentsOfFile: \"README.md\", encoding: .utf8)\nprint(String(s.prefix(200)))"}
+    ]},
+    {"group": "HTTP + APIs", "tasks": [
+      {"title": "GET JSON", "description": "URLSession async/await.", "code": "import Foundation\n@main struct App{ static func main() async {\n  let (data, _) = try! await URLSession.shared.data(from: URL(string: \"https://httpbin.org/json\")!)\n  print(String(data: data, encoding: .utf8)!) } }"}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "Foundation", "description": "Core utilities"}
+  ],
+  "tools": [
+    {"name": "swiftc", "description": "Swift compiler"}
+  ],
+  "links": [
+    {"title": "Swift.org Docs", "url": "https://www.swift.org/documentation/"}
+  ],
+  "builtins": [
+    {"name": "print", "kind": "function", "signature": "print(_:separator:terminator:)", "description": "Print values."},
+    {"name": "Array", "kind": "type", "signature": "[T]", "description": "Ordered collection."},
+    {"name": "Dictionary", "kind": "type", "signature": "[Key:Value]", "description": "Key-value map."},
+    {"name": "String.uppercased()", "kind": "method", "signature": "func uppercased() -> String", "description": "Uppercase a string."},
+    {"name": "Array.map", "kind": "method", "signature": "func map<T>(_ transform: (Element) -> T) -> [T]", "description": "Transform array elements."},
+    {"name": "Foundation", "kind": "module", "signature": "import Foundation", "description": "Core utilities (URL, Date, JSON)."},
+    {"name": "URLSession", "kind": "class", "signature": "class URLSession", "description": "Networking session."},
+    {"name": "Combine", "kind": "library", "signature": "import Combine", "description": "Reactive programming framework."}
+  ]
+}

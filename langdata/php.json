@@ -1,0 +1,43 @@
+{
+  "name": "PHP",
+  "slug": "php",
+  "version": "8.x",
+  "quick_start": [
+    {"title": "Install PHP", "description": "Install via your OS or Homebrew.", "code": "php -v"},
+    {"title": "Hello, World", "description": "Run a script.", "code": "<?php\necho \"Hello, world!\\n\";\n"}
+  ],
+  "common_tasks": [
+    {"group": "I/O", "tasks": [
+      {"title": "Read a file", "description": "Get contents as string.", "code": "<?php\n$s = file_get_contents('README.md');\necho substr($s, 0, 200);\n"},
+      {"title": "Write JSON", "description": "Encode and write.", "code": "<?php\n$data = ['ok' => true, 'items' => [1,2,3]];\nfile_put_contents('data.json', json_encode($data, JSON_PRETTY_PRINT));\n"}
+    ]},
+    {"group": "HTTP + APIs", "tasks": [
+      {"title": "GET JSON", "description": "Simple fetch with file_get_contents.", "code": "<?php\n$s = file_get_contents('https://httpbin.org/json');\necho $s;\n"}
+    ]},
+    {"group": "CLI", "tasks": [
+      {"title": "Arguments", "description": "Access $argv.", "code": "<?php\nprint_r($argv);\n"}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "json", "description": "JSON encode/decode"},
+    {"name": "curl", "description": "HTTP client"},
+    {"name": "spl", "description": "Standard PHP Library"}
+  ],
+  "tools": [
+    {"name": "composer", "description": "Dependency manager"}
+  ],
+  "links": [
+    {"title": "PHP Manual", "url": "https://www.php.net/manual/"},
+    {"title": "Packagist", "url": "https://packagist.org/"}
+  ],
+  "builtins": [
+    {"name": "echo", "kind": "construct", "signature": "echo expr", "description": "Output one or more strings."},
+    {"name": "print_r", "kind": "function", "signature": "print_r(value)", "description": "Print human-readable information."},
+    {"name": "count", "kind": "function", "signature": "count(array)", "description": "Count elements."},
+    {"name": "strlen", "kind": "function", "signature": "strlen(string)", "description": "Get string length."},
+    {"name": "array", "kind": "language", "signature": "[ ... ]", "description": "Array literal."},
+    {"name": "DateTime::format", "kind": "method", "signature": "DateTime::format(string $format)", "description": "Format a date/time."},
+    {"name": "json_encode", "kind": "function", "signature": "json_encode(mixed $value, int $flags = 0)", "description": "Returns a JSON encoded string."},
+    {"name": "json", "kind": "library", "signature": "ext-json", "description": "Core JSON extension."}
+  ]
+}

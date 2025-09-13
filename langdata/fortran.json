@@ -1,0 +1,27 @@
+{
+  "name": "Fortran",
+  "slug": "fortran",
+  "version": "Fortran 2008",
+  "quick_start": [
+    {"title": "Install gfortran", "description": "GNU Fortran.", "code": "gfortran --version"},
+    {"title": "Hello, World", "description": "Compile and run.", "code": "program hello\nprint *, 'Hello, world!'\nend program hello"}
+  ],
+  "common_tasks": [
+    {"group": "I/O", "tasks": [
+      {"title": "Read file", "description": "READ and OPEN.", "code": "character(len=200) :: line\nopen(10, file='README.md')\nread(10,'(A)') line\nprint *, trim(line)\nclose(10)"}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "iso_fortran_env", "description": "Env and kinds"}
+  ],
+  "tools": [
+    {"name": "gfortran", "description": "Fortran compiler"}
+  ],
+  "links": [
+    {"title": "Fortran Wiki", "url": "https://fortranwiki.org/"}
+  ],
+  "builtins": [
+    {"name": "print", "kind": "statement", "signature": "print *, expr", "description": "Output values."}
+  ]
+}
+

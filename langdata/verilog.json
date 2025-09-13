@@ -1,0 +1,26 @@
+{
+  "name": "Verilog",
+  "slug": "verilog",
+  "version": "2005",
+  "quick_start": [
+    {"title": "Toolchain", "description": "Use Icarus Verilog.", "code": "iverilog -V"}
+  ],
+  "common_tasks": [
+    {"group": "Hello", "tasks": [
+      {"title": "Module", "description": "Minimal module.", "code": "module hello; initial $display(\"Hello\"); endmodule"}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "$display", "description": "Print display task"}
+  ],
+  "tools": [
+    {"name": "iverilog", "description": "Verilog simulator"}
+  ],
+  "links": [
+    {"title": "Icarus Verilog", "url": "http://iverilog.icarus.com/"}
+  ],
+  "builtins": [
+    {"name": "$display", "kind": "task", "signature": "$display(fmt, args)", "description": "Print to console."}
+  ]
+}
+

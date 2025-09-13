@@ -1,0 +1,28 @@
+{
+  "name": "Solidity",
+  "slug": "solidity",
+  "version": "0.8+",
+  "quick_start": [
+    {"title": "Install solc or use Remix", "description": "Use solc or remix.ethereum.org.", "code": "solc --version"},
+    {"title": "Hello contract", "description": "Minimal contract.", "code": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\ncontract Hello { function hi() public pure returns (string memory){ return \"Hello\"; } }"}
+  ],
+  "common_tasks": [
+    {"group": "Basics", "tasks": [
+      {"title": "State + view", "description": "Read-only function.", "code": "contract C { uint public x; function get() public view returns(uint){ return x; } }"}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "OpenZeppelin", "description": "Common contracts"}
+  ],
+  "tools": [
+    {"name": "solc", "description": "Compiler"},
+    {"name": "hardhat", "description": "Dev environment"}
+  ],
+  "links": [
+    {"title": "Solidity Docs", "url": "https://docs.soliditylang.org/"}
+  ],
+  "builtins": [
+    {"name": "require", "kind": "function", "signature": "require(cond, message)", "description": "Error if condition is false."}
+  ]
+}
+

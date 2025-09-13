@@ -48,7 +48,11 @@
     {"name": "panic", "kind": "function", "signature": "panic(v)", "description": "Stop ordinary flow of control."},
     {"name": "recover", "kind": "function", "signature": "recover()", "description": "Resume from panic."},
     {"name": "print", "kind": "function", "signature": "print(args...)", "description": "Low-level printing."},
-    {"name": "println", "kind": "function", "signature": "println(args...)", "description": "Low-level printing with newline."}
+    {"name": "println", "kind": "function", "signature": "println(args...)", "description": "Low-level printing with newline."},
+    {"name": "fmt", "kind": "module", "signature": "import \"fmt\"", "description": "Formatting I/O.", "category": "Stdlib"},
+    {"name": "io", "kind": "module", "signature": "import \"io\"", "description": "I/O primitives.", "category": "Stdlib"},
+    {"name": "os", "kind": "module", "signature": "import \"os\"", "description": "Operating system primitives.", "category": "Stdlib"},
+    {"name": "net/http", "kind": "module", "signature": "import \"net/http\"", "description": "HTTP client and server.", "category": "Stdlib"},
+    {"name": "encoding/json", "kind": "module", "signature": "import \"encoding/json\"", "description": "JSON encoding/decoding.", "category": "Stdlib"}
   ]
 }
-

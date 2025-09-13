@@ -39,7 +39,10 @@
     {"name": "dbg!", "kind": "macro", "signature": "dbg!(expr)", "description": "Print debug representation and pass through value."},
     {"name": "vec!", "kind": "macro", "signature": "vec![elems]", "description": "Create a Vec."},
     {"name": "Option", "kind": "enum", "signature": "Option<T>", "description": "Optional values (Some/None)."},
-    {"name": "Result", "kind": "enum", "signature": "Result<T,E>", "description": "Error handling (Ok/Err)."}
+    {"name": "Result", "kind": "enum", "signature": "Result<T,E>", "description": "Error handling (Ok/Err)."},
+    {"name": "std::fs", "kind": "module", "signature": "use std::fs;", "description": "Filesystem operations.", "category": "Stdlib"},
+    {"name": "std::io", "kind": "module", "signature": "use std::io;", "description": "I/O primitives.", "category": "Stdlib"},
+    {"name": "serde", "kind": "library", "signature": "serde", "description": "Serialization/deserialization framework.", "category": "Crate"},
+    {"name": "reqwest", "kind": "library", "signature": "reqwest", "description": "HTTP client.", "category": "Crate"}
   ]
 }
-

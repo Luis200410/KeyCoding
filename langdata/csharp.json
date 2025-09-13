@@ -8,10 +8,14 @@
   ],
   "common_tasks": [
     {"group": "I/O", "tasks": [
-      {"title": "Read a file", "description": "Read all text."}
+      {"title": "Read a file", "description": "Read all text.", "code": "using System; using System.IO;\nclass P{ static void Main(){ var s = File.ReadAllText(\"README.md\"); Console.WriteLine(s.Substring(0, Math.Min(200, s.Length))); }}"},
+      {"title": "Write JSON", "description": "Serialize and write JSON.", "code": "using System; using System.IO; using System.Text.Json;\nclass P{ static void Main(){ var obj = new { ok = true, items = new[]{1,2,3} }; var json = JsonSerializer.Serialize(obj, new JsonSerializerOptions{ WriteIndented = true }); File.WriteAllText(\"data.json\", json); }}"}
     ]},
     {"group": "HTTP + APIs", "tasks": [
-      {"title": "GET JSON", "description": "HttpClient usage."}
+      {"title": "GET JSON", "description": "HttpClient usage.", "code": "using System; using System.Net.Http; using System.Threading.Tasks;\nclass P{ static async Task Main(){ using var c = new HttpClient(); var s = await c.GetStringAsync(\"https://httpbin.org/json\"); Console.WriteLine(s); }}"}
+    ]},
+    {"group": "CLI", "tasks": [
+      {"title": "Arguments", "description": "Process command-line args.", "code": "using System;\nclass P{ static void Main(string[] args){ Console.WriteLine(string.Join(\",\", args)); }}"}
     ]}
   ],
   "stdlib": [
@@ -30,7 +34,9 @@
     {"name": "Math", "kind": "class", "signature": "System.Math", "description": "Math utilities."},
     {"name": "String", "kind": "class", "signature": "System.String", "description": "Unicode strings."},
     {"name": "List", "kind": "class", "signature": "System.Collections.Generic.List", "description": "Dynamic array."},
-    {"name": "Dictionary", "kind": "class", "signature": "System.Collections.Generic.Dictionary", "description": "Hash map."}
+    {"name": "Dictionary", "kind": "class", "signature": "System.Collections.Generic.Dictionary", "description": "Hash map."},
+    {"name": "Console.WriteLine", "kind": "method", "signature": "Console.WriteLine(string value)", "description": "Write a line to stdout."},
+    {"name": "System.IO", "kind": "module", "signature": "namespace System.IO", "description": "File and stream I/O."},
+    {"name": "System.Net.Http", "kind": "module", "signature": "namespace System.Net.Http", "description": "HTTP client."}
   ]
 }
-

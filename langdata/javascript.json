@@ -2,6 +2,50 @@
   "name": "JavaScript",
   "slug": "javascript",
   "version": "ES2023",
+  "concepts": [
+    {
+      "id": "io",
+      "title": "Input / Output",
+      "description": "Read data and display results. In Node: use fetch, fs, and console.",
+      "code": "// Output\nconsole.log('Hello, world!');\n\n// Input (Node >=18)\nconst res = await fetch('https://httpbin.org/json');\nconst data = await res.json();\nconsole.log('title:', data.slideshow?.title);"
+    },
+    {
+      "id": "variables",
+      "title": "Variables & Data Types",
+      "description": "Use let/const. Primitives: number, string, boolean, bigint, symbol; objects and arrays.",
+      "code": "const answer = 42;             // number\nlet name = 'Ada';               // string\nconst ok = true;                // boolean\nconst items = [1, 2, 3];        // array\nconst user = { name, answer };  // object\nconsole.log(typeof answer, typeof name, Array.isArray(items));"
+    },
+    {
+      "id": "operators",
+      "title": "Operators",
+      "description": "Arithmetic, comparison, logical, nullish coalescing.",
+      "code": "const a = 5, b = 2;\nconsole.log(a + b, a * b);           // arithmetic\nconsole.log(a === 5, a > b);         // comparison\nconsole.log(true && false || !false); // logical\nconst v = null ?? 'fallback';        // nullish coalescing\nconsole.log(v);"
+    },
+    {
+      "id": "control",
+      "title": "Control Structures",
+      "description": "Conditionals and loops determine execution flow.",
+      "code": "const n = 3;\nif (n % 2 === 0) {\n  console.log('even');\n} else {\n  console.log('odd');\n}\nfor (let i = 0; i < 3; i++) {\n  console.log(i);\n}\nlet i = 0;\nwhile (i < 2) { i++; }"
+    },
+    {
+      "id": "functions",
+      "title": "Functions / Procedures",
+      "description": "Declare functions and arrow functions to reuse logic.",
+      "code": "function greet(name = 'world') {\n  return `Hello, ${name}!`;\n}\nconst add = (x, y) => x + y;\nconsole.log(greet('Ada'), add(2,3));"
+    },
+    {
+      "id": "libraries",
+      "title": "Libraries",
+      "description": "Use npm to install packages; import ES modules.",
+      "code": "// npm install axios\nimport axios from 'axios';\nconst r = await axios.get('https://httpbin.org/json');\nconsole.log(r.data.slideshow.title);"
+    },
+    {
+      "id": "naming",
+      "title": "Naming Conventions",
+      "description": "camelCase for variables/functions, PascalCase for classes, UPPER_SNAKE_CASE for constants.",
+      "code": "const userName = 'ada';        // camelCase variable\nfunction makeWidget() {}       // camelCase function\nclass HttpClient {}            // PascalCase class\nconst MAX_RETRIES = 3;         // UPPER_SNAKE_CASE constant"
+    }
+  ],
   "quick_start": [
     {"title": "Install Node.js", "description": "Install via nvm or the official installer.", "code": "# macOS/Linux: nvm\ncurl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash\n# restart shell then:\nnvm install --lts\nnode -v && npm -v"},
     {"title": "Hello, World (Node)", "description": "Create a script and run it with Node.", "code": "console.log('Hello, world!');\n\n// Run\n// node hello.js"},
@@ -59,6 +103,41 @@
     {"name": "decodeURIComponent", "kind": "function", "signature": "decodeURIComponent(str)", "description": "Decode a URI component.", "category": "Encoding"},
     {"name": "queueMicrotask", "kind": "function", "signature": "queueMicrotask(callback)", "description": "Schedule a microtask.", "category": "Async"},
     {"name": "structuredClone", "kind": "function", "signature": "structuredClone(value)", "description": "Deep-clone a structured value.", "category": "Core"},
-    {"name": "globalThis", "kind": "object", "signature": "globalThis", "description": "Standardized global object reference.", "category": "Core"}
+    {"name": "globalThis", "kind": "object", "signature": "globalThis", "description": "Standardized global object reference.", "category": "Core"},
+    {"name": "console", "kind": "object", "signature": "console", "description": "Logging API (log, error, warn…)", "category": "Core"},
+    {"name": "JSON", "kind": "object", "signature": "JSON", "description": "Parse and stringify JSON.", "category": "Core"},
+    {"name": "Math", "kind": "object", "signature": "Math", "description": "Math functions and constants.", "category": "Numbers"},
+    {"name": "Reflect", "kind": "object", "signature": "Reflect", "description": "Meta-programming helpers.", "category": "Core"},
+    {"name": "Proxy", "kind": "class", "signature": "new Proxy(target, handler)", "description": "Define custom behavior for fundamental operations.", "category": "Core"},
+    {"name": "Atomics", "kind": "object", "signature": "Atomics", "description": "Atomic operations on SharedArrayBuffer.", "category": "Concurrency"},
+    {"name": "Intl", "kind": "object", "signature": "Intl", "description": "Internationalization APIs.", "category": "I18n"},
+    {"name": "ArrayBuffer", "kind": "class", "signature": "new ArrayBuffer(length)", "description": "Generic, fixed-length binary buffer.", "category": "Binary"},
+    {"name": "DataView", "kind": "class", "signature": "new DataView(buffer, byteOffset?, byteLength?)", "description": "Read/write typed data from ArrayBuffer.", "category": "Binary"},
+    {"name": "Uint8Array", "kind": "class", "signature": "new Uint8Array(bufferOrLength)", "description": "Typed array of 8‑bit unsigned integers.", "category": "Binary"},
+    {"name": "Float64Array", "kind": "class", "signature": "new Float64Array(bufferOrLength)", "description": "Typed array of 64‑bit floats.", "category": "Binary"},
+    {"name": "TypeError", "kind": "class", "signature": "new TypeError(message)", "description": "Error subclass.", "category": "Errors"},
+    {"name": "RangeError", "kind": "class", "signature": "new RangeError(message)", "description": "Error subclass.", "category": "Errors"},
+    {"name": "Promise.all", "kind": "function", "signature": "Promise.all(iterable)", "description": "Wait for multiple promises.", "category": "Async"},
+    {"name": "setTimeout", "kind": "function", "signature": "setTimeout(fn, delay, ...args)", "description": "Schedule a callback after delay.", "category": "Async"},
+    {"name": "clearTimeout", "kind": "function", "signature": "clearTimeout(id)", "description": "Cancel timeout.", "category": "Async"},
+    {"name": "setInterval", "kind": "function", "signature": "setInterval(fn, delay, ...args)", "description": "Repeated scheduling.", "category": "Async"},
+    {"name": "clearInterval", "kind": "function", "signature": "clearInterval(id)", "description": "Cancel interval.", "category": "Async"},
+    {"name": "fs", "kind": "module", "signature": "node:fs / require('fs')", "description": "Filesystem module (Node).", "category": "Node Core"},
+    {"name": "path", "kind": "module", "signature": "node:path / require('path')", "description": "Path utilities (Node).", "category": "Node Core"},
+    {"name": "http", "kind": "module", "signature": "node:http / require('http')", "description": "HTTP server/client (Node).", "category": "Node Core"},
+    {"name": "https", "kind": "module", "signature": "node:https / require('https')", "description": "HTTPS (Node).", "category": "Node Core"},
+    {"name": "url", "kind": "module", "signature": "node:url / require('url')", "description": "URL utilities (Node).", "category": "Node Core"},
+    {"name": "crypto", "kind": "module", "signature": "node:crypto / require('crypto')", "description": "Cryptography (Node).", "category": "Node Core"},
+    {"name": "stream", "kind": "module", "signature": "node:stream / require('stream')", "description": "Streams (Node).", "category": "Node Core"},
+    {"name": "buffer", "kind": "module", "signature": "node:buffer", "description": "Buffer API (Node).", "category": "Node Core"},
+    {"name": "os", "kind": "module", "signature": "node:os", "description": "OS info (Node).", "category": "Node Core"},
+    {"name": "child_process", "kind": "module", "signature": "node:child_process", "description": "Spawn processes (Node).", "category": "Node Core"},
+    {"name": "events", "kind": "module", "signature": "node:events", "description": "EventEmitter (Node).", "category": "Node Core"},
+    {"name": "util", "kind": "module", "signature": "node:util", "description": "Utilities (promisify, inspect).", "category": "Node Core"},
+    {"name": "zlib", "kind": "module", "signature": "node:zlib", "description": "Compression (Node).", "category": "Node Core"},
+    {"name": "Array.prototype.map", "kind": "method", "signature": "Array.prototype.map(callback, thisArg?)", "description": "Create a new array with results of calling a function on every element.", "category": "Collections"},
+    {"name": "Array.prototype.filter", "kind": "method", "signature": "Array.prototype.filter(callback, thisArg?)", "description": "Create a new array with elements that pass the test.", "category": "Collections"},
+    {"name": "String.prototype.includes", "kind": "method", "signature": "String.prototype.includes(searchString, position?)", "description": "Determine whether one string may be found within another.", "category": "Text & RegExp"},
+    {"name": "Promise.prototype.then", "kind": "method", "signature": "Promise.prototype.then(onFulfilled?, onRejected?)", "description": "Add fulfillment and rejection handlers to the promise.", "category": "Async"}
   ]
 }

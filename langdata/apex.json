@@ -1,0 +1,26 @@
+{
+  "name": "Apex",
+  "slug": "apex",
+  "version": "Salesforce",
+  "quick_start": [
+    {"title": "Salesforce org", "description": "Execute in Developer Console.", "code": "System.debug('Hello, world!');"}
+  ],
+  "common_tasks": [
+    {"group": "Console", "tasks": [
+      {"title": "Debug", "description": "Log output.", "code": "System.debug('Message');"}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "System", "description": "Core classes"}
+  ],
+  "tools": [
+    {"name": "Developer Console", "description": "In-org tooling"}
+  ],
+  "links": [
+    {"title": "Apex Guide", "url": "https://developer.salesforce.com/docs/"}
+  ],
+  "builtins": [
+    {"name": "System.debug", "kind": "method", "signature": "System.debug(any)", "description": "Log output."}
+  ]
+}
+

@@ -1,0 +1,29 @@
+{
+  "name": "Lua",
+  "slug": "lua",
+  "version": "5.4",
+  "quick_start": [
+    {"title": "Install Lua", "description": "Install via your OS.", "code": "lua -v"},
+    {"title": "Hello, World", "description": "Run a script.", "code": "print('Hello, world!')"}
+  ],
+  "common_tasks": [
+    {"group": "I/O", "tasks": [
+      {"title": "Read file", "description": "io.open", "code": "local f = io.open('README.md', 'r'); local s = f:read('*a'); f:close(); print(string.sub(s,1,200))"}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "string", "description": "String library"},
+    {"name": "table", "description": "Table helpers"}
+  ],
+  "tools": [
+    {"name": "lua", "description": "Lua interpreter"}
+  ],
+  "links": [
+    {"title": "Lua 5.4 Reference", "url": "https://www.lua.org/manual/5.4/"}
+  ],
+  "builtins": [
+    {"name": "print", "kind": "function", "signature": "print(...) ", "description": "Print arguments."},
+    {"name": "pairs", "kind": "function", "signature": "pairs(t)", "description": "Iterate key/value pairs."}
+  ]
+}
+

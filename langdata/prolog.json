@@ -1,0 +1,27 @@
+{
+  "name": "Prolog",
+  "slug": "prolog",
+  "version": "SWI 9+",
+  "quick_start": [
+    {"title": "Install SWI-Prolog", "description": "Install from swi-prolog.org.", "code": "swipl --version"},
+    {"title": "Hello, World", "description": "Run a fact and query.", "code": "say :- writeln('Hello, world!').\n% swipl then ?- say."}
+  ],
+  "common_tasks": [
+    {"group": "I/O", "tasks": [
+      {"title": "Read file", "description": "read_file_to_string", "code": ":- use_module(library(readutil)).\n:- initialization(main).\nmain :- read_file_to_string('README.md', S, []), sub_string(S,0,200,_,Out), writeln(Out)."}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "library(lists)", "description": "List utilities"}
+  ],
+  "tools": [
+    {"name": "swipl", "description": "Prolog REPL"}
+  ],
+  "links": [
+    {"title": "SWI-Prolog Manual", "url": "https://www.swi-prolog.org/pldoc/"}
+  ],
+  "builtins": [
+    {"name": "writeln/1", "kind": "predicate", "signature": "writeln(X)", "description": "Write term with newline."}
+  ]
+}
+

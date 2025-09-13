@@ -1,0 +1,35 @@
+{
+  "name": "Zig",
+  "slug": "zig",
+  "version": "0.12+",
+  "quick_start": [
+    {"title": "Install Zig", "description": "Download from ziglang.org or use a package manager.", "code": "zig version"},
+    {"title": "Hello, World", "description": "Compile and run.", "code": "const std = @import(\"std\");\npub fn main() !void {\n  try std.io.getStdOut().writer().print(\"Hello, world!\\n\", .{});\n}"}
+  ],
+  "common_tasks": [
+    {"group": "I/O", "tasks": [
+      {"title": "Read a file", "description": "Read an entire file into memory.", "code": "const std = @import(\"std\");\npub fn main() !void {\n  const gpa = std.heap.page_allocator;\n  const data = try std.fs.cwd().readFileAlloc(gpa, \"README.md\", 1 << 20);\n  defer gpa.free(data);\n  try std.io.getStdOut().writer().print(\"{s}\", .{data[0..@min(200, data.len)]});\n}"}
+    ]},
+    {"group": "CLI", "tasks": [
+      {"title": "Arguments", "description": "Iterate argv.", "code": "const std = @import(\"std\");\npub fn main() !void {\n  var it = std.process.argsWithAllocator(std.heap.page_allocator);\n  defer it.deinit();\n  while (it.next()) |arg| { try std.io.getStdOut().writer().print(\"{s}\\n\", .{arg}); }\n}"}
+    ]}
+  ],
+  "stdlib": [
+    {"name": "std", "description": "Core standard library"},
+    {"name": "std.fs", "description": "Filesystem"},
+    {"name": "std.io", "description": "I/O utilities"}
+  ],
+  "tools": [
+    {"name": "zig", "description": "Compiler, builder, and package manager"}
+  ],
+  "links": [
+    {"title": "Zig Documentation", "url": "https://ziglang.org/learn/"},
+    {"title": "std docs", "url": "https://ziglang.org/documentation/"}
+  ],
+  "builtins": [
+    {"name": "@import", "kind": "builtin", "signature": "@import(path)", "description": "Import a file or package."},
+    {"name": "@min", "kind": "builtin", "signature": "@min(a, b)", "description": "Minimum of two values."},
+    {"name": "@intFromFloat", "kind": "builtin", "signature": "@intFromFloat(T, x)", "description": "Convert float to integer type."}
+  ]
+}
+

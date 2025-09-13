@@ -32,9 +32,12 @@
   "builtins": [
     {"name": "String", "kind": "class", "signature": "java.lang.String", "description": "UTF-16 strings."},
     {"name": "System", "kind": "class", "signature": "java.lang.System", "description": "System facilities (in/out/err, properties)."},
+    {"name": "System.out.println", "kind": "method", "signature": "System.out.println(String x)", "description": "Print a line to standard output."},
     {"name": "Math", "kind": "class", "signature": "java.lang.Math", "description": "Math utilities."},
     {"name": "List", "kind": "interface", "signature": "java.util.List", "description": "List collection interface."},
-    {"name": "Map", "kind": "interface", "signature": "java.util.Map", "description": "Key-value maps."}
+    {"name": "Map", "kind": "interface", "signature": "java.util.Map", "description": "Key-value maps."},
+    {"name": "java.util", "kind": "module", "signature": "package java.util", "description": "Collections and utilities."},
+    {"name": "java.nio.file", "kind": "module", "signature": "package java.nio.file", "description": "File I/O (NIO)."},
+    {"name": "java.net.http", "kind": "module", "signature": "package java.net.http", "description": "HTTP client (Java 11+)."}
   ]
 }
-
