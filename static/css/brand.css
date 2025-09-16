@@ -191,5 +191,20 @@ button { border: none; }
 .code-content { position:relative; }
 .code-pane { display:none; }
 .code-pane.active { display:block; }
-pre.code { margin:0; padding:1rem; background:#0b1222; border-top:1px solid var(--border); color:#e6edf3; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size:.92rem; line-height:1.45; overflow:auto; }
+pre.code {
+  margin: 0;
+  padding: 1rem;
+  background: #0b1222;
+  border-top: 1px solid var(--border);
+  color: #e6edf3;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: .92rem;
+  line-height: 1.45;
+  overflow-x: auto;
+  overflow-y: auto;
+  max-width: 100%;
+}
+/* Ensure code blocks never force cards wider than their container */
+.card .card-inner { min-width: 0; }
+pre.code code { display: block; min-width: 0; }
 .code-meta { display:flex; align-items:center; gap:.5rem; padding:.6rem .8rem; color: var(--text-muted); font-size:.85rem; border-top:1px solid var(--border); }
