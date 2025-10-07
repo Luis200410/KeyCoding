@@ -4,9 +4,29 @@
   "version": "HTML5",
   "quick_start": [
     {
-      "title": "Basic page",
-      "description": "Create index.html and open in browser.",
-      "code": "<!doctype html>\n<html><head><meta charset=\"utf-8\"><title>Hello</title></head><body>Hello</body></html>"
+      "title": "What HTML Actually Does",
+      "description": "When you write HTML, you’re not just “putting letters on the web.”\nYou’re describing the structure and meaning of everything that appears on a webpage.\n\nThink of a webpage like a human body:\n\t•\tHTML is the skeleton → it gives shape (head, arms, legs).\n\t•\tCSS is the clothing and style → it makes it look nice.\n\t•\tJavaScript is the muscle and brain → it makes things move and react.\n\nSo yes — HTML is what tells the browser what should appear (text, images, links, forms…),\nbut even more, it tells the browser what each thing is (a title, a paragraph, a list, etc.).",
+      "code": "<!DOCTYPE html>\n<html>\n  <head>\n    <title>My First Page</title>\n  </head>\n  <body>\n    <h1>Hello, world!</h1>\n    <p>This is my first paragraph on the web.</p>\n  </body>\n</html>"
+    },
+    {
+      "title": "How To Open What I Wrote In The First Code?",
+      "description": "1️⃣ Create a File\n\t1.\tOpen any text editor — you can use:\n\t        •\tVisual Studio Code (best option — free, powerful)\n\t        •\tOr even Notepad (Windows) / TextEdit (Mac)\n\t2.\tCreate a new file.\n\t3.\twrite the code inside the file\t\n        4.\tSave the file as you like but have in mind:\n\t        •\t⚠️ The name can be anything, but the .html extension is very important — that’s what tells your computer and browser it’s a webpage.\n2️⃣ Open It in a Browser\n\nNow you’ll actually see your code “come to life.”\n\nOption A (simple):\n\t•\tGo to the folder where you saved index.html\n\t•\tDouble-click it\n\t•\tIt will open in your default browser (like Chrome, Safari, or Edge)\n\nOption B (developer way):\n\t•\tRight-click the file → choose “Open with” → “Google Chrome” (or your browser)\n\n✅ You’ll see the code after this process\n\n3️⃣ Optional (if you’re using VS Code)\n\nYou can install an extension called “Live Server” — it lets you open your page instantly and auto-refresh every time you save changes.\nThat’s what real developers use daily.",
+      "code": ""
+    },
+    {
+      "title": "What Is That At The Top Of Every HTML Code?",
+      "description": "You’re talking about the first line that always goes at the very top of every HTML file.\nThat’s called the DOCTYPE declaration.\n\nLet’s break it down so you truly understand it.\n💡 What it means:\n\nThis line tells the browser:\n\n“Hey, I’m an HTML5 document — please read and render me using modern HTML rules.”\n\nIt’s not actually an HTML tag (like <html> or <body>).\nIt’s an instruction to the browser — a kind of agreement between you and the browser about how your page should be interpreted.\n\n🧠 Think of it like this:\n\nIf your webpage were a movie script:\n\t•\t<!DOCTYPE html> = “This script follows modern movie rules — not the old black-and-white ones.”",
+      "code": "<!DOCTYPE html>"
+    },
+    {
+      "title": "What Is The Ideal Top For Any HTML Code?",
+      "description": "Let’s build the perfect, professional, industry-standard HTML5 skeleton, just like a developer with 30+ years of experience would write it — clean, structured, documented, and standards-compliant.\n🧠 Why This Looks Professional\n\t•\tEvery line has purpose (no junk, no repetition).\n\t•\tComments show that the developer documents their work — this is key in senior-level codebases.\n\t•\tMeta tags cover:\n\t•\tEncoding (UTF-8)\n\t•\tResponsiveness (viewport)\n\t•\tSEO & sharing (description, og:)\n\t•\tStructure is perfectly semantic:\n\t•\t<header> for intro/nav\n\t•\t<main> for core content\n\t•\t<footer> for copyright or links\n\t•\tReadable indentation — clean and consistent.",
+      "code": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <!-- ✅ Character encoding: ensures correct display of all characters -->\n    <meta charset=\"UTF-8\" />\n\n    <!-- ✅ Viewport: makes the page responsive on all devices -->\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n\n    <!-- ✅ SEO: short, clear description for search engines -->\n    <meta name=\"description\" content=\"A clean, modern HTML5 base template for professional web projects.\" />\n\n    <!-- ✅ Author (optional but good practice for professional portfolios) -->\n    <meta name=\"author\" content=\"Luis Eduardo Castañeda Ruiz\" />\n\n    <!-- ✅ Social media preview (Open Graph & Twitter Cards, optional but modern) -->\n    <meta property=\"og:title\" content=\"Professional HTML5 Template\" />\n    <meta property=\"og:description\" content=\"A fully structured HTML5 document built with best practices.\" />\n    <meta property=\"og:type\" content=\"website\" />\n    <meta property=\"og:image\" content=\"https://example.com/preview.png\" />\n    <meta property=\"og:url\" content=\"https://example.com/\" />\n    <meta name=\"twitter:card\" content=\"summary_large_image\" />\n\n    <!-- ✅ Favicon (small icon that appears in the browser tab) -->\n    <link rel=\"icon\" href=\"favicon.ico\" type=\"image/x-icon\" />\n\n    <!-- ✅ External CSS file (we’ll add one later when styling) -->\n    <link rel=\"stylesheet\" href=\"styles.css\" />\n\n    <!-- ✅ Document title -->\n    <title>Professional HTML5 Template</title>\n  </head>\n</html>"
+    },
+    {
+      "title": "What Are Attributes?",
+      "description": "Every HTML tag can have attributes.\nThey are extra pieces of information that modify or describe how the tag behaves.",
+      "code": "<tagname attribute=\"value\">content</tagname>"
     }
   ],
   "common_tasks": [
@@ -28,15 +48,10 @@
   ],
   "projects": [
     {
-      "title": "Landing page",
-      "summary": "Hero, features, CTA",
-      "description": "Basic multipane layout.",
-      "steps": [
-        {
-          "title": "index.html",
-          "code": "<!doctype html>\n<html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><title>Landing</title></head><body><header><h1>Product</h1><a href=\"#cta\">Get started</a></header><main><section><h2>Feature A</h2><p>...</p></section></main><footer id=\"cta\"><p>Ready?</p></footer></body></html>"
-        }
-      ]
+      "title": "Create A Standard Top For Your Personal Use",
+      "summary": "Your baseline is the ideal top in the  \"Quick Start\" Section. Select What You Think You'll Use.",
+      "description": "Standardize A Head Block Of Code You Can Use In Any Project",
+      "steps": []
     }
   ],
   "glossary": [
@@ -47,6 +62,10 @@
     {
       "term": "Accessibility",
       "definition": "Alt text, labels, roles, and keyboard navigation."
+    },
+    {
+      "term": "Attributes",
+      "definition": "Every HTML tag can have attributes.\nThey are extra pieces of information that modify or describe how the tag behaves."
     }
   ],
   "tips": [
@@ -70,7 +89,8 @@
   "links": [
     {
       "title": "MDN HTML",
-      "url": "https://developer.mozilla.org/docs/Web/HTML"
+      "url": "https://developer.mozilla.org/docs/Web/HTML",
+      "description": ""
     }
   ],
   "builtins": [
@@ -79,6 +99,72 @@
       "kind": "element",
       "signature": "<div>...</div>",
       "description": "Content container."
+    },
+    {
+      "name": "<html>",
+      "kind": "Tag",
+      "signature": "<html> </html>",
+      "description": "<html> is an HTML tag — specifically, it’s the root tag (or “parent” of everything).\n\nIt’s what wraps all the content of your webpage.\nEvery tag you write (<head>, <body>, <h1>, <p>, etc.) must live inside <html> ... </html>.\n\n🧩 A few facts:\n\t•\tIt’s a built-in HTML element — part of the HTML standard.\n\t•\tYou can add attributes to it, like the page language:\n\n<html lang=\"en\">"
+    },
+    {
+      "name": "<meta>",
+      "kind": "Tag",
+      "signature": "<meta>",
+      "description": "The <meta> tag goes inside the <head> section of your HTML document.\nIt provides metadata — information about the page rather than what appears on the page.\n🧠 What It’s Used For\n\t1.\tEncoding (very important!)\nThis tells the browser which character set to use — basically how to read all letters, symbols, and emojis correctly.\n\t2.\tSEO (Search Engine Optimization)\n\t•\tHelps search engines understand your page content.\n\t3.\tAuthor or Viewport Info\n\t•\tThe viewport tag helps your site look good on mobile screens:"
+    },
+    {
+      "name": "lang",
+      "kind": "Attribute",
+      "signature": "<html lang=\"en\">",
+      "description": "Used in: <html> tag\n\nMeaning:\nTells the browser and search engines what language the document is in.\n\nUse case:\nAlways include it for accessibility and SEO.\n\"en\" for English, \"es\" for Spanish, \"fr\" for French, etc."
+    },
+    {
+      "name": "charset",
+      "kind": "Attribute",
+      "signature": "<meta charset=\"UTF-8\">",
+      "description": "Used in: <meta>\n\nMeaning:\nDefines the character encoding — how letters, symbols, and emojis are represented.\n\nUse case:\nAlways set it to \"UTF-8\" — it supports nearly all characters and languages."
+    },
+    {
+      "name": "name",
+      "kind": "Attribute",
+      "signature": "<meta name=\"description\" content=\"Professional webpage template\">",
+      "description": "Used in: <meta>, <input>, <form>, etc.\n\nMeaning:\nLabels what kind of metadata is being given.\nIn forms, it identifies the input field when data is sent.\n\nUse case:\n\t•\tFor metadata (in <head>)\n\t•\tFor identifying input fields in forms"
+    },
+    {
+      "name": "content",
+      "kind": "Attribute",
+      "signature": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">",
+      "description": "Used in: <meta>\n\nMeaning:\nThe actual value of the metadata you’re describing.\nIt works together with the name attribute.\n\nUse case:\nAny time you’re defining a <meta> tag."
+    },
+    {
+      "name": "initial-scale",
+      "kind": "Attribute",
+      "signature": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">",
+      "description": "Used in: inside the content of the viewport meta tag.\n\nMeaning:\nTells the browser the default zoom level when the page loads on mobile.\n1.0 means “don’t zoom in or out.”\n\nUse case:\nAlways include this in responsive designs."
+    },
+    {
+      "name": "property",
+      "kind": "Attribute",
+      "signature": "<meta property=\"og:title\" content=\"My Portfolio Page\">",
+      "description": "Used in: <meta> (especially for Open Graph, social media sharing)\n\nMeaning:\nDefines a specific property for platforms like Facebook, LinkedIn, etc.\nIt’s part of the Open Graph protocol.\n\nUse case:\nAny time you want your page to show a nice preview when shared."
+    },
+    {
+      "name": "rel",
+      "kind": "Attribute",
+      "signature": "<link rel=\"stylesheet\" href=\"styles.css\">",
+      "description": "Used in: <link> and <a>\n\nMeaning:\nDescribes the relationship between the current page and the linked file.\n\nUse case:\n\t•\trel=\"stylesheet\" → link to CSS\n\t•\trel=\"icon\" → link to favicon\n\t•\trel=\"noopener\" → security for external links"
+    },
+    {
+      "name": "href",
+      "kind": "Attribute",
+      "signature": "<a href=\"https://example.com\">Visit Example</a>",
+      "description": "Used in: <a> and <link>\n\nMeaning:\nSpecifies the URL (link or file location).\n\nUse case:\nWhenever you want to link to another file or website."
+    },
+    {
+      "name": "type",
+      "kind": "Attribute",
+      "signature": "<link rel=\"icon\" href=\"favicon.ico\" type=\"image/x-icon\">",
+      "description": "Used in: <link>, <script>, <button>, <input>\n\nMeaning:\nDescribes the type of file or content.\n\nUse case:\n\t•\tFor linking icons or scripts (type=\"image/x-icon\", type=\"text/javascript\")\n\t•\tFor buttons/inputs (type=\"submit\", type=\"text\", etc.)"
     }
   ],
   "concepts": []

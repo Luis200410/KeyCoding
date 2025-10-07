@@ -1,0 +1,747 @@
+{% extends 'base.html' %}
+{% block title %}Manage {{ lang_name }}{% endblock %}
+{% block content %}
+<section class="section">
+  <div class="container">
+    <div class="hero" style="padding:2.5rem 0 1rem;">
+      <h1>Manage {{ lang_name }}</h1>
+      <p class="lead">Update libraries, modules, keywords, and every content block right from the dashboard.</p>
+      <div class="hero-cta" style="margin-top:.6rem; display:flex; gap:.6rem; flex-wrap:wrap;">
+        <a class="btn btn-primary" href="{% url 'language_dashboard' lang_slug %}">View public dashboard</a>
+        <a class="btn btn-ghost" href="/dashboard/">Back to categories</a>
+      </div>
+    </div>
+
+    <div class="stack" style="gap:1.4rem;">
+      <div class="card">
+        <div class="card-inner">
+          <h2 style="margin-bottom:.8rem;">Language Details</h2>
+          <form method="post" class="stack" style="gap:.6rem;">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="update_language_meta">
+            <label class="stack" style="gap:.3rem;">
+              <span class="muted">Display name</span>
+              <input type="text" name="name" value="{{ lang.name }}" placeholder="Language name">
+            </label>
+            <label class="stack" style="gap:.3rem;">
+              <span class="muted">Primary version</span>
+              <input type="text" name="version" value="{{ lang.version }}" placeholder="Version (optional)">
+            </label>
+            <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Save details</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <h2>Quick Start</h2>
+          <p class="muted" style="margin-bottom:.8rem;">Short guides to get users productive quickly.</p>
+          <div class="stack" style="gap:.8rem;">
+            {% for q in lang.quick_start %}
+              <details style="border:1px solid var(--border); border-radius:8px; padding:.6rem .8rem;">
+                <summary style="cursor:pointer; font-weight:600;">Entry #{{ forloop.counter }} · {{ q.title|default:"Untitled" }}</summary>
+                <div class="stack" style="margin-top:.6rem; gap:.6rem;">
+                  <form method="post" class="stack" style="gap:.5rem;">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="update_quick_start">
+                    <input type="hidden" name="index" value="{{ forloop.counter0 }}">
+                    <label class="stack" style="gap:.3rem;">
+                      <span class="muted">Title</span>
+                      <input type="text" name="title" value="{{ q.title }}" required>
+                    </label>
+                    <label class="stack" style="gap:.3rem;">
+                      <span class="muted">Description</span>
+                      <textarea name="description" rows="4">{{ q.description }}</textarea>
+                    </label>
+                    <label class="stack" style="gap:.3rem;">
+                      <span class="muted">Code snippet</span>
+                      <textarea name="code" rows="6">{{ q.code }}</textarea>
+                    </label>
+                    <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Save changes</button>
+                  </form>
+                  <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="delete_quick_start">
+                    <input type="hidden" name="index" value="{{ forloop.counter0 }}">
+                    <button type="submit" class="btn btn-ghost" style="color:#d33;">Delete entry</button>
+                  </form>
+                </div>
+              </details>
+            {% empty %}
+              <p class="muted">No quick start entries yet.</p>
+            {% endfor %}
+          </div>
+          <hr style="margin:1.2rem 0;">
+          <h3 style="margin-bottom:.6rem;">Add Quick Start Entry</h3>
+          <form method="post" class="stack" style="gap:.5rem;">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="add_quick_start">
+            <label class="stack" style="gap:.3rem;">
+              <span class="muted">Title</span>
+              <input type="text" name="title" placeholder="Getting started" required>
+            </label>
+            <label class="stack" style="gap:.3rem;">
+              <span class="muted">Description</span>
+              <textarea name="description" rows="4" placeholder="What should learners do first?"></textarea>
+            </label>
+            <label class="stack" style="gap:.3rem;">
+              <span class="muted">Code snippet</span>
+              <textarea name="code" rows="6" placeholder="Optional code sample"></textarea>
+            </label>
+            <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Add entry</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <h2>Core Concepts</h2>
+          <p class="muted" style="margin-bottom:.8rem;">Define the building blocks for this language.</p>
+          <div class="stack" style="gap:.8rem;">
+            {% for c in lang.concepts %}
+              <details style="border:1px solid var(--border); border-radius:8px; padding:.6rem .8rem;">
+                <summary style="cursor:pointer; font-weight:600;">{{ c.id|default:"(no id)" }} · {{ c.title|default:"Untitled" }}</summary>
+                <div class="stack" style="margin-top:.6rem; gap:.6rem;">
+                  <form method="post" class="stack" style="gap:.5rem;">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="update_concept">
+                    <input type="hidden" name="index" value="{{ forloop.counter0 }}">
+                    <div style="display:grid; gap:.6rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+                      <label class="stack" style="gap:.3rem;">
+                        <span class="muted">Concept ID</span>
+                        <input type="text" name="concept_id" value="{{ c.id }}" required>
+                      </label>
+                      <label class="stack" style="gap:.3rem;">
+                        <span class="muted">Tag</span>
+                        <input type="text" name="tag" value="{{ c.tag }}" placeholder="Optional tag">
+                      </label>
+                    </div>
+                    <label class="stack" style="gap:.3rem;">
+                      <span class="muted">Title</span>
+                      <input type="text" name="title" value="{{ c.title }}" required>
+                    </label>
+                    <label class="stack" style="gap:.3rem;">
+                      <span class="muted">Description</span>
+                      <textarea name="description" rows="4">{{ c.description }}</textarea>
+                    </label>
+                    <label class="stack" style="gap:.3rem;">
+                      <span class="muted">Code snippet</span>
+                      <textarea name="code" rows="6">{{ c.code }}</textarea>
+                    </label>
+                    <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Save changes</button>
+                  </form>
+                  <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="delete_concept">
+                    <input type="hidden" name="index" value="{{ forloop.counter0 }}">
+                    <button type="submit" class="btn btn-ghost" style="color:#d33;">Delete concept</button>
+                  </form>
+                </div>
+              </details>
+            {% empty %}
+              <p class="muted">No concepts yet.</p>
+            {% endfor %}
+          </div>
+          <hr style="margin:1.2rem 0;">
+          <h3 style="margin-bottom:.6rem;">Add Concept</h3>
+          <form method="post" class="stack" style="gap:.5rem;">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="add_concept">
+            <div style="display:grid; gap:.6rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+              <label class="stack" style="gap:.3rem;">
+                <span class="muted">Concept ID</span>
+                <input type="text" name="concept_id" placeholder="identifier" required>
+              </label>
+              <label class="stack" style="gap:.3rem;">
+                <span class="muted">Tag</span>
+                <input type="text" name="tag" placeholder="Category tag (optional)">
+              </label>
+            </div>
+            <label class="stack" style="gap:.3rem;">
+              <span class="muted">Title</span>
+              <input type="text" name="title" placeholder="Concept title" required>
+            </label>
+            <label class="stack" style="gap:.3rem;">
+              <span class="muted">Description</span>
+              <textarea name="description" rows="4" placeholder="Explain the concept"></textarea>
+            </label>
+            <label class="stack" style="gap:.3rem;">
+              <span class="muted">Code snippet</span>
+              <textarea name="code" rows="6" placeholder="Optional sample"></textarea>
+            </label>
+            <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Add concept</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <h2>Common Tasks</h2>
+          <p class="muted" style="margin-bottom:.8rem;">Organise frequently performed tasks by workflow group.</p>
+          <div class="stack" style="gap:.8rem;">
+            {% for group in lang.common_tasks %}
+              <details style="border:1px solid var(--border); border-radius:8px; padding:.6rem .8rem;">
+                <summary style="cursor:pointer; font-weight:600;">{{ group.group|default:"(no group name)" }} · {{ group.tasks|length }} task{{ group.tasks|length|pluralize }}</summary>
+                <div class="stack" style="margin-top:.6rem; gap:.8rem;">
+                  <div style="display:flex; gap:.6rem; flex-wrap:wrap;">
+                    <form method="post" style="display:flex; gap:.4rem; flex-wrap:wrap; align-items:flex-end;">
+                      {% csrf_token %}
+                      <input type="hidden" name="action" value="rename_common_task_group">
+                      <input type="hidden" name="group_index" value="{{ forloop.counter0 }}">
+                      <label class="stack" style="gap:.2rem;">
+                        <span class="muted">Group name</span>
+                        <input type="text" name="group" value="{{ group.group }}" required>
+                      </label>
+                      <button type="submit" class="btn btn-primary">Rename group</button>
+                    </form>
+                    <form method="post">
+                      {% csrf_token %}
+                      <input type="hidden" name="action" value="delete_common_task_group">
+                      <input type="hidden" name="group_index" value="{{ forloop.counter0 }}">
+                      <button type="submit" class="btn btn-ghost" style="color:#d33;">Delete group</button>
+                    </form>
+                  </div>
+                  <div class="stack" style="gap:.6rem;">
+                    {% for task in group.tasks %}
+                      <details style="border:1px solid var(--border); border-radius:6px; padding:.6rem .8rem;">
+                        <summary style="cursor:pointer; font-weight:600;">Task #{{ forloop.counter }} · {{ task.title|default:"Untitled" }}</summary>
+                        <div class="stack" style="margin-top:.6rem; gap:.6rem;">
+                          <form method="post" class="stack" style="gap:.5rem;">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="update_common_task">
+                            <input type="hidden" name="group_index" value="{{ forloop.parentloop.counter0 }}">
+                            <input type="hidden" name="task_index" value="{{ forloop.counter0 }}">
+                            <label class="stack" style="gap:.3rem;">
+                              <span class="muted">Group</span>
+                              <input type="text" name="group" value="{{ group.group }}" placeholder="Group name">
+                            </label>
+                            <label class="stack" style="gap:.3rem;">
+                              <span class="muted">Title</span>
+                              <input type="text" name="title" value="{{ task.title }}" required>
+                            </label>
+                            <label class="stack" style="gap:.3rem;">
+                              <span class="muted">Description</span>
+                              <textarea name="description" rows="4">{{ task.description }}</textarea>
+                            </label>
+                            <label class="stack" style="gap:.3rem;">
+                              <span class="muted">Code snippet</span>
+                              <textarea name="code" rows="6">{{ task.code }}</textarea>
+                            </label>
+                            <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Save changes</button>
+                          </form>
+                          <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="delete_common_task">
+                            <input type="hidden" name="group_index" value="{{ forloop.parentloop.counter0 }}">
+                            <input type="hidden" name="task_index" value="{{ forloop.counter0 }}">
+                            <button type="submit" class="btn btn-ghost" style="color:#d33;">Delete task</button>
+                          </form>
+                        </div>
+                      </details>
+                    {% empty %}
+                      <p class="muted">No tasks within this group yet.</p>
+                    {% endfor %}
+                  </div>
+                </div>
+              </details>
+            {% empty %}
+              <p class="muted">No task groups yet.</p>
+            {% endfor %}
+          </div>
+          <hr style="margin:1.2rem 0;">
+          <h3 style="margin-bottom:.6rem;">Add Task</h3>
+          <form method="post" class="stack" style="gap:.5rem;">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="add_common_task">
+            <div style="display:grid; gap:.6rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+              <label class="stack" style="gap:.3rem;">
+                <span class="muted">Group</span>
+                <input type="text" name="group" placeholder="e.g. Files &amp; Data" required>
+              </label>
+              <label class="stack" style="gap:.3rem;">
+                <span class="muted">Title</span>
+                <input type="text" name="title" placeholder="Task name" required>
+              </label>
+            </div>
+            <label class="stack" style="gap:.3rem;">
+              <span class="muted">Description</span>
+              <textarea name="description" rows="4" placeholder="What does this accomplish?"></textarea>
+            </label>
+            <label class="stack" style="gap:.3rem;">
+              <span class="muted">Code snippet</span>
+              <textarea name="code" rows="6" placeholder="Optional code sample"></textarea>
+            </label>
+            <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Add task</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <h2>Mini Projects</h2>
+          <p class="muted" style="margin-bottom:.8rem;">Hands-on guided projects, each with step-by-step instructions.</p>
+          <div class="stack" style="gap:.8rem;">
+            {% for project in lang.projects %}
+              <details style="border:1px solid var(--border); border-radius:8px; padding:.6rem .8rem;">
+                <summary style="cursor:pointer; font-weight:600;">{{ project.title|default:"Untitled project" }}</summary>
+                <div class="stack" style="margin-top:.6rem; gap:.7rem;">
+                  <form method="post" class="stack" style="gap:.5rem;">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="update_project">
+                    <input type="hidden" name="project_index" value="{{ forloop.counter0 }}">
+                    <label class="stack" style="gap:.3rem;">
+                      <span class="muted">Title</span>
+                      <input type="text" name="title" value="{{ project.title }}" required>
+                    </label>
+                    <label class="stack" style="gap:.3rem;">
+                      <span class="muted">Summary</span>
+                      <input type="text" name="summary" value="{{ project.summary }}" placeholder="Short summary">
+                    </label>
+                    <label class="stack" style="gap:.3rem;">
+                      <span class="muted">Description</span>
+                      <textarea name="description" rows="4">{{ project.description }}</textarea>
+                    </label>
+                    <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Save project</button>
+                  </form>
+                  <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="delete_project">
+                    <input type="hidden" name="project_index" value="{{ forloop.counter0 }}">
+                    <button type="submit" class="btn btn-ghost" style="color:#d33;">Delete project</button>
+                  </form>
+                  <div class="stack" style="gap:.6rem;">
+                    <h3 style="margin-bottom:0;">Steps</h3>
+                    {% for step in project.steps %}
+                      <details style="border:1px solid var(--border); border-radius:6px; padding:.6rem .8rem;">
+                        <summary style="cursor:pointer; font-weight:600;">Step #{{ forloop.counter }} · {{ step.title|default:"Untitled" }}</summary>
+                        <div class="stack" style="margin-top:.6rem; gap:.6rem;">
+                          <form method="post" class="stack" style="gap:.5rem;">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="update_project_step">
+                            <input type="hidden" name="project_index" value="{{ forloop.parentloop.counter0 }}">
+                            <input type="hidden" name="step_index" value="{{ forloop.counter0 }}">
+                            <label class="stack" style="gap:.3rem;">
+                              <span class="muted">Title</span>
+                              <input type="text" name="title" value="{{ step.title }}" placeholder="Step title">
+                            </label>
+                            <label class="stack" style="gap:.3rem;">
+                              <span class="muted">Text</span>
+                              <textarea name="text" rows="4">{{ step.text }}</textarea>
+                            </label>
+                            <label class="stack" style="gap:.3rem;">
+                              <span class="muted">Code snippet</span>
+                              <textarea name="code" rows="6">{{ step.code }}</textarea>
+                            </label>
+                            <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Save step</button>
+                          </form>
+                          <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="delete_project_step">
+                            <input type="hidden" name="project_index" value="{{ forloop.parentloop.counter0 }}">
+                            <input type="hidden" name="step_index" value="{{ forloop.counter0 }}">
+                            <button type="submit" class="btn btn-ghost" style="color:#d33;">Delete step</button>
+                          </form>
+                        </div>
+                      </details>
+                    {% empty %}
+                      <p class="muted">No steps added yet.</p>
+                    {% endfor %}
+                    <details style="border:1px dashed var(--border); border-radius:6px; padding:.6rem .8rem;">
+                      <summary style="cursor:pointer; font-weight:600;">Add step</summary>
+                      <form method="post" class="stack" style="margin-top:.6rem; gap:.5rem;">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="add_project_step">
+                        <input type="hidden" name="project_index" value="{{ forloop.counter0 }}">
+                        <label class="stack" style="gap:.3rem;">
+                          <span class="muted">Title</span>
+                          <input type="text" name="title" placeholder="Step title (optional)">
+                        </label>
+                        <label class="stack" style="gap:.3rem;">
+                          <span class="muted">Text</span>
+                          <textarea name="text" rows="4" placeholder="Describe what to do"></textarea>
+                        </label>
+                        <label class="stack" style="gap:.3rem;">
+                          <span class="muted">Code snippet</span>
+                          <textarea name="code" rows="6" placeholder="Optional code sample"></textarea>
+                        </label>
+                        <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Add step</button>
+                      </form>
+                    </details>
+                  </div>
+                </div>
+              </details>
+            {% empty %}
+              <p class="muted">No projects yet.</p>
+            {% endfor %}
+          </div>
+          <hr style="margin:1.2rem 0;">
+          <h3 style="margin-bottom:.6rem;">Add Project</h3>
+          <form method="post" class="stack" style="gap:.5rem;">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="add_project">
+            <label class="stack" style="gap:.3rem;">
+              <span class="muted">Title</span>
+              <input type="text" name="title" placeholder="Project name" required>
+            </label>
+            <label class="stack" style="gap:.3rem;">
+              <span class="muted">Summary</span>
+              <input type="text" name="summary" placeholder="Short summary">
+            </label>
+            <label class="stack" style="gap:.3rem;">
+              <span class="muted">Description</span>
+              <textarea name="description" rows="4" placeholder="Goal, prerequisites, etc."></textarea>
+            </label>
+            <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Add project</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <h2>Glossary</h2>
+          <p class="muted" style="margin-bottom:.8rem;">Definitions of important terms and vocabulary.</p>
+          <div class="stack" style="gap:.8rem;">
+            {% for entry in lang.glossary %}
+              <details style="border:1px solid var(--border); border-radius:8px; padding:.6rem .8rem;">
+                <summary style="cursor:pointer; font-weight:600;">{{ entry.term|default:"Untitled" }}</summary>
+                <div class="stack" style="margin-top:.6rem; gap:.6rem;">
+                  <form method="post" class="stack" style="gap:.5rem;">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="update_glossary">
+                    <input type="hidden" name="index" value="{{ forloop.counter0 }}">
+                    <label class="stack" style="gap:.3rem;">
+                      <span class="muted">Term</span>
+                      <input type="text" name="term" value="{{ entry.term }}" required>
+                    </label>
+                    <label class="stack" style="gap:.3rem;">
+                      <span class="muted">Definition</span>
+                      <textarea name="definition" rows="4" required>{{ entry.definition }}</textarea>
+                    </label>
+                    <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Save entry</button>
+                  </form>
+                  <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="delete_glossary">
+                    <input type="hidden" name="index" value="{{ forloop.counter0 }}">
+                    <button type="submit" class="btn btn-ghost" style="color:#d33;">Delete entry</button>
+                  </form>
+                </div>
+              </details>
+            {% empty %}
+              <p class="muted">No glossary entries yet.</p>
+            {% endfor %}
+          </div>
+          <hr style="margin:1.2rem 0;">
+          <h3 style="margin-bottom:.6rem;">Add Term</h3>
+          <form method="post" class="stack" style="gap:.5rem;">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="add_glossary">
+            <label class="stack" style="gap:.3rem;">
+              <span class="muted">Term</span>
+              <input type="text" name="term" placeholder="Keyword" required>
+            </label>
+            <label class="stack" style="gap:.3rem;">
+              <span class="muted">Definition</span>
+              <textarea name="definition" rows="4" placeholder="Explain what it means" required></textarea>
+            </label>
+            <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Add term</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <h2>Beginner Tips</h2>
+          <p class="muted" style="margin-bottom:.8rem;">Quick advice and reminders for newcomers.</p>
+          <div class="stack" style="gap:.8rem;">
+            {% for tip in lang.tips %}
+              <details style="border:1px solid var(--border); border-radius:8px; padding:.6rem .8rem;">
+                <summary style="cursor:pointer; font-weight:600;">{{ tip.title|default:"Tip" }}</summary>
+                <div class="stack" style="margin-top:.6rem; gap:.6rem;">
+                  <form method="post" class="stack" style="gap:.5rem;">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="update_tip">
+                    <input type="hidden" name="index" value="{{ forloop.counter0 }}">
+                    <label class="stack" style="gap:.3rem;">
+                      <span class="muted">Title</span>
+                      <input type="text" name="title" value="{{ tip.title }}" placeholder="Optional title">
+                    </label>
+                    <label class="stack" style="gap:.3rem;">
+                      <span class="muted">Note</span>
+                      <textarea name="note" rows="4" required>{{ tip.note }}</textarea>
+                    </label>
+                    <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Save tip</button>
+                  </form>
+                  <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="delete_tip">
+                    <input type="hidden" name="index" value="{{ forloop.counter0 }}">
+                    <button type="submit" class="btn btn-ghost" style="color:#d33;">Delete tip</button>
+                  </form>
+                </div>
+              </details>
+            {% empty %}
+              <p class="muted">No tips added yet.</p>
+            {% endfor %}
+          </div>
+          <hr style="margin:1.2rem 0;">
+          <h3 style="margin-bottom:.6rem;">Add Tip</h3>
+          <form method="post" class="stack" style="gap:.5rem;">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="add_tip">
+            <label class="stack" style="gap:.3rem;">
+              <span class="muted">Title</span>
+              <input type="text" name="title" placeholder="Optional heading">
+            </label>
+            <label class="stack" style="gap:.3rem;">
+              <span class="muted">Note</span>
+              <textarea name="note" rows="4" placeholder="Advice for newcomers" required></textarea>
+            </label>
+            <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Add tip</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <h2>Built-ins</h2>
+          <p class="muted" style="margin-bottom:.8rem;">Manage core functions, types, modules, and libraries provided out of the box.</p>
+          <div class="stack" style="gap:.8rem; max-height:420px; overflow:auto; padding-right:.3rem;">
+            {% for item in lang.builtins %}
+              <details style="border:1px solid var(--border); border-radius:8px; padding:.6rem .8rem;">
+                <summary style="cursor:pointer; font-weight:600;">{{ item.name|default:"Untitled" }} · {{ item.kind|default:"kind" }}</summary>
+                <div class="stack" style="margin-top:.6rem; gap:.6rem;">
+                  <form method="post" class="stack" style="gap:.5rem;">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="update_builtin">
+                    <input type="hidden" name="index" value="{{ forloop.counter0 }}">
+                    <div style="display:grid; gap:.6rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+                      <label class="stack" style="gap:.3rem;">
+                        <span class="muted">Name</span>
+                        <input type="text" name="name" value="{{ item.name }}" required>
+                      </label>
+                      <label class="stack" style="gap:.3rem;">
+                        <span class="muted">Kind</span>
+                        <input type="text" name="kind" value="{{ item.kind }}" placeholder="Function, module, type...">
+                      </label>
+                    </div>
+                    <label class="stack" style="gap:.3rem;">
+                      <span class="muted">Signature</span>
+                      <input type="text" name="signature" value="{{ item.signature }}" placeholder="e.g. map(func, iterable)">
+                    </label>
+                    <label class="stack" style="gap:.3rem;">
+                      <span class="muted">Description</span>
+                      <textarea name="description" rows="4">{{ item.description }}</textarea>
+                    </label>
+                    <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Save built-in</button>
+                  </form>
+                  <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="delete_builtin">
+                    <input type="hidden" name="index" value="{{ forloop.counter0 }}">
+                    <button type="submit" class="btn btn-ghost" style="color:#d33;">Delete built-in</button>
+                  </form>
+                </div>
+              </details>
+            {% empty %}
+              <p class="muted">No built-ins recorded yet.</p>
+            {% endfor %}
+          </div>
+          <hr style="margin:1.2rem 0;">
+          <h3 style="margin-bottom:.6rem;">Add Built-in</h3>
+          <form method="post" class="stack" style="gap:.5rem;">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="add_builtin">
+            <div style="display:grid; gap:.6rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+              <label class="stack" style="gap:.3rem;">
+                <span class="muted">Name</span>
+                <input type="text" name="name" placeholder="Identifier" required>
+              </label>
+              <label class="stack" style="gap:.3rem;">
+                <span class="muted">Kind</span>
+                <input type="text" name="kind" placeholder="Function, type, module, library">
+              </label>
+            </div>
+            <label class="stack" style="gap:.3rem;">
+              <span class="muted">Signature</span>
+              <input type="text" name="signature" placeholder="Optional signature">
+            </label>
+            <label class="stack" style="gap:.3rem;">
+              <span class="muted">Description</span>
+              <textarea name="description" rows="4" placeholder="Explain what it does"></textarea>
+            </label>
+            <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Add built-in</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <h2>Standard Library</h2>
+          <p class="muted" style="margin-bottom:.8rem;">Highlight the most useful standard modules and packages.</p>
+          <div class="stack" style="gap:.8rem;">
+            {% for module in lang.stdlib %}
+              <details style="border:1px solid var(--border); border-radius:8px; padding:.6rem .8rem;">
+                <summary style="cursor:pointer; font-weight:600;">{{ module.name|default:"Untitled" }}</summary>
+                <div class="stack" style="margin-top:.6rem; gap:.6rem;">
+                  <form method="post" class="stack" style="gap:.5rem;">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="update_stdlib">
+                    <input type="hidden" name="index" value="{{ forloop.counter0 }}">
+                    <label class="stack" style="gap:.3rem;">
+                      <span class="muted">Name</span>
+                      <input type="text" name="name" value="{{ module.name }}" required>
+                    </label>
+                    <label class="stack" style="gap:.3rem;">
+                      <span class="muted">Description</span>
+                      <textarea name="description" rows="4">{{ module.description }}</textarea>
+                    </label>
+                    <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Save module</button>
+                  </form>
+                  <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="delete_stdlib">
+                    <input type="hidden" name="index" value="{{ forloop.counter0 }}">
+                    <button type="submit" class="btn btn-ghost" style="color:#d33;">Delete module</button>
+                  </form>
+                </div>
+              </details>
+            {% empty %}
+              <p class="muted">No standard library modules listed.</p>
+            {% endfor %}
+          </div>
+          <hr style="margin:1.2rem 0;">
+          <h3 style="margin-bottom:.6rem;">Add Standard Library Module</h3>
+          <form method="post" class="stack" style="gap:.5rem;">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="add_stdlib">
+            <label class="stack" style="gap:.3rem;">
+              <span class="muted">Name</span>
+              <input type="text" name="name" placeholder="Module name" required>
+            </label>
+            <label class="stack" style="gap:.3rem;">
+              <span class="muted">Description</span>
+              <textarea name="description" rows="4" placeholder="What does this module cover?"></textarea>
+            </label>
+            <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Add module</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <h2>Tools</h2>
+          <p class="muted" style="margin-bottom:.8rem;">Package managers, linters, compilers, and other ecosystem tools.</p>
+          <div class="stack" style="gap:.8rem;">
+            {% for tool in lang.tools %}
+              <details style="border:1px solid var(--border); border-radius:8px; padding:.6rem .8rem;">
+                <summary style="cursor:pointer; font-weight:600;">{{ tool.name|default:"Tool" }}</summary>
+                <div class="stack" style="margin-top:.6rem; gap:.6rem;">
+                  <form method="post" class="stack" style="gap:.5rem;">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="update_tool">
+                    <input type="hidden" name="index" value="{{ forloop.counter0 }}">
+                    <label class="stack" style="gap:.3rem;">
+                      <span class="muted">Name</span>
+                      <input type="text" name="name" value="{{ tool.name }}" required>
+                    </label>
+                    <label class="stack" style="gap:.3rem;">
+                      <span class="muted">Description</span>
+                      <textarea name="description" rows="4">{{ tool.description }}</textarea>
+                    </label>
+                    <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Save tool</button>
+                  </form>
+                  <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="delete_tool">
+                    <input type="hidden" name="index" value="{{ forloop.counter0 }}">
+                    <button type="submit" class="btn btn-ghost" style="color:#d33;">Delete tool</button>
+                  </form>
+                </div>
+              </details>
+            {% empty %}
+              <p class="muted">No tools listed yet.</p>
+            {% endfor %}
+          </div>
+          <hr style="margin:1.2rem 0;">
+          <h3 style="margin-bottom:.6rem;">Add Tool</h3>
+          <form method="post" class="stack" style="gap:.5rem;">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="add_tool">
+            <label class="stack" style="gap:.3rem;">
+              <span class="muted">Name</span>
+              <input type="text" name="name" placeholder="Tool name" required>
+            </label>
+            <label class="stack" style="gap:.3rem;">
+              <span class="muted">Description</span>
+              <textarea name="description" rows="4" placeholder="What is it used for?"></textarea>
+            </label>
+            <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Add tool</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <h2>Useful Links</h2>
+          <p class="muted" style="margin-bottom:.8rem;">Surface documentation, tutorials, and other learning resources.</p>
+          <div class="stack" style="gap:.8rem;">
+            {% for link in lang.links %}
+              <details style="border:1px solid var(--border); border-radius:8px; padding:.6rem .8rem;">
+                <summary style="cursor:pointer; font-weight:600;">{{ link.title|default:"Link" }}</summary>
+                <div class="stack" style="margin-top:.6rem; gap:.6rem;">
+                  <form method="post" class="stack" style="gap:.5rem;">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="update_link">
+                    <input type="hidden" name="index" value="{{ forloop.counter0 }}">
+                    <label class="stack" style="gap:.3rem;">
+                      <span class="muted">Title</span>
+                      <input type="text" name="title" value="{{ link.title }}" required>
+                    </label>
+                    <label class="stack" style="gap:.3rem;">
+                      <span class="muted">URL</span>
+                      <input type="url" name="url" value="{{ link.url }}" required>
+                    </label>
+                    <label class="stack" style="gap:.3rem;">
+                      <span class="muted">Description</span>
+                      <textarea name="description" rows="3">{{ link.description }}</textarea>
+                    </label>
+                    <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Save link</button>
+                  </form>
+                  <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="delete_link">
+                    <input type="hidden" name="index" value="{{ forloop.counter0 }}">
+                    <button type="submit" class="btn btn-ghost" style="color:#d33;">Delete link</button>
+                  </form>
+                </div>
+              </details>
+            {% empty %}
+              <p class="muted">No links yet.</p>
+            {% endfor %}
+          </div>
+          <hr style="margin:1.2rem 0;">
+          <h3 style="margin-bottom:.6rem;">Add Link</h3>
+          <form method="post" class="stack" style="gap:.5rem;">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="add_link">
+            <label class="stack" style="gap:.3rem;">
+              <span class="muted">Title</span>
+              <input type="text" name="title" placeholder="Resource title" required>
+            </label>
+            <label class="stack" style="gap:.3rem;">
+              <span class="muted">URL</span>
+              <input type="url" name="url" placeholder="https://" required>
+            </label>
+            <label class="stack" style="gap:.3rem;">
+              <span class="muted">Description</span>
+              <textarea name="description" rows="3" placeholder="Optional context"></textarea>
+            </label>
+            <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Add link</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

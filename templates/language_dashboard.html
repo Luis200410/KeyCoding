@@ -9,6 +9,9 @@
         <p class="lead">Category: {{ categories|join:', ' }}</p>
         <div class="hero-cta" style="margin-top:.6rem;">
           <a class="btn btn-primary" href="/dashboard/">Back to categories</a>
+          {% if user.is_superuser %}
+            <a class="btn btn-ghost" href="?manage=1">Manage content</a>
+          {% endif %}
         </div>
       </div>
 
