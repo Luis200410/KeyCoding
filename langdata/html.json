@@ -165,6 +165,12 @@
       "kind": "Attribute",
       "signature": "<link rel=\"icon\" href=\"favicon.ico\" type=\"image/x-icon\">",
       "description": "Used in: <link>, <script>, <button>, <input>\n\nMeaning:\nDescribes the type of file or content.\n\nUse case:\n\t•\tFor linking icons or scripts (type=\"image/x-icon\", type=\"text/javascript\")\n\t•\tFor buttons/inputs (type=\"submit\", type=\"text\", etc.)"
+    },
+    {
+      "name": "<h1>, <h2>, <h3>, <h4>, <h5>, <h6>",
+      "kind": "Tag",
+      "signature": "<h1>Welcome To My Site</h1>",
+      "description": "These are called heading tags. They show hierarchy, just like chapter titles and subtitles in a book. the numbers (1-6) indicate the level of importance, with <h1> being the most important and <h6> the least.\n\n🧠 Why Use Them?\n\t•\tSEO: Search engines use headings to understand the structure and main topics of your content.\n\t•\tAccessibility: Screen readers use headings to help users navigate your page.\n\t•\tOrganization: They break up content into sections, making it easier to read."
     }
   ],
   "concepts": []
