@@ -27,6 +27,16 @@
       "title": "What Are Attributes?",
       "description": "Every HTML tag can have attributes.\nThey are extra pieces of information that modify or describe how the tag behaves.",
       "code": "<tagname attribute=\"value\">content</tagname>"
+    },
+    {
+      "title": "Nesting and indentation",
+      "description": "You may have noticed that in all the examples in this lesson we indent any elements that are within other elements. This is known as nesting elements.\n\nWhen we nest elements within other elements, we create a parent and child relationship between them. The nested elements are the children and the element they are nested within is the parent.\n\nJust as in human relationships, HTML parent elements can have many children. Elements at the same level of nesting are considered to be siblings.\n\nFor example, the two paragraphs in the following code are siblings, since they are both children of the body tag and are at the same level of nesting as each other\n\nWe use indentation to make the level of nesting clear and readable for ourselves and other developers who will work with our HTML in the future. In our examples, we have indented any child elements by two spaces per nesting level.\n\nThe parent, child, and sibling relationships between elements will become much more important later when we start styling our HTML with CSS and adding behavior with JavaScript. For now, however, it is just important to know the distinction between how elements are related and the terminology used to describe their relationships.",
+      "code": "<html>\n<head>\n</head\n  <body>\n   <p>Lorem ipsum dolor sit amet.</p>\n    <p>Ut enim ad minim veniam.</p>\n  </body>\n </html>"
+    },
+    {
+      "title": "HTML Comments",
+      "description": "HTML comments are not visible to the browser; they allow us to comment on our code so that other developers or our future selves can read them and get some context about something that might not be clear in the code.\n\nIf you find typing out the comments syntax tiring, the following shortcut will help you quickly create a new comment, convert any line to a comment, or uncomment any line:\n\nMac Users: Cmd + /\nWindows and Linux Users: Ctrl + /",
+      "code": "<h1> View the html to see the hidden comments </h1>\n\n<!-- I am an html comment -->\n\n<p>Some paragraph text</p>\n\n<!-- I am another html comment -->"
     }
   ],
   "common_tasks": [
@@ -171,6 +181,18 @@
       "kind": "Tag",
       "signature": "<h1>Welcome To My Site</h1>",
       "description": "These are called heading tags. They show hierarchy, just like chapter titles and subtitles in a book. the numbers (1-6) indicate the level of importance, with <h1> being the most important and <h6> the least.\n\n🧠 Why Use Them?\n\t•\tSEO: Search engines use headings to understand the structure and main topics of your content.\n\t•\tAccessibility: Screen readers use headings to help users navigate your page.\n\t•\tOrganization: They break up content into sections, making it easier to read."
+    },
+    {
+      "name": "em",
+      "kind": "Tag",
+      "signature": "<em></em>",
+      "description": "The <em> element makes text italic. It also semantically places emphasis on the text, which again may affect things like screen readers. To define an emphasized element, wrap the text content in an <em> tag."
+    },
+    {
+      "name": "strong",
+      "kind": "Tag",
+      "signature": "<strong></strong>",
+      "description": "The <strong> element makes text bold. It also semantically marks text as important; this affects tools, like screen readers, that users with visual impairments will rely on to use your website. The tone of voice on some screen readers will change to communicate the importance of the text within a strong element. To define a strong element, we wrap text content in a <strong> tag.\nyou will probably find yourself using the strong element much more in combination with other text elements"
     }
   ],
   "concepts": []
